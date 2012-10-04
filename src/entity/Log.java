@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class Log {
     
+    private String codigo;
     private Usuario usuario;
     private String acao;
     private Date data;
@@ -15,10 +16,19 @@ public class Log {
     public Log() {
     }
     
-    public Log(Usuario usuario, String acao, Date data) {
+    public Log(String codigo, Usuario usuario, String acao, Date data) {
+        this.codigo = codigo;
         this.usuario = usuario;
         this.acao = acao;
         this.data = data;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
     public Usuario getUsuario() {
@@ -44,6 +54,5 @@ public class Log {
     public void setData(Date data) {
         this.data = data;
     }
-    
-    
+        
 }

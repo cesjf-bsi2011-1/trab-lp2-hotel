@@ -3,7 +3,7 @@ package teste;
 import entity.Log;
 import java.util.ArrayList;
 import java.util.List;
-import mvc.model.dao.AbstractDao;
+import mvc.model.dao.AbstractDAO;
 
 /**
  *
@@ -11,7 +11,7 @@ import mvc.model.dao.AbstractDao;
  * Classe para teste da funcionalidade de grava logs no histórico
  * Essa classe vai fazer papel de uma classe Dao atuando e registrando logs
  */
-public class TesteHistorico extends AbstractDao{
+public class TesteHistorico extends AbstractDAO{
 
     private List<Teste> lista;
     

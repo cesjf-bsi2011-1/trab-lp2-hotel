@@ -10,9 +10,10 @@ import mvc.controllerview.AbstractForm;
  *
  * @author Tássio Auad
  */
-public class Historico implements InterfaceDao {
+public class Historico implements InterfaceDAO {
 
     private List<Log> logs;
+    private static int codigo = 0;
     
     public Historico()
     {
@@ -29,29 +30,32 @@ public class Historico implements InterfaceDao {
     
     public void inserir(String mensagem) {
         Date data = new Date();
-        Log log = new Log(AbstractForm.logado, mensagem, data);
+        Log log = new Log(String.valueOf(codigo), AbstractForm.logado, mensagem, data);
         inserir(log);
+        codigo++;
     }
 
+    
+
     @Override
-    public void atualizar(Object o) {
+    public void remover(Object o) {
+        if(o instanceof Log) {
+            logs.remove((Log) o);
+            
+        }
+    }
+    
+    @Override
+    public void atualizar(String codigo, Object o) {
         if(o instanceof Log) {
             Log log = (Log) o;
             for(int i = 0; i < logs.size(); i++) {
-                if(logs.get(i) == log ) {
+                if(logs.get(i).getCodigo().equals(codigo) ) {
                     logs.remove(i);
                     logs.add(log);
                     
                 }
             }
-        }
-    }
-
-    @Override
-    public void deletar(Object o) {
-        if(o instanceof Log) {
-            logs.remove((Log) o);
-            
         }
     }
 
@@ -62,10 +66,15 @@ public class Historico implements InterfaceDao {
     }
 
     @Override
-    public Log buscar(int index) {
-        return logs.get(index);
+    public Log buscar(String codigo) {
+        for(int i = 0; i < logs.size(); i++) {
+                if(logs.get(i).getCodigo().equals(codigo) ) {
+                    return logs.get(i);
+                    
+                }
+        }
         
+        return null;
     }
-
     
 }
