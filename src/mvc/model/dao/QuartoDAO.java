@@ -31,6 +31,15 @@ public class QuartoDAO extends AbstractDAO{
     }
     
     @Override
+    public void remover(String codigo) {
+        for(int i = 0; i < quartos.size(); i++) {
+                if(quartos.get(i).getCodigo().equals(codigo) ) {
+                    quartos.remove(i);
+                }
+            }
+    }
+    
+    @Override
     public void atualizar(String codigo, Object o) {
         if(o instanceof Log) {
             Quarto quarto = (Quarto) o;
@@ -61,5 +70,4 @@ public class QuartoDAO extends AbstractDAO{
         
         return null;
     }
-    
 }

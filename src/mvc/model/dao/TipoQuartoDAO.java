@@ -46,6 +46,16 @@ public class TipoQuartoDAO extends AbstractDAO{
     }
 
     @Override
+    public void remover(String codigo) {
+        for(int i = 0; i < tiposQuarto.size(); i++) {
+            if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
+                tiposQuarto.remove(i);
+
+            }
+        }
+    }
+    
+    @Override
     public List buscarTodos() {
         return tiposQuarto;
         
@@ -54,10 +64,10 @@ public class TipoQuartoDAO extends AbstractDAO{
     @Override
     public TipoQuarto buscar(String codigo) {
         for(int i = 0; i < tiposQuarto.size(); i++) {
-                if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
-                    return tiposQuarto.get(i);
-                    
-                }
+            if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
+                return tiposQuarto.get(i);
+
+            }
         }
         
         return null;

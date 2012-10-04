@@ -30,6 +30,15 @@ public class MobiliaDAO extends AbstractDAO{
     }
     
     @Override
+    public void remover(String codigo) {
+        for(int i = 0; i < mobilias.size(); i++) {
+            if(mobilias.get(i).getCodigo().equals(codigo) ) {
+                mobilias.remove(i);
+            }
+        }
+    }
+    
+    @Override
     public void atualizar(String codigo, Object o) {
         if(o instanceof Log) {
             Mobilia mobilia = (Mobilia) o;

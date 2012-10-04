@@ -46,6 +46,16 @@ public class Historico implements InterfaceDAO {
     }
     
     @Override
+    public void remover(String codigo) {
+        for(int i = 0; i < logs.size(); i++) {
+            if(logs.get(i).getCodigo().equals(codigo) ) {
+                logs.remove(i);
+
+            }
+        }
+    }
+    
+    @Override
     public void atualizar(String codigo, Object o) {
         if(o instanceof Log) {
             Log log = (Log) o;
@@ -68,13 +78,12 @@ public class Historico implements InterfaceDAO {
     @Override
     public Log buscar(String codigo) {
         for(int i = 0; i < logs.size(); i++) {
-                if(logs.get(i).getCodigo().equals(codigo) ) {
-                    return logs.get(i);
-                    
-                }
+            if(logs.get(i).getCodigo().equals(codigo) ) {
+                return logs.get(i);
+
+            }
         }
         
         return null;
     }
-    
 }
