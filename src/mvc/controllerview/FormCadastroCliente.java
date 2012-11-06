@@ -1,7 +1,7 @@
 package mvc.controllerview;
 
-import Utils.DateCustomizer;
-import Utils.FormCustomizer;
+import myutils.DateCustomizer;
+import myutils.FormCustomizer;
 import entity.Cliente;
 import java.text.ParseException;
 import java.util.logging.Level;
