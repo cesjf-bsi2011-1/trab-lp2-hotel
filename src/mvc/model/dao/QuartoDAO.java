@@ -10,12 +10,13 @@ import java.util.List;
  *
  * @author Tássio Auad
  */
-public class QuartoDAO extends AbstractDAO{
-
+public class QuartoDAO extends AbstractDAO
+{
     private static List<Quarto> quartos = new ArrayList<>();
     
     @Override
-    public void inserir(Object o) {
+    public void inserir(Object o) 
+    {
         if(o instanceof Quarto) {
             quartos.add((Quarto) o);
             
@@ -23,27 +24,32 @@ public class QuartoDAO extends AbstractDAO{
     }
 
     @Override
-    public void remover(Object o) {
-        if(o instanceof Mobilia) {
+    public void remover(Object o) 
+    {
+        if(o instanceof Quarto) {
             quartos.remove((Quarto) o);
             
         }
     }
     
     @Override
-    public void remover(String codigo) {
-        for(int i = 0; i < quartos.size(); i++) {
+    public void remover(String codigo) 
+    {
+        for(int i = 0; i < quartos.size(); i++) 
+        {
                 if(quartos.get(i).getCodigo().equals(codigo) ) {
                     quartos.remove(i);
                 }
-            }
+        }
     }
     
     @Override
-    public void atualizar(String codigo, Object o) {
+    public void atualizar(String codigo, Object o) 
+    {
         if(o instanceof Log) {
             Quarto quarto = (Quarto) o;
-            for(int i = 0; i < quartos.size(); i++) {
+            for(int i = 0; i < quartos.size(); i++) 
+            {
                 if(quartos.get(i).getCodigo().equals(codigo) ) {
                     quartos.remove(i);
                     quartos.add(quarto);
@@ -54,14 +60,17 @@ public class QuartoDAO extends AbstractDAO{
     }
 
     @Override
-    public List buscarTodos() {
+    public List buscarTodos() 
+    {
         return quartos;
         
     }
 
     @Override
-    public Quarto buscar(String codigo) {
-        for(int i = 0; i < quartos.size(); i++) {
+    public Quarto buscar(String codigo) 
+    {
+        for(int i = 0; i < quartos.size(); i++) 
+        {
                 if(quartos.get(i).getCodigo().equals(codigo) ) {
                     return quartos.get(i);
                     

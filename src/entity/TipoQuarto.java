@@ -21,6 +21,10 @@ public class TipoQuarto {
         
     }
 
+    public TipoQuarto() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
     public String getCodigo() {
         return codigo;
     }

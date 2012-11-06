@@ -5,13 +5,21 @@ package mvc.model.dao;
  * @author Tássio Auad
  */
 public abstract class AbstractDAO implements InterfaceDAO {
-    private static Historico historico = new Historico();
+    
+    private static LogDAO historico = new LogDAO();
 
-    public AbstractDAO() {
+    public AbstractDAO() 
+    {
 
     }
 
-    public Historico getHistorico() {
+    public LogDAO getHistorico() 
+    {
         return historico;
+    }
+    
+    public void registrarLog(String mensagem)
+    {
+        historico.inserir(mensagem);
     }
 }

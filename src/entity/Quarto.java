@@ -12,6 +12,24 @@ public class Quarto {
     private String codigo;
     private TipoQuarto tipoQuarto;
     private boolean status;
+    private float valor;
+    private String Observacao;
+
+    public float getValor() {
+        return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+    public String getObservacao() {
+        return Observacao;
+    }
+
+    public void setObservacao(String Observacao) {
+        this.Observacao = Observacao;
+    }
 
     public Quarto() {
     }

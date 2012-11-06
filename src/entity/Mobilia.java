@@ -42,5 +42,11 @@ public class Mobilia {
         this.descricao = descricao;
     }
     
+    public Object[] getDadosMobilia()
+    {
+        Object v[] = {codigo, nome, descricao};
+        return v;
+    }
+    
     
 }

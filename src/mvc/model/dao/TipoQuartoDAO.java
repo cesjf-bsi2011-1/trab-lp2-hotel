@@ -9,12 +9,13 @@ import java.util.List;
  *
  * @author Tássio Auad
  */
-public class TipoQuartoDAO extends AbstractDAO{
-    
+public class TipoQuartoDAO extends AbstractDAO
+{    
     public static List<TipoQuarto> tiposQuarto = new ArrayList<>();
 
     @Override
-    public void inserir(Object o) {
+    public void inserir(Object o) 
+    {
         if(o instanceof TipoQuarto) {
             TipoQuarto tipoQuarto = (TipoQuarto) o;
             tiposQuarto.add(tipoQuarto);
@@ -23,10 +24,12 @@ public class TipoQuartoDAO extends AbstractDAO{
     }
 
     @Override
-    public void atualizar(String codigo, Object o) {
+    public void atualizar(String codigo, Object o) 
+    {
         if(o instanceof TipoQuarto) {
             TipoQuarto tipoQuarto = (TipoQuarto) o;
-            for(int i = 0; i < tiposQuarto.size(); i++) {
+            for(int i = 0; i < tiposQuarto.size(); i++) 
+            {
                 if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
                     tiposQuarto.remove(i);
                     tiposQuarto.add(tipoQuarto);
@@ -37,7 +40,8 @@ public class TipoQuartoDAO extends AbstractDAO{
     }
 
     @Override
-    public void remover(Object o) {
+    public void remover(Object o) 
+    {
         if(o instanceof TipoQuarto) {
             TipoQuarto tipoQuarto = (TipoQuarto) o;
             tiposQuarto.remove(tipoQuarto);
@@ -46,8 +50,10 @@ public class TipoQuartoDAO extends AbstractDAO{
     }
 
     @Override
-    public void remover(String codigo) {
-        for(int i = 0; i < tiposQuarto.size(); i++) {
+    public void remover(String codigo) 
+    {
+        for(int i = 0; i < tiposQuarto.size(); i++) 
+        {
             if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
                 tiposQuarto.remove(i);
 
@@ -56,14 +62,17 @@ public class TipoQuartoDAO extends AbstractDAO{
     }
     
     @Override
-    public List buscarTodos() {
+    public List buscarTodos() 
+    {
         return tiposQuarto;
         
     }
 
     @Override
-    public TipoQuarto buscar(String codigo) {
-        for(int i = 0; i < tiposQuarto.size(); i++) {
+    public TipoQuarto buscar(String codigo) 
+    {
+        for(int i = 0; i < tiposQuarto.size(); i++) 
+        {
             if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
                 return tiposQuarto.get(i);
 
