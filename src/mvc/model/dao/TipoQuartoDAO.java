@@ -1,66 +1,64 @@
 package mvc.model.dao;
 
-import entity.Log;
 import entity.TipoQuarto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
+/*
  * @author Tássio Auad
  */
 public class TipoQuartoDAO extends AbstractDAO
-{    
-    public static List<TipoQuarto> tiposQuarto = new ArrayList<>();
+{
 
+    private static List<TipoQuarto> tiposQuarto = new ArrayList<>();
+    
     @Override
     public void inserir(Object o) 
     {
-        if(o instanceof TipoQuarto) {
-            TipoQuarto tipoQuarto = (TipoQuarto) o;
-            tiposQuarto.add(tipoQuarto);
-            
-        }
-    }
-
-    @Override
-    public void atualizar(String codigo, Object o) 
-    {
-        if(o instanceof TipoQuarto) {
-            TipoQuarto tipoQuarto = (TipoQuarto) o;
-            for(int i = 0; i < tiposQuarto.size(); i++) 
-            {
-                if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
-                    tiposQuarto.remove(i);
-                    tiposQuarto.add(tipoQuarto);
-                    
-                }
-            }
-        }
+        if(objetoEUmTipoQuarto(o)) {
+            TipoQuarto tipoQuartoParaRemover = (TipoQuarto) o;
+            tiposQuarto.remove(tipoQuartoParaRemover);
+            getHistorico().inserir("Remoção do Tipo de Quarto " + tipoQuartoParaRemover.getNome());
+        }       
     }
 
     @Override
     public void remover(Object o) 
     {
-        if(o instanceof TipoQuarto) {
-            TipoQuarto tipoQuarto = (TipoQuarto) o;
-            tiposQuarto.remove(tipoQuarto);
-            
-        }
-    }
-
-    @Override
-    public void remover(String codigo) 
-    {
-        for(int i = 0; i < tiposQuarto.size(); i++) 
-        {
-            if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
-                tiposQuarto.remove(i);
-
-            }
+        if(objetoEUmTipoQuarto(o)) {
+            TipoQuarto novoTipoQuarto = (TipoQuarto) o;
+            tiposQuarto.remove((TipoQuarto) o);
+            getHistorico().inserir("Remoção do Tipo de Quarto " + novoTipoQuarto.getNome());
         }
     }
     
+    @Override
+    public void remover(String codigo) 
+    {        
+        TipoQuarto tipoQuartoEncontrado = buscar(codigo);
+        if(null != tipoQuartoEncontrado) {
+            tiposQuarto.remove(tipoQuartoEncontrado);
+            getHistorico().inserir("Remoção do Tipo de Quarto " + tipoQuartoEncontrado.getNome());
+        }
+    }
+    
+    @Override
+    public void atualizar(String codigo, Object o) 
+    {
+        if(objetoEUmTipoQuarto(o)) {
+            TipoQuarto tipoQuartoParaInserir = (TipoQuarto) o;
+            TipoQuarto tipoQuartoParaRemover = buscar(codigo);
+            
+            if(null != tipoQuartoParaRemover) {
+                tiposQuarto.remove(tipoQuartoParaRemover);
+                tiposQuarto.add(tipoQuartoParaInserir);
+                getHistorico().inserir("Atualização do tipo de quarto " + tipoQuartoParaInserir.getNome());
+            }
+        }
+    }
+
     @Override
     public List buscarTodos() 
     {
@@ -71,15 +69,45 @@ public class TipoQuartoDAO extends AbstractDAO
     @Override
     public TipoQuarto buscar(String codigo) 
     {
-        for(int i = 0; i < tiposQuarto.size(); i++) 
+        for(TipoQuarto tipoQuartoDaLista : tiposQuarto) 
         {
-            if(tiposQuarto.get(i).getCodigo().equals(codigo) ) {
-                return tiposQuarto.get(i);
-
-            }
+                if(tipoQuartoDaLista.getCodigo().equals(codigo)) {
+                    return tipoQuartoDaLista;
+                    
+                }
+        }
+        /*Se não houve retorno, não encontrou 
+         * e, sendo assim, se torna uma Exception
+         * por regra.
+         */
+        try {
+            throw new Exception("TipoQuartoDAO.buscar(String codigo) não "
+                    + "encontrou um tipo de quarto que possua o codigo " + codigo 
+                    + ".");
+        } catch (Exception ex) {
+            Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } finally {
+            return null;
         }
         
-        return null;
+    }
+    public boolean objetoEUmTipoQuarto(Object o) 
+    {
+        if(o instanceof TipoQuarto) {
+            return true;
+            
+        } else {
+            try {
+                throw new Exception("TipoQuartoDAO.atualizar(String codigo, "
+                        + "Object o) recebendo um objeto que não é uma instância"
+                        + " de TipoQuarto");
+            } catch (Exception ex) {
+                Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                return false;
+            }
+        }
     }
     
 }
