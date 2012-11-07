@@ -18,37 +18,21 @@ public class ClienteDAO extends AbstractDAO
     @Override
     public void inserir(Object o) 
     {
-        if(o instanceof Cliente) {
+        if(objetoEUmCliente(o)) {
             Cliente novoCliente = (Cliente) o;
             clientes.add(novoCliente);
             getHistorico().inserir("Inserção do Cliente "
                     + novoCliente.getNome());
-        }else {
-            try {
-                throw new Exception("ClienteDAO.inserir(Object o) recebendo"
-                        + " um objeto via parâmetros que não é uma instância"
-                        + " de Cliente");
-            } catch (Exception ex) {
-                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }       
     }
 
     @Override
     public void remover(Object o) 
     {
-        if(o instanceof Cliente) {
+        if(objetoEUmCliente(o)) {
             Cliente novoCliente = (Cliente) o;
             clientes.remove((Cliente) o);
             getHistorico().inserir("Remoção do Cliente " + novoCliente.getNome());
-        } else {
-            try {
-                throw new Exception("ClienteDAO.remover(Object o) recebendo"
-                        + " um objeto via parâmetros que não é uma instância"
-                        + " de Cliente");
-            } catch (Exception ex) {
-                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
     
@@ -66,7 +50,7 @@ public class ClienteDAO extends AbstractDAO
     @Override
     public void atualizar(String codigo, Object o) 
     {
-        if(o instanceof Cliente) {
+        if(objetoEUmCliente(o)) {
             Cliente clienteViaParametro = (Cliente) o;
             
             if(null != buscar(codigo)) {
@@ -75,14 +59,6 @@ public class ClienteDAO extends AbstractDAO
                 getHistorico().inserir("Atualização do cliente " + clienteViaParametro.getNome());
             }
             
-        } else {
-            try {
-                throw new Exception("ClienteDAO.atualizar(String codigo, "
-                        + "Object o) recebendo um objeto que não é uma instância"
-                        + " de Cliente");
-            } catch (Exception ex) {
-                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
@@ -116,6 +92,22 @@ public class ClienteDAO extends AbstractDAO
         }
         
     }
-    
+    public boolean objetoEUmCliente(Object o) 
+    {
+        if(o instanceof Cliente) {
+            return true;
+            
+        } else {
+            try {
+                throw new Exception("ClienteDAO.atualizar(String codigo, "
+                        + "Object o) recebendo um objeto que não é uma instância"
+                        + " de Cliente");
+            } catch (Exception ex) {
+                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                return false;
+            }
+        }
+    }
     
 }
