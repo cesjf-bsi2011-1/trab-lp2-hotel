@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.model.dao;
 
 import entity.Mobilia;
@@ -10,6 +6,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+ * @author Tássio Auad
+ */
 public class MobiliaDAO extends AbstractDAO
 {
 
@@ -21,8 +20,7 @@ public class MobiliaDAO extends AbstractDAO
         if(objetoEUmaMobilia(o)) {
             Mobilia novaMobilia = (Mobilia) o;
             mobilias.add(novaMobilia);
-            getHistorico().inserir("Inserção da Mobília "
-                    + novaMobilia.getNome());
+            getHistorico().inserir("Inserção da Mobília " + novaMobilia.getNome());
         }       
     }
 
@@ -30,9 +28,9 @@ public class MobiliaDAO extends AbstractDAO
     public void remover(Object o) 
     {
         if(objetoEUmaMobilia(o)) {
-            Mobilia novaMobilia = (Mobilia) o;
-            mobilias.remove((Mobilia) o);
-            getHistorico().inserir("Remoção da Mobília " + novaMobilia.getNome());
+            Mobilia mobiliaParaRemover = (Mobilia) o;
+            mobilias.remove(mobiliaParaRemover);
+            getHistorico().inserir("Remoção da Mobília " + mobiliaParaRemover.getNome());
         }
     }
     
@@ -41,9 +39,8 @@ public class MobiliaDAO extends AbstractDAO
     {        
         Mobilia mobiliaEncontrada = buscar(codigo);
         if(null != mobiliaEncontrada) {
-            mobilias.remove(Integer.parseInt(codigo));
-            getHistorico().inserir("Remoção da Mobília " + 
-                                               mobiliaEncontrada.getNome());
+            mobilias.remove(mobiliaEncontrada);
+            getHistorico().inserir("Remoção da Mobília " + mobiliaEncontrada.getNome());
         }
     }
     
@@ -51,12 +48,13 @@ public class MobiliaDAO extends AbstractDAO
     public void atualizar(String codigo, Object o) 
     {
         if(objetoEUmaMobilia(o)) {
-            Mobilia mobiliaViaParametro = (Mobilia) o;
+            Mobilia mobiliaParaInserir = (Mobilia) o;
+            Mobilia mobiliaParaRemover = buscar(codigo);
             
-            if(null != buscar(codigo)) {
-                mobilias.remove(Integer.parseInt(codigo));
-                mobilias.add(mobiliaViaParametro);
-                getHistorico().inserir("Atualização do mobilia " + mobiliaViaParametro.getNome());
+            if(null != mobiliaParaRemover) {
+                mobilias.remove(mobiliaParaRemover);
+                mobilias.add(mobiliaParaInserir);
+                getHistorico().inserir("Atualização do mobilia " + mobiliaParaInserir.getNome());
             }
         } 
     }
@@ -76,11 +74,14 @@ public class MobiliaDAO extends AbstractDAO
                     return mobiliaDaLista;           
                 }
         }
-        
+        /*Se não houve retorno, não encontrou 
+         * e, sendo assim, se torna uma Exception
+         * por regra.
+         */
         try {
             throw new Exception("MobiliasDAO.buscar(String codigo) não "
-                    + "encontrou uma mobília que possua o codigo " + codigo +
-                    ".");
+                    + "encontrou uma mobília que possua o codigo " + codigo 
+                    + ".");
         } catch (Exception ex) {
             Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex);
             

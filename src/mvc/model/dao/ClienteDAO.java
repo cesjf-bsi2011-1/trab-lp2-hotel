@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.model.dao;
 
 import entity.Cliente;
@@ -10,6 +6,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+ * @author Tássio Auad
+ */
 public class ClienteDAO extends AbstractDAO
 {
 
@@ -19,10 +18,9 @@ public class ClienteDAO extends AbstractDAO
     public void inserir(Object o) 
     {
         if(objetoEUmCliente(o)) {
-            Cliente novoCliente = (Cliente) o;
-            clientes.add(novoCliente);
-            getHistorico().inserir("Inserção do Cliente "
-                    + novoCliente.getNome());
+            Cliente clienteParaRemover = (Cliente) o;
+            clientes.remove(clienteParaRemover);
+            getHistorico().inserir("Remoção da Mobília " + clienteParaRemover.getNome());
         }       
     }
 
@@ -41,9 +39,8 @@ public class ClienteDAO extends AbstractDAO
     {        
         Cliente clienteEncontrado = buscar(codigo);
         if(null != clienteEncontrado) {
-            clientes.remove(Integer.parseInt(codigo));
-            getHistorico().inserir("Remoção do Cliente " + 
-                                               clienteEncontrado.getNome());
+            clientes.remove(clienteEncontrado);
+            getHistorico().inserir("Remoção do Cliente " + clienteEncontrado.getNome());
         }
     }
     
@@ -51,14 +48,14 @@ public class ClienteDAO extends AbstractDAO
     public void atualizar(String codigo, Object o) 
     {
         if(objetoEUmCliente(o)) {
-            Cliente clienteViaParametro = (Cliente) o;
+            Cliente clienteParaInserir = (Cliente) o;
+            Cliente clienteParaRemover = buscar(codigo);
             
-            if(null != buscar(codigo)) {
-                clientes.remove(Integer.parseInt(codigo));
-                clientes.add(clienteViaParametro);
-                getHistorico().inserir("Atualização do cliente " + clienteViaParametro.getNome());
+            if(null != clienteParaRemover) {
+                clientes.remove(clienteParaRemover);
+                clientes.add(clienteParaInserir);
+                getHistorico().inserir("Atualização do mobilia " + clienteParaInserir.getNome());
             }
-            
         }
     }
 
@@ -79,11 +76,14 @@ public class ClienteDAO extends AbstractDAO
                     
                 }
         }
-        
+        /*Se não houve retorno, não encontrou 
+         * e, sendo assim, se torna uma Exception
+         * por regra.
+         */
         try {
             throw new Exception("ClienteDAO.buscar(String codigo) não "
-                    + "encontrou um cliente que possua o codigo " + codigo +
-                    ".");
+                    + "encontrou um cliente que possua o codigo " + codigo 
+                    + ".");
         } catch (Exception ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             
