@@ -7,11 +7,9 @@ package mvc.model.dao;
 import entity.Cliente;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author Willian
- */
 public class ClienteDAO extends AbstractDAO
 {
 
@@ -21,28 +19,47 @@ public class ClienteDAO extends AbstractDAO
     public void inserir(Object o) 
     {
         if(o instanceof Cliente) {
-            clientes.add((Cliente) o);
-            
-        }
+            Cliente novoCliente = (Cliente) o;
+            clientes.add(novoCliente);
+            getHistorico().inserir("Inserção do Cliente "
+                    + novoCliente.getNome());
+        }else {
+            try {
+                throw new Exception("ClienteDAO.inserir(Object o) recebendo"
+                        + " um objeto via parâmetros que não é uma instância"
+                        + " de Cliente");
+            } catch (Exception ex) {
+                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }       
     }
 
     @Override
     public void remover(Object o) 
     {
         if(o instanceof Cliente) {
+            Cliente novoCliente = (Cliente) o;
             clientes.remove((Cliente) o);
-            
+            getHistorico().inserir("Remoção do Cliente " + novoCliente.getNome());
+        } else {
+            try {
+                throw new Exception("ClienteDAO.remover(Object o) recebendo"
+                        + " um objeto via parâmetros que não é uma instância"
+                        + " de Cliente");
+            } catch (Exception ex) {
+                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
     @Override
     public void remover(String codigo) 
-    {
-        for(int i = 0; i < clientes.size(); i++) 
-        {
-            if(clientes.get(i).getCodigo() == Integer.parseInt(codigo)) {
-                clientes.remove(i);
-            }
+    {        
+        Cliente clienteEncontrado = buscar(codigo);
+        if(null != clienteEncontrado) {
+            clientes.remove(Integer.parseInt(codigo));
+            getHistorico().inserir("Remoção do Cliente " + 
+                                               clienteEncontrado.getNome());
         }
     }
     
@@ -50,14 +67,21 @@ public class ClienteDAO extends AbstractDAO
     public void atualizar(String codigo, Object o) 
     {
         if(o instanceof Cliente) {
-            Cliente cliente = (Cliente) o;
-            for(int i = 0; i < clientes.size(); i++) 
-            {
-                if(clientes.get(i).getCodigo() == Integer.parseInt(codigo)) {
-                    clientes.remove(i);
-                    clientes.add(cliente);
-                    
-                }
+            Cliente clienteViaParametro = (Cliente) o;
+            
+            if(null != buscar(codigo)) {
+                clientes.remove(Integer.parseInt(codigo));
+                clientes.add(clienteViaParametro);
+                getHistorico().inserir("Atualização do cliente " + clienteViaParametro.getNome());
+            }
+            
+        } else {
+            try {
+                throw new Exception("ClienteDAO.atualizar(String codigo, "
+                        + "Object o) recebendo um objeto que não é uma instância"
+                        + " de Cliente");
+            } catch (Exception ex) {
+                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -72,14 +96,25 @@ public class ClienteDAO extends AbstractDAO
     @Override
     public Cliente buscar(String codigo) 
     {
-        for(int i = 0; i < clientes.size(); i++) 
+        for(Cliente clienteDaLista : clientes) 
         {
-                if(clientes.get(i).getCodigo() == Integer.parseInt(codigo)) {
-                    return clientes.get(i);
+                if(clienteDaLista.getCodigo() == Integer.parseInt(codigo)) {
+                    return clienteDaLista;
                     
                 }
         }
-        return null;
+        
+        try {
+            throw new Exception("ClienteDAO.buscar(String codigo) não "
+                    + "encontrou um cliente que possua o codigo " + codigo +
+                    ".");
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } finally {
+            return null;
+        }
+        
     }
     
     
