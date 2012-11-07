@@ -11,26 +11,28 @@ import java.util.logging.Logger;
  */
 public class ClienteDAO extends AbstractDAO
 {
-
     private static List<Cliente> clientes = new ArrayList<>();
+    private static int index = 0;
     
     @Override
     public void inserir(Object o) 
     {
-        if(objetoEUmCliente(o)) {
-            Cliente clienteParaRemover = (Cliente) o;
-            clientes.remove(clienteParaRemover);
-            getHistorico().inserir("Remoção da Mobília " + clienteParaRemover.getNome());
+        if (objetoEUmCliente(o)) {
+            Cliente clienteParaInserir = (Cliente) o;
+            /*Garantindo que o código equivale ao index*/
+            clienteParaInserir.setCodigo(getIndex());
+            clientes.remove(clienteParaInserir);
+            getHistorico().inserir("Remoção do Cliente " + clienteParaInserir.getNome());
         }       
     }
 
     @Override
     public void remover(Object o) 
     {
-        if(objetoEUmCliente(o)) {
-            Cliente novoCliente = (Cliente) o;
+        if (objetoEUmCliente(o)) {
+            Cliente clienteParaInserir = (Cliente) o;
             clientes.remove((Cliente) o);
-            getHistorico().inserir("Remoção do Cliente " + novoCliente.getNome());
+            getHistorico().inserir("Remoção do Cliente " + clienteParaInserir.getNome());
         }
     }
     
@@ -38,7 +40,7 @@ public class ClienteDAO extends AbstractDAO
     public void remover(String codigo) 
     {        
         Cliente clienteEncontrado = buscar(codigo);
-        if(null != clienteEncontrado) {
+        if (null != clienteEncontrado) {
             clientes.remove(clienteEncontrado);
             getHistorico().inserir("Remoção do Cliente " + clienteEncontrado.getNome());
         }
@@ -47,14 +49,16 @@ public class ClienteDAO extends AbstractDAO
     @Override
     public void atualizar(String codigo, Object o) 
     {
-        if(objetoEUmCliente(o)) {
+        if (objetoEUmCliente(o)) {
             Cliente clienteParaInserir = (Cliente) o;
             Cliente clienteParaRemover = buscar(codigo);
             
-            if(null != clienteParaRemover) {
+            if (null != clienteParaRemover) {
                 clientes.remove(clienteParaRemover);
+                /*Garantindo que o código equivale ao index*/
+                clienteParaInserir.setCodigo(getIndex());
                 clientes.add(clienteParaInserir);
-                getHistorico().inserir("Atualização do mobilia " + clienteParaInserir.getNome());
+                getHistorico().inserir("Atualização do Cliente " + clienteParaInserir.getNome());
             }
         }
     }
@@ -69,9 +73,8 @@ public class ClienteDAO extends AbstractDAO
     @Override
     public Cliente buscar(String codigo) 
     {
-        for(Cliente clienteDaLista : clientes) 
-        {
-                if(clienteDaLista.getCodigo() == Integer.parseInt(codigo)) {
+        for (Cliente clienteDaLista : clientes) {
+                if (clienteDaLista.getCodigo() == Integer.parseInt(codigo)) {
                     return clienteDaLista;
                     
                 }
@@ -94,7 +97,7 @@ public class ClienteDAO extends AbstractDAO
     }
     public boolean objetoEUmCliente(Object o) 
     {
-        if(o instanceof Cliente) {
+        if (o instanceof Cliente) {
             return true;
             
         } else {
@@ -110,4 +113,13 @@ public class ClienteDAO extends AbstractDAO
         }
     }
     
+    public int getIndex()
+    {
+        return index;
+    }
+    
+    public void acrescerIndex()
+    {
+        index += 1;
+    }
 }

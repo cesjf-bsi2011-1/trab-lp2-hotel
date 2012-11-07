@@ -11,23 +11,25 @@ import java.util.logging.Logger;
  */
 public class MobiliaDAO extends AbstractDAO
 {
-
     private static List<Mobilia> mobilias = new ArrayList<>();
+    private static int index = 0;
     
     @Override
     public void inserir(Object o) 
     {
-        if(objetoEUmaMobilia(o)) {
-            Mobilia novaMobilia = (Mobilia) o;
-            mobilias.add(novaMobilia);
-            getHistorico().inserir("Inserção da Mobília " + novaMobilia.getNome());
+        if (objetoEUmaMobilia(o)) {
+            Mobilia mobiliaParaInserir = (Mobilia) o;
+            /*Garantindo que o código equivale ao index*/
+            mobiliaParaInserir.setCodigo(String.valueOf(getIndex()));
+            mobilias.add(mobiliaParaInserir);
+            getHistorico().inserir("Inserção da Mobília " + mobiliaParaInserir.getNome());
         }       
     }
 
     @Override
     public void remover(Object o) 
     {
-        if(objetoEUmaMobilia(o)) {
+        if (objetoEUmaMobilia(o)) {
             Mobilia mobiliaParaRemover = (Mobilia) o;
             mobilias.remove(mobiliaParaRemover);
             getHistorico().inserir("Remoção da Mobília " + mobiliaParaRemover.getNome());
@@ -38,7 +40,7 @@ public class MobiliaDAO extends AbstractDAO
     public void remover(String codigo) 
     {        
         Mobilia mobiliaEncontrada = buscar(codigo);
-        if(null != mobiliaEncontrada) {
+        if (null != mobiliaEncontrada) {
             mobilias.remove(mobiliaEncontrada);
             getHistorico().inserir("Remoção da Mobília " + mobiliaEncontrada.getNome());
         }
@@ -47,12 +49,14 @@ public class MobiliaDAO extends AbstractDAO
     @Override
     public void atualizar(String codigo, Object o) 
     {
-        if(objetoEUmaMobilia(o)) {
+        if (objetoEUmaMobilia(o)) {
             Mobilia mobiliaParaInserir = (Mobilia) o;
             Mobilia mobiliaParaRemover = buscar(codigo);
             
-            if(null != mobiliaParaRemover) {
+            if (null != mobiliaParaRemover) {
                 mobilias.remove(mobiliaParaRemover);
+                /*Garantindo que o código equivale ao index*/
+                mobiliaParaRemover.setCodigo(String.valueOf(getIndex()));
                 mobilias.add(mobiliaParaInserir);
                 getHistorico().inserir("Atualização do mobilia " + mobiliaParaInserir.getNome());
             }
@@ -68,9 +72,8 @@ public class MobiliaDAO extends AbstractDAO
     @Override
     public Mobilia buscar(String codigo) 
     {
-        for(Mobilia mobiliaDaLista : mobilias) 
-        {
-                if(mobiliaDaLista.getCodigo().equals(codigo)) {
+        for (Mobilia mobiliaDaLista : mobilias) {
+                if (mobiliaDaLista.getCodigo().equals(codigo)) {
                     return mobiliaDaLista;           
                 }
         }
@@ -93,7 +96,7 @@ public class MobiliaDAO extends AbstractDAO
     
     public boolean objetoEUmaMobilia(Object o) 
     {
-        if(o instanceof Mobilia) {
+        if (o instanceof Mobilia) {
             return true;
             
         } else {
@@ -109,5 +112,13 @@ public class MobiliaDAO extends AbstractDAO
         }
     }
     
+    public int getIndex()
+    {
+        return index;
+    }
     
+    public void acrescerIndex()
+    {
+        index += 1;
+    }
 }
