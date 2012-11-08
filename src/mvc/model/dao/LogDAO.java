@@ -121,11 +121,13 @@ public class LogDAO extends AbstractDAO
         }
     }
     
+    @Override
     public int getIndex()
     {
         return index;
     }
     
+    @Override
     public void acrescerIndex()
     {
         index += 1;

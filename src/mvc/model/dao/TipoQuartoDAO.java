@@ -122,4 +122,15 @@ public class TipoQuartoDAO extends AbstractDAO
     {
         index += 1;
     }
+    
+    public List<String> listarNomesTipoQuarto()
+    {
+        List<String> listaDeNomes = new ArrayList<String>();
+        
+        for (TipoQuarto tipoQuartoDaLista : tiposQuarto) {
+            listaDeNomes.add(tipoQuartoDaLista.getNome());
+        }
+   
+        return listaDeNomes;
+    }
 }

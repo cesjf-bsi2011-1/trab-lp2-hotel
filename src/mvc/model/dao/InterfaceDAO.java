@@ -14,5 +14,7 @@ public interface InterfaceDAO {
     public void remover(String id);
     public Object buscar(String id);
     public List buscarTodos();
+    public int getIndex();
+    public void acrescerIndex();
     
 }

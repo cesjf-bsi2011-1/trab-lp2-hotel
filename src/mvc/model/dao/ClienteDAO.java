@@ -95,6 +95,33 @@ public class ClienteDAO extends AbstractDAO
         }
         
     }
+    
+
+    public Cliente buscarPorCpf(String cpf) 
+    {
+        for (Cliente clienteDaLista : clientes) {
+                if (clienteDaLista.getCpf() == cpf) {
+                    return clienteDaLista;
+                    
+                }
+        }
+        /*Se não houve retorno, não encontrou 
+         * e, sendo assim, se torna uma Exception
+         * por regra.
+         */
+        try {
+            throw new Exception("ClienteDAO.buscar(String codigo) não "
+                    + "encontrou um cliente que possua o cpf " + cpf 
+                    + ".");
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } finally {
+            return null;
+        }
+        
+    }
+    
     public boolean objetoEUmCliente(Object o) 
     {
         if (o instanceof Cliente) {
