@@ -7,54 +7,69 @@ import java.util.List;
  *
  * @author Tássio Auad
  */
-public class TipoQuarto {
+public class TipoQuarto implements InterfaceEntity
+{
     private String codigo;
     private String nome;
     private String descricao;
     private List<Mobilia> mobilias;
 
-    public TipoQuarto(String codigo, String nome, String descricao) {
+    public TipoQuarto(String codigo, String nome, String descricao) 
+    {
         this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
         mobilias = new ArrayList<>();
-        
     }
 
-    public TipoQuarto() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public TipoQuarto() 
+    {
     }
 
-    public String getCodigo() {
+    public String getCodigo() 
+    {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(String codigo) 
+    {
         this.codigo = codigo;
     }
 
-    public String getNome() {
+    public String getNome() 
+    {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) 
+    {
         this.nome = nome;
     }
 
-    public String getDescricao() {
+    public String getDescricao() 
+    {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(String descricao) 
+    {
         this.descricao = descricao;
     }
 
-    public List<Mobilia> getMobilias() {
+    public List<Mobilia> getMobilias()
+    {
         return mobilias;
     }
 
-    public void setMobilias(Mobilia mobilia) {
-        this.mobilias.add(mobilia);
+    public void setMobilias(List<Mobilia> listMobilia)
+    {
+        this.mobilias = listMobilia;
     }
     
+    @Override
+    public Object[] getDadosEmVetor()
+    {
+        throw new UnsupportedOperationException("TipoQuarto.getDadosEmVetor não "
+                + "desenvolvido.");
+    }
 }

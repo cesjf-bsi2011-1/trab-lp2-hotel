@@ -8,9 +8,10 @@ import java.util.Date;
 
 /**
  *
- * @author Willian
+ * @author Tássio Auad
  */
-public class Cliente {
+public class Cliente implements InterfaceEntity 
+{
     private int codigo;
     private String nome;
     private String rua;
@@ -30,157 +31,190 @@ public class Cliente {
     private String email;
     private String observação;    
 
-    public Cliente() {
-    }
-    
-    
-
-    public String getRua() {
+    public String getRua() 
+    {
         return rua;
     }
 
-    public void setRua(String rua) {
+    public void setRua(String rua) 
+    {
         this.rua = rua;
     }
 
-    public String getComplemento() {
+    public String getComplemento() 
+    {
         return complemento;
     }
 
-    public void setComplemento(String complemento) {
+    public void setComplemento(String complemento) 
+    {
         this.complemento = complemento;
     }
 
-    public String getCep() {
+    public String getCep() 
+    {
         return cep;
     }
 
-    public void setCep(String cep) {
+    public void setCep(String cep) 
+    {
         this.cep = cep;
     }
 
-    public String getEstado() {
+    public String getEstado() 
+    {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(String estado) 
+    {
         this.estado = estado;
     }
 
-    public int getCodigo() {
+    public int getCodigo() 
+    {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(int codigo) 
+    {
         this.codigo = codigo;
     }
 
-    public String getNome() {
+    public String getNome() 
+    {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) 
+    {
         this.nome = nome;
     }
     
-    public String getNumeroEnd() {
+    public String getNumeroEnd() 
+    {
         return numeroEnd;
     }
 
-    public void setNumeroEnd(String numeroEnd) {
+    public void setNumeroEnd(String numeroEnd) 
+    {
         this.numeroEnd = numeroEnd;
     }
 
-    public String getCidade() {
+    public String getCidade() 
+    {
         return cidade;
     }
 
-    public void setCidade(String cidade) {
+    public void setCidade(String cidade) 
+    {
         this.cidade = cidade;
     }
 
-    public boolean isJuridico() {
+    public boolean isJuridico() 
+    {
         return juridico;
     }
 
-    public void setJuridico(boolean juridico) {
+    public void setJuridico(boolean juridico) 
+    {
         this.juridico = juridico;
     }
 
-    public String getCpf() {
+    public String getCpf() 
+    {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(String cpf) 
+    {
         this.cpf = cpf;
     }
 
-    public String getRg() {
+    public String getRg() 
+    {
         return rg;
     }
 
-    public void setRg(String rg) {
+    public void setRg(String rg) 
+    {
         this.rg = rg;
     }
 
-    public Date getDataNascimento() {
+    public Date getDataNascimento() 
+    {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) 
+    {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getClienteNivel() {
+    public String getClienteNivel() 
+    {
         return clienteNivel;
     }
 
-    public void setClienteNivel(String clienteNivel) {
+    public void setClienteNivel(String clienteNivel) 
+    {
         this.clienteNivel = clienteNivel;
     }
 
-    public String getFoneResidencial() {
+    public String getFoneResidencial() 
+    {
         return foneResidencial;
     }
 
-    public void setFoneResidencial(String foneResidencial) {
+    public void setFoneResidencial(String foneResidencial) 
+    {
         this.foneResidencial = foneResidencial;
     }
 
-    public String getFoneComercial() {
+    public String getFoneComercial() 
+    {
         return foneComercial;
     }
 
-    public void setFoneComercial(String foneComercial) {
+    public void setFoneComercial(String foneComercial) 
+    {
         this.foneComercial = foneComercial;
     }
 
-    public String getFoneCelular() {
+    public String getFoneCelular() 
+    {
         return foneCelular;
     }
 
-    public void setFoneCelular(String foneCelular) {
+    public void setFoneCelular(String foneCelular) 
+    {
         this.foneCelular = foneCelular;
     }
 
-    public String getEmail() {
+    public String getEmail() 
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) 
+    {
         this.email = email;
     }
 
-    public String getObservação() {
+    public String getObservação() 
+    {
         return observação;
     }
 
-    public void setObservação(String observação) {
+    public void setObservação(String observação) 
+    {
         this.observação = observação;
     }
 
-    
-    
-    
-    
+    @Override
+    public Object[] getDadosEmVetor()
+    {
+        throw new UnsupportedOperationException("Cliente.getDadosEmVetor não "
+                + "desenvolvido.");
+    }
 }

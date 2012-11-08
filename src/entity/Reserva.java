@@ -8,9 +8,10 @@ import java.util.Date;
 
 /**
  *
- * @author Willian
+ * @author Tássio Auad
  */
-public class Reserva {
+public class Reserva implements InterfaceEntity
+{
     
     private int codigo;
     private Cliente cliente;
@@ -20,72 +21,91 @@ public class Reserva {
     private Date dataPedido;
     private Usuario usuario;
 
-    public int getCodigo() {
+    public Reserva(int codigo, Cliente cliente, Quarto quarto, Date dataInicio, Date dataTermino, Date dataPedido, Usuario usuario) 
+    {
+        this.codigo = codigo;
+        this.cliente = cliente;
+        this.quarto = quarto;
+        this.dataInicio = dataInicio;
+        this.dataTermino = dataTermino;
+        this.dataPedido = dataPedido;
+        this.usuario = usuario;
+    }
+    
+    public int getCodigo() 
+    {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(int codigo) 
+    {
         this.codigo = codigo;
     }
 
-    public Cliente getCliente() {
+    public Cliente getCliente() 
+    {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Cliente cliente) 
+    {
         this.cliente = cliente;
     }
 
-    public Quarto getQuarto() {
+    public Quarto getQuarto() 
+    {
         return quarto;
     }
 
-    public void setQuarto(Quarto quarto) {
+    public void setQuarto(Quarto quarto) 
+    {
         this.quarto = quarto;
     }
 
-    public Date getDataInicio() {
+    public Date getDataInicio() 
+    {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(Date dataInicio) 
+    {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataTermino() {
+    public Date getDataTermino() 
+    {
         return dataTermino;
     }
 
-    public void setDataTermino(Date dataTermino) {
+    public void setDataTermino(Date dataTermino) 
+    {
         this.dataTermino = dataTermino;
     }
 
-    public Date getDataPedido() {
+    public Date getDataPedido() 
+    {
         return dataPedido;
     }
 
-    public void setDataPedido(Date dataPedido) {
+    public void setDataPedido(Date dataPedido) 
+    {
         this.dataPedido = dataPedido;
     }
 
-    public Usuario getUsuario() {
+    public Usuario getUsuario() 
+    {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario) 
+    {
         this.usuario = usuario;
     }
 
-    public Reserva(int codigo, Cliente cliente, Quarto quarto, Date dataInicio, Date dataTermino, Date dataPedido, Usuario usuario) {
-        this.codigo = codigo;
-        this.cliente = cliente;
-        this.quarto = quarto;
-        this.dataInicio = dataInicio;
-        this.dataTermino = dataTermino;
-        this.dataPedido = dataPedido;
-        this.usuario = usuario;
+    @Override
+    public Object[] getDadosEmVetor() 
+    {
+        throw new UnsupportedOperationException("Reserva.getDadosEmVetor não "
+                + "desenvolvido.");
     }
-    
-       
-    
 }
