@@ -4,6 +4,12 @@
  */
 package mvc.controllerview;
 
+import entity.Quarto;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import mvc.model.dao.QuartoDAO;
+
 /**
  *
  * @author Willian
@@ -38,6 +44,7 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
         jTableQuartos = new javax.swing.JTable();
         btNovoTipoQuarto = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
+        lbErro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Buscar Quartos");
@@ -56,6 +63,11 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
         btQuartoEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Modify.png"))); // NOI18N
         btQuartoEditar.setText("Editar");
         btQuartoEditar.setEnabled(false);
+        btQuartoEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btQuartoEditarActionPerformed(evt);
+            }
+        });
 
         btQuartoExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Remove.png"))); // NOI18N
         btQuartoExcluir.setText("Excluir");
@@ -69,6 +81,11 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
         });
 
         btBuscarTodosQuartos.setText("BuscarTodos");
+        btBuscarTodosQuartos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarTodosQuartosActionPerformed(evt);
+            }
+        });
 
         lbLocQuartoNumero.setText("Localizar Quarto por número:");
 
@@ -77,14 +94,14 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Número", "Tipo do Quarto", "Status"
+                "Número", "Tipo do Quarto", "Status", "Valor", "Observação"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -101,6 +118,11 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTableQuartos);
+        jTableQuartos.getColumnModel().getColumn(0).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(1).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(2).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(3).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(4).setResizable(false);
 
         btNovoTipoQuarto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/List.png"))); // NOI18N
         btNovoTipoQuarto.setText("Novo Tipo");
@@ -168,24 +190,33 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btQuartoExcluir))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(btSair))
         );
+
+        lbErro.setForeground(new java.awt.Color(255, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbErro)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 22, Short.MAX_VALUE)
-                .addComponent(jPanelQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(lbErro, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -200,10 +231,35 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
 
     private void btLocQuartoNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocQuartoNumeroActionPerformed
         // TODO add your handling code here:
+        btQuartoEditar.setEnabled(false);
+        btQuartoExcluir.setEnabled(false);
+        limparTabela();
+        String numero = tfLocQuartoNumero.getText();
+        
+        try
+        {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            Quarto quarto = quartoDAO.buscar(numero);
+            DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
+            if(quarto != null)
+            {
+                modelo.addRow(quarto.getDadosEmVetor());
+            }
+            else
+            {
+                lbErro.setVisible(true);
+                lbErro.setText("Nenhum Quarto Encontrado!");
+            }
+        }catch(Exception e)
+        {
+           JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_btLocQuartoNumeroActionPerformed
 
     private void jTableQuartosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableQuartosMouseClicked
         // TODO add your handling code here:
+        btQuartoEditar.setEnabled(true);
+        btQuartoExcluir.setEnabled(true);
     }//GEN-LAST:event_jTableQuartosMouseClicked
 
     private void btNovoTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoTipoQuartoActionPerformed
@@ -217,6 +273,64 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
+    private void btBuscarTodosQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarTodosQuartosActionPerformed
+        // TODO add your handling code here:
+        btQuartoEditar.setEnabled(false);
+        btQuartoExcluir.setEnabled(false);
+        limparTabela();
+        tfLocQuartoNumero.setText("");
+
+        DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
+        QuartoDAO quartoDAO = new QuartoDAO();
+        try
+        {
+        ArrayList<Quarto> listaQuarto = (ArrayList<Quarto>) quartoDAO.buscarTodos();
+
+        if(!listaQuarto.isEmpty())
+        {
+            for(int i = 0; i < listaQuarto.size(); i++)
+            {
+                modelo.addRow(listaQuarto.get(i).getDadosEmVetor());
+            }
+            lbErro.setVisible(false);
+        }
+        else
+        {
+            lbErro.setVisible(true);
+            lbErro.setText("Nenhum Quarto Encontrado!");
+        }
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btBuscarTodosQuartosActionPerformed
+
+    private void btQuartoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartoEditarActionPerformed
+        // TODO add your handling code here:
+
+        int linha = jTableQuartos.getSelectedRow();
+
+        Quarto newQuarto = new Quarto();
+        newQuarto.setCodigo((String)jTableQuartos.getModel().getValueAt(linha, 0));
+        //PArei aqui linha do tipoQuarto
+        newQuarto.setObservacao((String)jTableQuartos.getModel().getValueAt(linha, 2));
+        newQuarto.setStatus((Boolean)jTableQuartos.getModel().getValueAt(linha, 3));
+        newQuarto.setValor((Float)jTableQuartos.getModel().getValueAt(linha, 4));
+
+        FormCadastroQuarto.quarto = newQuarto;
+        FormCadastroQuarto formCadastroQuarto = new FormCadastroQuarto();
+        formCadastroQuarto.setVisible(true);
+        limparTabela();
+    }//GEN-LAST:event_btQuartoEditarActionPerformed
+
+    private void limparTabela()
+    {
+        DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
+        for(int i = jTableQuartos.getRowCount() - 1; i >= 0; i--)
+        {
+            modelo.removeRow(i);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -262,6 +376,7 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelQuartos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableQuartos;
+    private javax.swing.JLabel lbErro;
     private javax.swing.JLabel lbLocQuartoNumero;
     private javax.swing.JTextField tfLocQuartoNumero;
     // End of variables declaration//GEN-END:variables

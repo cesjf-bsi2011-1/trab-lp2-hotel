@@ -5,6 +5,7 @@
 package mvc.controllerview;
 
 import entity.Mobilia;
+import javax.swing.JOptionPane;
 import mvc.model.dao.MobiliaDAO;
 
 public class FormCadastroMobilia extends javax.swing.JFrame {
@@ -178,14 +179,19 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
             newMobilia.setNome(tfNome.getText());           
             newMobilia.setDescricao(taDescricao.getText());
             MobiliaDAO mobiliaDAO = new MobiliaDAO();
-            mobiliaDAO.inserir(newMobilia);
+            try
+            {
+                mobiliaDAO.inserir(newMobilia);
+            }catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(null, e);
+            }            
             lbErro.setVisible(false);
             lbConfirma.setVisible(true);
             lbConfirma.setText("Mobilia cadastrada com sucesso!");
             tfCodigo.setText("");
             tfNome.setText("");
             taDescricao.setText("");
-            FormPrincipal.mobilia = newMobilia;
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -209,6 +215,7 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
             tfNome.setText(mobilia.getNome());
             taDescricao.setText(mobilia.getDescricao());
             btAtualizar.setEnabled(true);
+            btCadastrar.setEnabled(false);
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -218,7 +225,13 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
         mobilia.setNome(tfNome.getText());
         mobilia.setDescricao(taDescricao.getText());
         MobiliaDAO mobiliaDAO = new MobiliaDAO();
-        mobiliaDAO.atualizar(mobilia.getCodigo(), mobilia);
+        try
+        {
+            mobiliaDAO.atualizar(mobilia.getCodigo(), mobilia);
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
         mobilia = null;
         tfCodigo.setText("");
         tfNome.setText("");

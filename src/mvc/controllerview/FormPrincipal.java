@@ -13,7 +13,7 @@ import entity.Mobilia;
  */
 public class FormPrincipal extends javax.swing.JFrame {
 
-    public static Mobilia mobilia = null;
+    
     /**
      * Creates new form FormPrincipal
      */
@@ -41,6 +41,12 @@ public class FormPrincipal extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btSair = new javax.swing.JButton();
         lbLogo = new javax.swing.JLabel();
+        jPanelHospedagem = new javax.swing.JPanel();
+        btHospedar = new javax.swing.JButton();
+        btFecharHospedagem = new javax.swing.JButton();
+        btCancelarHosp = new javax.swing.JButton();
+        btEditarHops = new javax.swing.JButton();
+        btSair1 = new javax.swing.JButton();
         jMenuBarPrincipal = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemCliente = new javax.swing.JMenuItem();
@@ -141,6 +147,64 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/logoHotelRooms.png"))); // NOI18N
 
+        jPanelHospedagem.setBorder(javax.swing.BorderFactory.createTitledBorder("Hospedagem"));
+        jPanelHospedagem.setPreferredSize(new java.awt.Dimension(830, 490));
+
+        btHospedar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/New.png"))); // NOI18N
+        btHospedar.setText("Hospedar");
+        btHospedar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btHospedarActionPerformed(evt);
+            }
+        });
+
+        btFecharHospedagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Dollar.png"))); // NOI18N
+        btFecharHospedagem.setText("Fechar Hospedagem");
+
+        btCancelarHosp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/No-entry.png"))); // NOI18N
+        btCancelarHosp.setText("Cancelar");
+
+        btEditarHops.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Modify.png"))); // NOI18N
+        btEditarHops.setText("Editar");
+
+        btSair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Close.png"))); // NOI18N
+        btSair1.setText("Sair");
+        btSair1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSair1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelHospedagemLayout = new javax.swing.GroupLayout(jPanelHospedagem);
+        jPanelHospedagem.setLayout(jPanelHospedagemLayout);
+        jPanelHospedagemLayout.setHorizontalGroup(
+            jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHospedagemLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btHospedar)
+                .addGap(18, 18, 18)
+                .addComponent(btFecharHospedagem)
+                .addGap(18, 18, 18)
+                .addComponent(btEditarHops)
+                .addGap(18, 18, 18)
+                .addComponent(btCancelarHosp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(btSair1)
+                .addContainerGap())
+        );
+        jPanelHospedagemLayout.setVerticalGroup(
+            jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHospedagemLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btHospedar)
+                    .addComponent(btFecharHospedagem)
+                    .addComponent(btCancelarHosp)
+                    .addComponent(btEditarHops)
+                    .addComponent(btSair1))
+                .addContainerGap())
+        );
+
         jMenuCadastro.setText("Cadastro");
 
         jMenuItemCliente.setText("Clientes");
@@ -211,16 +275,24 @@ public class FormPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 357, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanelHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbLogo))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addComponent(lbLogo)
-                .addGap(26, 26, 26))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
+                        .addComponent(lbLogo)
+                        .addGap(26, 26, 26))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -293,6 +365,17 @@ public class FormPrincipal extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
+
+    private void btHospedarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedarActionPerformed
+        // TODO add your handling code here:
+        FormReserva fReserva = new FormReserva();
+        fReserva.setVisible(true);
+    }//GEN-LAST:event_btHospedarActionPerformed
+
+    private void btSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSair1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btSair1ActionPerformed
     
 
     
@@ -332,11 +415,16 @@ public class FormPrincipal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCalculadora;
+    private javax.swing.JButton btCancelarHosp;
     private javax.swing.JButton btClientes;
+    private javax.swing.JButton btEditarHops;
+    private javax.swing.JButton btFecharHospedagem;
     private javax.swing.JButton btHospedagem;
+    private javax.swing.JButton btHospedar;
     private javax.swing.JButton btMobilia;
     private javax.swing.JButton btQuartos;
     private javax.swing.JButton btSair;
+    private javax.swing.JButton btSair1;
     private javax.swing.JMenuBar jMenuBarPrincipal;
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuConsultas;
@@ -349,6 +437,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemSobre;
     private javax.swing.JMenuItem jMenuItemTipoQuarto;
     private javax.swing.JMenu jMenuSuporte;
+    private javax.swing.JPanel jPanelHospedagem;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;

@@ -5,6 +5,12 @@
 package mvc.controllerview;
 
 import entity.Quarto;
+import entity.TipoQuarto;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import mvc.model.dao.QuartoDAO;
+import mvc.model.dao.TipoQuartoDAO;
 
 /**
  *
@@ -12,11 +18,28 @@ import entity.Quarto;
  */
 public class FormCadastroQuarto extends javax.swing.JFrame {
 
+    static TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();    
+    static ArrayList<String> tipoQuartoNomes; 
+    static Quarto quarto = null;
+    
     /**
      * Creates new form FormCadastroQuarto
      */
     public FormCadastroQuarto() {
-        initComponents();
+        initComponents();   
+        try
+        {
+            tipoQuartoNomes = (ArrayList) tipoQuartoDAO.listarNomesTipoQuarto();
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+       
+        
+        for(int i = 0; i < tipoQuartoNomes.size(); i++)
+        {
+            jComboBoxTipoQuarto.addItem((String)tipoQuartoNomes.get(i));
+        }        
     }
 
     /**
@@ -31,7 +54,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         lbCodigo = new javax.swing.JLabel();
         tfCodigo = new javax.swing.JTextField();
         lbTipoQuarto = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboBoxTipoQuarto = new javax.swing.JComboBox();
         btCadastrar = new javax.swing.JButton();
         btCancelar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
@@ -46,10 +69,21 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Cadastro de Quartos");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lbCodigo.setText("Código: *");
 
         lbTipoQuarto.setText("Tipo Quarto:");
+
+        jComboBoxTipoQuarto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTipoQuartoActionPerformed(evt);
+            }
+        });
 
         btCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Add.png"))); // NOI18N
         btCadastrar.setText("Cadastrar");
@@ -99,47 +133,44 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btCadastrar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btAtualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btCancelar)
-                        .addGap(42, 42, 42)
-                        .addComponent(btSair)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(lbCodigo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfCodigo))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbValor)
                                 .addGap(11, 11, 11)
-                                .addComponent(tfValor)))
-                        .addGap(18, 18, 18)
-                        .addComponent(lbTipoQuarto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(118, 118, 118))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfValor))
                             .addComponent(lbObs)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbErro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lbConfirma)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(lbTipoQuarto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxTipoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btCadastrar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btAtualizar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btCancelar)
+                                .addGap(35, 35, 35)
+                                .addComponent(btSair))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(23, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbErro, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(lbErro, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbConfirma)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -148,26 +179,29 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                     .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbCodigo)
                     .addComponent(lbTipoQuarto)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxTipoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbValor))
-                .addGap(18, 18, 18)
-                .addComponent(lbObs)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbValor))
+                        .addGap(46, 46, 46)
+                        .addComponent(lbObs)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-496)/2, (screenSize.height-364)/2, 496, 364);
+        setBounds((screenSize.width-514)/2, (screenSize.height-406)/2, 514, 406);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -183,11 +217,30 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         }
         else
         {
-            Quarto qua = new Quarto();
-            qua.setCodigo(tfCodigo.getText());
-            qua.setTipoQuarto(null);
-            qua.setObservacao(taObs.getText());
-            qua.setValor(Float.parseFloat(tfValor.getText()));
+            Quarto quarto = new Quarto();
+            quarto.setCodigo(tfCodigo.getText());
+            quarto.setObservacao(taObs.getText());
+            quarto.setValor(Float.parseFloat(tfValor.getText()));
+            quarto.setStatus(false);
+            List<TipoQuarto> tipoQuartoList = tipoQuartoDAO.buscarTodos();
+            
+            for(TipoQuarto tipoQuarto : tipoQuartoList)
+            {                
+                if(tipoQuarto.getNome().equals((String)jComboBoxTipoQuarto.getSelectedItem()))
+                {
+                    quarto.setTipoQuarto(tipoQuarto);
+                }               
+            }
+            
+            QuartoDAO quartoDAO = new QuartoDAO();
+            quartoDAO.inserir(quarto);
+            try
+            {
+                tipoQuartoDAO.inserir(quarto);
+            }catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(null, e);
+            }
             lbErro.setVisible(false);
             lbConfirma.setText("Quarto Cadastrado com sucesso!");
         }
@@ -201,6 +254,14 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         lbConfirma.setText("");
         lbErro.setText("");
     }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jComboBoxTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoQuartoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxTipoQuartoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,7 +302,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
     private javax.swing.JButton btCadastrar;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSair;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBoxTipoQuarto;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbCodigo;
     private javax.swing.JLabel lbConfirma;

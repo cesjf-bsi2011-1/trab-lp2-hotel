@@ -2,6 +2,7 @@ package mvc.controllerview;
 
 import entity.Mobilia;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mvc.model.dao.MobiliaDAO;
 
@@ -199,7 +200,7 @@ public class FormBuscarMobilia extends javax.swing.JFrame
     }//GEN-LAST:event_btMobiliaNovoActionPerformed
 
     private void btMobiliaEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMobiliaEditarActionPerformed
-
+        
         int linha = jTableMobilia.getSelectedRow();
 
         Mobilia newMobilia = new Mobilia();
@@ -210,6 +211,7 @@ public class FormBuscarMobilia extends javax.swing.JFrame
         FormCadastroMobilia.mobilia = newMobilia;
         FormCadastroMobilia formCadastroMobilia = new FormCadastroMobilia();
         formCadastroMobilia.setVisible(true);
+        limparTabela();
     }//GEN-LAST:event_btMobiliaEditarActionPerformed
 
     private void btMobiliaExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMobiliaExcluirActionPerformed
@@ -223,6 +225,7 @@ public class FormBuscarMobilia extends javax.swing.JFrame
         tfLocMobiliaNumero.requestFocus();
         btMobiliaExcluir.setEnabled(false);
         btMobiliaEditar.setEnabled(false);
+        limparTabela();
     }//GEN-LAST:event_btMobiliaExcluirActionPerformed
 
     private void jTableMobiliaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMobiliaMouseClicked
@@ -238,19 +241,25 @@ public class FormBuscarMobilia extends javax.swing.JFrame
         limparTabela();
         String numero = tfLocMobiliaNumero.getText();
         MobiliaDAO mobiliaDAO = new MobiliaDAO();
-        Mobilia m = mobiliaDAO.buscar(numero);
-        DefaultTableModel modelo = (DefaultTableModel)jTableMobilia.getModel();
-
-        if(m != null)
+        try
         {
-            modelo.addRow(m.getDadosMobilia());
-            lbResultMobilia.setVisible(false);
-        }
-        else
+            Mobilia mobilia = mobiliaDAO.buscar(numero);
+            DefaultTableModel modelo = (DefaultTableModel)jTableMobilia.getModel();
+            if(mobilia != null)
+            {
+                modelo.addRow(mobilia.getDadosEmVetor());
+                lbResultMobilia.setVisible(false);
+            }
+            else
+            {
+                lbResultMobilia.setVisible(true);
+                lbResultMobilia.setText("Nenhuma Mobilia Encontrada!");
+            }
+        }catch(Exception e)
         {
-            lbResultMobilia.setVisible(true);
-            lbResultMobilia.setText("Nenhuma Mobilia Encontrada!");
+           JOptionPane.showMessageDialog(null, e);
         }
+       
 
     }//GEN-LAST:event_btLocMobiliaNumeroActionPerformed
 
@@ -263,14 +272,15 @@ public class FormBuscarMobilia extends javax.swing.JFrame
 
         DefaultTableModel modelo = (DefaultTableModel)jTableMobilia.getModel();
         MobiliaDAO mobiliaDAO = new MobiliaDAO();
-
+        try
+        {
         ArrayList<Mobilia> listaMobilia = (ArrayList<Mobilia>) mobiliaDAO.buscarTodos();
 
         if(!listaMobilia.isEmpty())
         {
             for(int i = 0; i < listaMobilia.size(); i++)
             {
-                modelo.addRow(listaMobilia.get(i).getDadosMobilia());
+                modelo.addRow(listaMobilia.get(i).getDadosEmVetor());
             }
             lbResultMobilia.setVisible(false);
         }
@@ -278,6 +288,10 @@ public class FormBuscarMobilia extends javax.swing.JFrame
         {
             lbResultMobilia.setVisible(true);
             lbResultMobilia.setText("Nenhuma Mobilia Encontrada!");
+        }
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btBuscarTodosMobiliaActionPerformed
 
