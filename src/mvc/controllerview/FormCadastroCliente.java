@@ -488,8 +488,10 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         Cliente cli = new Cliente();
         
-        if(tfNome.getText().equals("") || tformatadoCpf.getText().equals("   .   .   -  ") || tfRg.getText().equals("") || tformatadoDataNasc.getText().equals("  /  /    ") || tfRua.getText().equals(""))
+        if(tfNome.getText().equals("") || tformatadoCpf.getText().equals("   .   .   -  ") || tfRg.getText().equals("") || tformatadoDataNasc.getText().equals("  /  /    ") || tfRua.getText().equals("") || tfCidade.getText().equals(""))
         {
+            lbConfirma.setVisible(false);
+            lbErro.setVisible(true);
             lbErro.setText("Os Campos com * são obrigatorios!");
         }
         else
@@ -522,6 +524,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             FormCustomizer.limparTodosCampos(painelContato);
             taObs.setText("");
             lbErro.setVisible(false);
+            lbConfirma.setVisible(true);
             lbConfirma.setText("Cliente Cadastrado com Sucesso!");
             tfNome.requestFocus();
             
@@ -549,21 +552,18 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         String cpfBusca = tformatadoCpf.getText();
-        JOptionPane.showMessageDialog(null, "Erro!1");
-        ClienteDAO clienteBusca = new ClienteDAO(); 
-        JOptionPane.showMessageDialog(null, "Erro!2");
+        ClienteDAO clienteBusca = new ClienteDAO();
         cliente = clienteBusca.buscarPorCpf(cpfBusca);
-        JOptionPane.showMessageDialog(null, "Erro!3");
         if(cliente != null)
         {
             //Dados Pessoais
-            JOptionPane.showMessageDialog(null, "Erro!4");
+            
             tfCodigo.setText(Integer.toString(cliente.getCodigo()));
             tfNome.setText(cliente.getNome());
-            JOptionPane.showMessageDialog(null, "Erro!5");
+            
             tfRg.setText(cliente.getRg());
             tformatadoDataNasc.setText(DateCustomizer.DateToStr(cliente.getDataNascimento()));
-            
+            JOptionPane.showMessageDialog(null, "Erro!");
             //Endereço
             tfRua.setText(cliente.getRua());
             tfComplemento.setText(cliente.getComplemento());
