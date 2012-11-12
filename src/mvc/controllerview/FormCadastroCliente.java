@@ -88,8 +88,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
 
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 0)));
 
-        tfCodigo.setEnabled(false);
-
         lbCodigo.setText("Código:");
 
         lbNome.setText("Nome: *");
@@ -516,6 +514,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             cli.setFoneComercial(tformatadoTelComercial.getText());
             cli.setObservação(taObs.getText());
             
+            JOptionPane.showMessageDialog(null, "erro");
+            
             ClienteDAO clienteDAO = new ClienteDAO();
             clienteDAO.inserir(cli);
             
@@ -545,7 +545,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         btAtualizar.setEnabled(false);
         btRemover.setEnabled(false);
-        tfCodigo.setText("022");
     }//GEN-LAST:event_formWindowOpened
 
     private void btBuscarCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCpfActionPerformed
