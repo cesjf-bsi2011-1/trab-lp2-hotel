@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class MobiliaDAO extends AbstractDAO
 {
     private static List<Mobilia> mobilias = new ArrayList<>();
-    private static int index = 0;
+    private static int index = 0000;
     
     @Override
     public void inserir(Object o) 

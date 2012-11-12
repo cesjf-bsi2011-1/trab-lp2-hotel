@@ -14,7 +14,7 @@ import java.util.Date;
 public class LogDAO extends AbstractDAO
 {
     private static List<Log> historico = new ArrayList<>();
-    private static int index = 0;
+    private static int index = 0000;
     
     @Override
     public void inserir(Object o) 
@@ -23,8 +23,8 @@ public class LogDAO extends AbstractDAO
             Log logParaInserir = (Log) o;
             /*Garantindo que o código equivale ao index*/
             logParaInserir.setCodigo(String.valueOf(getIndex()));
-            historico.remove(logParaInserir);
-            getHistorico().inserir("Remoção do Log :" + logParaInserir.getAcao());
+            historico.add(logParaInserir);
+            
         }       
     }
 
