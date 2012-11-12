@@ -163,29 +163,23 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        // TODO add your handling code here:
-        if(tfCodigo.getText().equals("") || tfNome.getText().equals(""))
-        {
+        if (tfCodigo.getText().equals("") || tfNome.getText().equals("")) {
             lbConfirma.setVisible(false);
             lbErro.setVisible(true);
             lbErro.setText("Os Campos com * são Obrigatorios!");
-            
-        }
-        else
-        {
-            
+        } else {
             Mobilia newMobilia = new Mobilia();
             newMobilia.setCodigo(tfCodigo.getText());
             newMobilia.setNome(tfNome.getText());           
             newMobilia.setDescricao(taDescricao.getText());
-            MobiliaDAO mobiliaDAO = new MobiliaDAO();
-            try
-            {
+            
+            try {
+                MobiliaDAO mobiliaDAO = new MobiliaDAO();
                 mobiliaDAO.inserir(newMobilia);
-            }catch(Exception e)
-            {
-                JOptionPane.showMessageDialog(null, e);
-            }            
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }   
+            
             lbErro.setVisible(false);
             lbConfirma.setVisible(true);
             lbConfirma.setText("Mobilia cadastrada com sucesso!");
@@ -209,8 +203,7 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if(mobilia != null)
-        {
+        if (mobilia != null) {
             tfCodigo.setText(mobilia.getCodigo());
             tfNome.setText(mobilia.getNome());
             taDescricao.setText(mobilia.getDescricao());
@@ -220,18 +213,17 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        // TODO add your handling code here:
         mobilia.setCodigo(tfCodigo.getText());
         mobilia.setNome(tfNome.getText());
         mobilia.setDescricao(taDescricao.getText());
-        MobiliaDAO mobiliaDAO = new MobiliaDAO();
-        try
-        {
+        
+        try {
+            MobiliaDAO mobiliaDAO = new MobiliaDAO();
             mobiliaDAO.atualizar(mobilia.getCodigo(), mobilia);
-        }catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
+        
         mobilia = null;
         tfCodigo.setText("");
         tfNome.setText("");

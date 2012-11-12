@@ -231,14 +231,17 @@ public class FormBuscarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLocalizaClienteCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizaClienteCpfActionPerformed
-        // TODO add your handling code here:
-
         btCliEditar1.setEnabled(false);
         btCliExcluir1.setEnabled(false);
         limparTabela();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        String cpf = tfLocalizaClienteCodigo.getText();
-        cliente = clienteDAO.buscarPorCpf(cpf);
+        
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            String cpf = tfLocalizaClienteCodigo.getText();
+            cliente = clienteDAO.buscarPorCpf(cpf);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
         
         if(cliente != null)
         {
@@ -256,10 +259,15 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         btCliEditar1.setEnabled(false);
         btCliExcluir1.setEnabled(false);
         limparTabela();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        String codigo = tfLocalizaClienteCodigo.getText();
-        cliente = clienteDAO.buscarPorCpf(codigo);
         
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            String codigo = tfLocalizaClienteCodigo.getText();
+            cliente = clienteDAO.buscarPorCpf(codigo);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
+             
         if(cliente != null)
         {
             DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();            
@@ -269,25 +277,18 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         {
             lbErro.setText("Nenhum cliente encontrado!");
         }
-        
-        
-        
     }//GEN-LAST:event_btLocaizaClienteCodigoActionPerformed
 
     private void btCliNovo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCliNovo1ActionPerformed
-        // TODO add your handling code here:
         FormCadastroCliente fCadCli = new FormCadastroCliente();
         fCadCli.setVisible(true);
     }//GEN-LAST:event_btCliNovo1ActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
+       this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btBuscarTodosClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarTodosClientes1ActionPerformed
-        // TODO add your handling code here:
-
         btCliEditar1.setEnabled(false);
         btCliExcluir1.setEnabled(false);
         limparTabela();
@@ -296,8 +297,7 @@ public class FormBuscarCliente extends javax.swing.JFrame {
 
         DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();
         ClienteDAO clienteDAO = new ClienteDAO();
-        try
-        {
+        try {
             ArrayList<Cliente> listaCliente = (ArrayList<Cliente>) clienteDAO.buscarTodos();
 
             if(!listaCliente.isEmpty())
@@ -313,15 +313,12 @@ public class FormBuscarCliente extends javax.swing.JFrame {
                 lbErro.setVisible(true);
                 lbErro.setText("Nenhum Cliente Encontrado!");
             }
-        }catch(Exception e)
-        {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btBuscarTodosClientes1ActionPerformed
 
     private void btCliEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCliEditar1ActionPerformed
-        // TODO add your handling code here:
-
         int linha = jTableClientes.getSelectedRow();
 
         Cliente newCliente = new Cliente();
@@ -339,13 +336,16 @@ public class FormBuscarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btCliEditar1ActionPerformed
 
     private void btCliExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCliExcluir1ActionPerformed
-        // TODO add your handling code here:
-        
         int linha = jTableClientes.getSelectedRow();
         String codigo = (String)jTableClientes.getModel().getValueAt(linha, 0);
-        ClienteDAO clienteDAO = new ClienteDAO();
-
-        clienteDAO.remover(codigo);
+        
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            clienteDAO.remover(codigo);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
+        
         tfLocalizaClienteCodigo.requestFocus();
         btCliEditar1.setEnabled(false);
         btCliExcluir1.setEnabled(false);

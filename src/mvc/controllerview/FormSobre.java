@@ -10,9 +10,6 @@ package mvc.controllerview;
  */
 public class FormSobre extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormSobre
-     */
     public FormSobre() {
         initComponents();
     }

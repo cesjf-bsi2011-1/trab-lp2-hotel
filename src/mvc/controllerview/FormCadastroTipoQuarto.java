@@ -320,17 +320,14 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        // TODO add your handling code here:
         btIncluirMobilia.setEnabled(false);
-        btLimpar.setEnabled(false);        
-        if(tfCodigo.getText().equals("") || tfNome.getText().equals(""))
-        {
+        btLimpar.setEnabled(false); 
+        
+        if (tfCodigo.getText().equals("") || tfNome.getText().equals("")) {
             lbConfirma.setVisible(false);
             lbErro.setVisible(true);
             lbErro.setText("Os campos com * são obrigatorios!");
-        }
-        else
-        {
+        } else {
             TipoQuarto tipoQuarto = new TipoQuarto();
             tipoQuarto.setCodigo(tfCodigo.getText());
             tipoQuarto.setNome(tfNome.getText());
@@ -344,37 +341,42 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
             tfNome.setText("");
             limparTabelaAdicionarMobilia();
             limparTabelaBuscaMobilia();
-            TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
-            tipoQuartoDAO.inserir(tipoQuarto);
+            
+            try {
+                TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
+                tipoQuartoDAO.inserir(tipoQuarto);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }   
+            
             lbConfirma.setText("Tipo de Quarto cadastrado com sucesso!");
             listMobilias.clear();
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        // TODO add your handling code here:
         btIncluirMobilia.setEnabled(false);
         btLimpar.setEnabled(false);
         limparTabelaBuscaMobilia();
         
-        String cod = tfBuscarMobilia.getText();
-        MobiliaDAO mDao = new MobiliaDAO();
-        mobilia = mDao.buscar(cod);
-        
+        try {
+            String cod = tfBuscarMobilia.getText();
+            MobiliaDAO mobiliaDao = new MobiliaDAO();
+            mobilia = mobiliaDao.buscar(cod);
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }   
+            
         DefaultTableModel modelo = (DefaultTableModel)jTableBuscaMobilia.getModel();
         
-        if(mobilia != null)
-        {
+        if (mobilia != null) {
             modelo.addRow(mobilia.getDadosEmVetor());
             lbResultMobilia.setVisible(false);
-        }           
-        else
-        {
+        } else {
             lbResultMobilia.setText("Nenhuma Mobilia encontrada!");
             tfBuscarMobilia.requestFocus();
         }
@@ -392,14 +394,12 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         
         ArrayList<Mobilia> listaMobilia = (ArrayList<Mobilia>) mobiliaDAO.buscarTodos();
         
-        if(!listaMobilia.isEmpty()) {
-            for(int i = 0; i < listaMobilia.size(); i++)
-            {
+        if (!listaMobilia.isEmpty()) {
+            for (int i = 0; i < listaMobilia.size(); i++) {
                 modelo.addRow(listaMobilia.get(i).getDadosEmVetor());
                 lbResultMobilia.setVisible(false);
             }
-        }           
-        else {
+        } else {
             lbResultMobilia.setText("Nenhuma Mobilia encontrada!");
             tfBuscarMobilia.requestFocus();
         }
@@ -432,7 +432,6 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     private void btRemoverItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverItemActionPerformed
         mobilia = null;
         limparTabelaAdicionarMobilia();
-        
     }//GEN-LAST:event_btRemoverItemActionPerformed
 
     private void jTableMobiliasAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMobiliasAddMouseClicked
@@ -442,8 +441,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     private void limparTabelaBuscaMobilia()
     {
         DefaultTableModel modelo = (DefaultTableModel)jTableBuscaMobilia.getModel();
-        for(int i = jTableBuscaMobilia.getRowCount() - 1; i >= 0; i--)
-        {
+        for (int i = jTableBuscaMobilia.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
@@ -451,8 +449,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     private void limparTabelaAdicionarMobilia()
     {
         DefaultTableModel modelo = (DefaultTableModel)jTableMobiliasAdd.getModel();
-        for(int i = jTableMobiliasAdd.getRowCount() - 1; i >= 0; i--)
-        {
+        for (int i = jTableMobiliasAdd.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
@@ -462,11 +459,9 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         limparTabelaBuscaMobilia();
         limparTabelaAdicionarMobilia();
         DefaultTableModel modelo = (DefaultTableModel)jTableMobiliasAdd.getModel();
-        for(int i = 0; i < listMobilias.size(); i++)
-        {
-             modelo.addRow(listMobilias.get(i).getDadosEmVetor());
+        for(Mobilia mobiliaDaLista : listMobilias) {
+             modelo.addRow(mobiliaDaLista.getDadosEmVetor());
         }
-       
     }
 
     public static void main(String args[]) 

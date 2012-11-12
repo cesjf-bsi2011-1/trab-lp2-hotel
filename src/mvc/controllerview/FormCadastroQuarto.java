@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.controllerview;
 
 import entity.Quarto;
@@ -26,18 +22,15 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
      * Creates new form FormCadastroQuarto
      */
     public FormCadastroQuarto() {
-        initComponents();   
-        try
-        {
-            tipoQuartoNomes = (ArrayList) tipoQuartoDAO.listarNomesTipoQuarto();
-        }catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e);
-        }
-       
+        initComponents();  
         
-        for(int i = 0; i < tipoQuartoNomes.size(); i++)
-        {
+        try {
+            tipoQuartoNomes = (ArrayList) tipoQuartoDAO.listarNomesTipoQuarto();
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }   
+        
+        for (int i = 0; i < tipoQuartoNomes.size(); i++) {
             jComboBoxTipoQuarto.addItem((String)tipoQuartoNomes.get(i));
         }        
     }
@@ -205,18 +198,13 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        // TODO add your handling code here:
-        if(tfCodigo.getText().equals("") || tfValor.getText().equals(""))
-        {
+        if (tfCodigo.getText().equals("") || tfValor.getText().equals("")) {
             lbErro.setText("Os Campos com * são obrigatorios!");
-        }
-        else
-        {
+        } else {
             Quarto quarto = new Quarto();
             quarto.setCodigo(tfCodigo.getText());
             quarto.setObservacao(taObs.getText());
@@ -224,30 +212,26 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
             quarto.setStatus(false);
             List<TipoQuarto> tipoQuartoList = tipoQuartoDAO.buscarTodos();
             
-            for(TipoQuarto tipoQuarto : tipoQuartoList)
-            {                
-                if(tipoQuarto.getNome().equals((String)jComboBoxTipoQuarto.getSelectedItem()))
-                {
+            for (TipoQuarto tipoQuarto : tipoQuartoList) {                
+                if (tipoQuarto.getNome().equals((String)jComboBoxTipoQuarto.getSelectedItem())) {
                     quarto.setTipoQuarto(tipoQuarto);
                 }               
             }
-            
-            QuartoDAO quartoDAO = new QuartoDAO();
-            quartoDAO.inserir(quarto);
-            try
-            {
+                  
+            try {
+                QuartoDAO quartoDAO = new QuartoDAO();
+                quartoDAO.inserir(quarto);
                 tipoQuartoDAO.inserir(quarto);
-            }catch(Exception e)
-            {
-                JOptionPane.showMessageDialog(null, e);
-            }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }   
+            
             lbErro.setVisible(false);
             lbConfirma.setText("Quarto Cadastrado com sucesso!");
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        // TODO add your handling code here:
         tfCodigo.setText("");
         tfValor.setText("");
         taObs.setText("");

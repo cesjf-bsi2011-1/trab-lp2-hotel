@@ -224,84 +224,68 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btQuartoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartoNovoActionPerformed
-        // TODO add your handling code here:
-        FormCadastroQuarto fQuarto = new FormCadastroQuarto();
-        fQuarto.setVisible(true);
+        FormCadastroQuarto formQuarto = new FormCadastroQuarto();
+        formQuarto.setVisible(true);
     }//GEN-LAST:event_btQuartoNovoActionPerformed
 
     private void btLocQuartoNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocQuartoNumeroActionPerformed
-        // TODO add your handling code here:
         btQuartoEditar.setEnabled(false);
         btQuartoExcluir.setEnabled(false);
         limparTabela();
         String numero = tfLocQuartoNumero.getText();
         
-        try
-        {
+        try {
             QuartoDAO quartoDAO = new QuartoDAO();
             Quarto quarto = quartoDAO.buscar(numero);
             DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
-            if(quarto != null)
-            {
+            if(quarto != null) {
                 modelo.addRow(quarto.getDadosEmVetor());
-            }
-            else
-            {
+            } else {
                 lbErro.setVisible(true);
                 lbErro.setText("Nenhum Quarto Encontrado!");
             }
-        }catch(Exception e)
-        {
-           JOptionPane.showMessageDialog(null, e);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
     }//GEN-LAST:event_btLocQuartoNumeroActionPerformed
 
     private void jTableQuartosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableQuartosMouseClicked
-        // TODO add your handling code here:
         btQuartoEditar.setEnabled(true);
         btQuartoExcluir.setEnabled(true);
     }//GEN-LAST:event_jTableQuartosMouseClicked
 
     private void btNovoTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoTipoQuartoActionPerformed
-        // TODO add your handling code here:
         FormCadastroTipoQuarto fTipo = new FormCadastroTipoQuarto();
         fTipo.setVisible(true);
     }//GEN-LAST:event_btNovoTipoQuartoActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btBuscarTodosQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarTodosQuartosActionPerformed
-        // TODO add your handling code here:
         btQuartoEditar.setEnabled(false);
         btQuartoExcluir.setEnabled(false);
         limparTabela();
         tfLocQuartoNumero.setText("");
 
         DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
-        QuartoDAO quartoDAO = new QuartoDAO();
-        try
-        {
-        ArrayList<Quarto> listaQuarto = (ArrayList<Quarto>) quartoDAO.buscarTodos();
+        
+        try {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            ArrayList<Quarto> listaQuarto = (ArrayList<Quarto>) quartoDAO.buscarTodos();
 
-        if(!listaQuarto.isEmpty())
-        {
-            for(int i = 0; i < listaQuarto.size(); i++)
-            {
-                modelo.addRow(listaQuarto.get(i).getDadosEmVetor());
+            if (!listaQuarto.isEmpty()) {
+                for (int i = 0; i < listaQuarto.size(); i++) {
+                    modelo.addRow(listaQuarto.get(i).getDadosEmVetor());
+                }
+                lbErro.setVisible(false);
+            } else {
+                lbErro.setVisible(true);
+                lbErro.setText("Nenhum Quarto Encontrado!");
             }
-            lbErro.setVisible(false);
-        }
-        else
-        {
-            lbErro.setVisible(true);
-            lbErro.setText("Nenhum Quarto Encontrado!");
-        }
-        }catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
     }//GEN-LAST:event_btBuscarTodosQuartosActionPerformed
 
@@ -326,8 +310,7 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
     private void limparTabela()
     {
         DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
-        for(int i = jTableQuartos.getRowCount() - 1; i >= 0; i--)
-        {
+        for (int i = jTableQuartos.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }

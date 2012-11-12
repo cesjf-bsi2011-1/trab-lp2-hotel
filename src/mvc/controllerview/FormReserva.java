@@ -10,9 +10,6 @@ package mvc.controllerview;
  */
 public class FormReserva extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormReserva
-     */
     public FormReserva() {
         initComponents();
     }
@@ -223,7 +220,6 @@ public class FormReserva extends javax.swing.JFrame {
                                     .addComponent(lbCliente)
                                     .addComponent(jPanelValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btNovoTipoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -338,8 +334,8 @@ public class FormReserva extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-623)/2, (screenSize.height-584)/2, 623, 584);
+        setSize(new java.awt.Dimension(623, 584));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfQtdHospedesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQtdHospedesActionPerformed

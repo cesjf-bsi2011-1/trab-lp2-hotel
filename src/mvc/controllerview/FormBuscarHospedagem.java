@@ -115,13 +115,11 @@ public class FormBuscarHospedagem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btHospedarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedarActionPerformed
-        // TODO add your handling code here:
         FormReserva fReserva = new FormReserva();
         fReserva.setVisible(true);
     }//GEN-LAST:event_btHospedarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
