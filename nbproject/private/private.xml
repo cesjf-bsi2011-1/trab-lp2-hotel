@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/mvc/controllerview/FormPrincipal.java</file>
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/mvc/model/dao/LogDAO.java</file>
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/entity/InterfaceEntity.java</file>
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/mvc/controllerview/FormCadastroCliente.java</file>
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/mvc/model/dao/AbstractDAO.java</file>
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/mvc/model/dao/InterfaceDAO.java</file>
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/mvc/model/dao/QuartoDAO.java</file>
+        <file>file:/C:/Users/Willian/Documents/GitHub/HotelRooms/src/mvc/controllerview/FormCadastroQuarto.java</file>
+    </open-files>
 </project-private>
