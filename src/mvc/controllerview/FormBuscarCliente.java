@@ -8,6 +8,7 @@ import entity.Cliente;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.soap.Detail;
 import mvc.model.dao.ClienteDAO;
 
 /**
@@ -324,15 +325,11 @@ public class FormBuscarCliente extends javax.swing.JFrame {
 
         int linha = jTableClientes.getSelectedRow();
 
-        Cliente newCliente = new Cliente();
-        newCliente.setCodigo((Integer)jTableClientes.getModel().getValueAt(linha, 0));
-        newCliente.setNome((String)jTableClientes.getModel().getValueAt(linha, 1));
-        newCliente.setCpf((String)jTableClientes.getModel().getValueAt(linha, 2));
-        newCliente.setRg((String)jTableClientes.getModel().getValueAt(linha, 3));
-        newCliente.setCidade((String)jTableClientes.getModel().getValueAt(linha, 4));
-        //terminar aqui
-
-        FormCadastroCliente.cliente = newCliente;
+        String codigo = (String) jTableClientes.getModel().getValueAt(linha, 0);
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente clienteBuscado = clienteDAO.buscar(codigo);
+      
+        FormCadastroCliente.cliente = clienteBuscado;
         FormBuscarCliente fCliente = new FormBuscarCliente();
         fCliente.setVisible(true);
         limparTabela();

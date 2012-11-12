@@ -463,8 +463,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(793, 727));
-        setLocationRelativeTo(null);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-793)/2, (screenSize.height-727)/2, 793, 727);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
@@ -513,8 +513,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             cli.setFoneResidencial(tformatadoTelResidencial.getText());
             cli.setFoneComercial(tformatadoTelComercial.getText());
             cli.setObservação(taObs.getText());
-            
-            JOptionPane.showMessageDialog(null, "erro");
             
             ClienteDAO clienteDAO = new ClienteDAO();
             clienteDAO.inserir(cli);
