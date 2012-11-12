@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class TipoQuartoDAO extends AbstractDAO
 {
     private static List<TipoQuarto> tiposQuarto = new ArrayList<>();
-    private static int index = 0;
+    private static int index = 0000;
     
     @Override
     public void inserir(Object o) 
@@ -22,7 +22,7 @@ public class TipoQuartoDAO extends AbstractDAO
             /*Garantindo que o código equivale ao index*/
             tipoQuartoParaInserir.setCodigo(String.valueOf(getIndex()));
             tiposQuarto.add(tipoQuartoParaInserir);
-            getHistorico().inserir("Remoção do Tipo de Quarto " + tipoQuartoParaInserir.getNome());
+            getHistorico().inserir("Inserção do Tipo de Quarto " + tipoQuartoParaInserir.getNome());
         }       
     }
 

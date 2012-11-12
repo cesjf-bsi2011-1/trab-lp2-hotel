@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class ClienteDAO extends AbstractDAO
 {
     private static List<Cliente> clientes = new ArrayList<>();
-    private static int index = 0;
+    private static int index = 0000;
     
     @Override
     public void inserir(Object o) 
@@ -21,8 +21,8 @@ public class ClienteDAO extends AbstractDAO
             Cliente clienteParaInserir = (Cliente) o;
             /*Garantindo que o código equivale ao index*/
             clienteParaInserir.setCodigo(getIndex());
-            clientes.remove(clienteParaInserir);
-            getHistorico().inserir("Remoção do Cliente " + clienteParaInserir.getNome());
+            clientes.add(clienteParaInserir);
+            getHistorico().inserir("Inserção do Cliente " + clienteParaInserir.getNome());
         }       
     }
 
