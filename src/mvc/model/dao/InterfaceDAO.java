@@ -6,8 +6,8 @@ import java.util.List;
  *
  * @author Tássio Auad
  */
-public interface InterfaceDAO {
-    
+public interface InterfaceDAO 
+{    
     public void inserir(Object o);
     public void atualizar(String id, Object newO);
     public void remover(Object o);

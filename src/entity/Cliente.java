@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.util.Date;
@@ -214,7 +210,14 @@ public class Cliente implements InterfaceEntity
     @Override
     public Object[] getDadosEmVetor()
     {
-        throw new UnsupportedOperationException("Cliente.getDadosEmVetor não "
-                + "desenvolvido.");
+        Object[] dados = new Object[] {
+            codigo,
+            nome,
+            rg,
+            cpf,
+            cidade
+        };
+        
+        return dados;
     }
 }
