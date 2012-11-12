@@ -343,12 +343,12 @@ public class FormBuscarCliente extends javax.swing.JFrame {
 
         int linha = jTableClientes.getSelectedRow();
 
-        String codigo = (String) jTableClientes.getModel().getValueAt(linha, 0);
+        int codigo = (int) jTableClientes.getModel().getValueAt(linha, 0);
         ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente clienteBuscado = clienteDAO.buscar(codigo);
+        Cliente clienteBuscado = clienteDAO.buscar(Integer.toString(codigo));
       
         FormCadastroCliente.cliente = clienteBuscado;
-        FormBuscarCliente fCliente = new FormBuscarCliente();
+        FormCadastroCliente fCliente = new FormCadastroCliente();
         fCliente.setVisible(true);
         limparTabela();
     }//GEN-LAST:event_btCliEditar1ActionPerformed

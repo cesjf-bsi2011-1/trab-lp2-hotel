@@ -515,6 +515,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             cli.setFoneCelular(tformatadoTelCelular.getText());
             cli.setFoneResidencial(tformatadoTelResidencial.getText());
             cli.setFoneComercial(tformatadoTelComercial.getText());
+            cli.setEmail(tfEmail.getText());
             cli.setObservação(taObs.getText());
             
             ClienteDAO clienteDAO = new ClienteDAO();
@@ -548,22 +549,36 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         btAtualizar.setEnabled(false);
         btRemover.setEnabled(false);
+        if(cliente != null)
+        {
+            btAtualizar.setEnabled(true);
+            btRemover.setEnabled(true);
+            btCadastrar.setEnabled(false);
+            
+            tfNome.setText(cliente.getNome());
+            tfCodigo.setText(Integer.toString(cliente.getCodigo()));
+            tformatadoCpf.setText(cliente.getCpf());
+            tfRg.setText(cliente.getRg());
+            tformatadoDataNasc.setText(DateCustomizer.DateToStr(cliente.getDataNascimento()));
+            
+            tfRua.setText(cliente.getRua());
+            tfNumeroEnd.setText(cliente.getNumeroEnd());
+            tfComplemento.setText(cliente.getComplemento());
+            comboEstado.setSelectedItem((String)cliente.getEstado());
+            tfCidade.setText(cliente.getCidade());
+            tformatadoCep.setText(cliente.getCep());
+            
+            tformatadoTelCelular.setText(cliente.getFoneCelular());
+            tformatadoTelComercial.setText(cliente.getFoneComercial());
+            tformatadoTelResidencial.setText(cliente.getFoneResidencial());
+            tfEmail.setText(cliente.getEmail());
+            taObs.setText(cliente.getObservação());
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btBuscarCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCpfActionPerformed
         // TODO add your handling code here:
 
-//        Cliente cliente = new Cliente();
-//        cliente.getDadosEmVetor();
-        //Ai vem um vetor de Object, essa busca ai é essa aqui oooh
-        //Isso nao eh uma busca! Ele apenas retorna um vetor com os dados
-        //do ojeto cliente. A busca é feita na DAO. 
-        //ClienteDAO.buscarPorCPF() - clienteDAO.buscar(codigo) e etc...
-        //tô fazedo isso e olha o erro, não sei o porque, ta cadastrando
-        //Esse erro ai fui eu q coloquei, repare q ta em portugues =D.
-        //Por isso pedi pra sempre q der erro exibir o erro em um joption pane.
-        //Vou debugar aqui
-        
         try
         {
         
@@ -595,6 +610,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 tfTelResidencial.setText(clienteBusca.getFoneResidencial());
                 tformatadoTelCelular.setText(clienteBusca.getFoneCelular());
                 tformatadoTelComercial.setText(clienteBusca.getFoneComercial());
+                tfEmail.setText(clienteBusca.getEmail());
 
                 taObs.setText(clienteBusca.getObservação());
             }
