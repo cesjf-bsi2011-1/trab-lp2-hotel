@@ -82,9 +82,9 @@ public class MobiliaDAO extends AbstractDAO
          * por regra.
          */
         try {
-            throw new Exception("MobiliasDAO.buscar(String codigo) não "
-                    + "encontrou uma mobília que possua o codigo " + codigo 
-                    + ".");
+            throw new Exception("Não foi possível encontrar uma mobília "
+                                + "que possua o codigo " + codigo + "."
+                      );
         } catch (Exception ex) {
             Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex);
             

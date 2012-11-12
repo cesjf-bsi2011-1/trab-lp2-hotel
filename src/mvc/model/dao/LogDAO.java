@@ -92,9 +92,9 @@ public class LogDAO extends AbstractDAO
          * por regra.
          */
         try {
-            throw new Exception("LogDAO.buscar(String codigo) não "
-                    + "encontrou um log que possua o codigo " + codigo 
-                    + ".");
+            throw new Exception("Não foi possível encontrar um log "
+                                + "que possua o codigo " + codigo + "."
+                      );
         } catch (Exception ex) {
             Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex);
             

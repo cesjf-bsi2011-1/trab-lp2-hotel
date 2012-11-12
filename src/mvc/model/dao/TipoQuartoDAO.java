@@ -84,9 +84,9 @@ public class TipoQuartoDAO extends AbstractDAO
          * por regra.
          */
         try {
-            throw new Exception("TipoQuartoDAO.buscar(String codigo) não "
-                    + "encontrou um tipo de quarto que possua o codigo " + codigo 
-                    + ".");
+            throw new Exception("Não foi possível encontrar um tipo de quarto "
+                                + "que possua o codigo " + codigo + "."
+                      );
         } catch (Exception ex) {
             Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex);
             

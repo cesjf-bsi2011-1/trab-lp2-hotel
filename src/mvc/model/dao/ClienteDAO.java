@@ -84,9 +84,9 @@ public class ClienteDAO extends AbstractDAO
          * por regra.
          */
         try {
-            throw new Exception("ClienteDAO.buscar(String codigo) não "
-                    + "encontrou um cliente que possua o codigo " + codigo 
-                    + ".");
+            throw new Exception("Não foi possível encontrar um cliente "
+                                + "que possua o codigo " + codigo + "."
+                      );
         } catch (Exception ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             
@@ -100,7 +100,7 @@ public class ClienteDAO extends AbstractDAO
     public Cliente buscarPorCpf(String cpf) 
     {
         for (Cliente clienteDaLista : clientes) {
-                if (clienteDaLista.getCpf() == cpf) {
+                if (clienteDaLista.getCpf().equals(cpf)) {
                     return clienteDaLista;
                     
                 }
@@ -110,9 +110,9 @@ public class ClienteDAO extends AbstractDAO
          * por regra.
          */
         try {
-            throw new Exception("ClienteDAO.buscar(String codigo) não "
-                    + "encontrou um cliente que possua o cpf " + cpf 
-                    + ".");
+            throw new Exception("Não foi possível encontrar um cliente "
+                                + "que possua o CPF " + cpf + "."
+                      );
         } catch (Exception ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             
@@ -140,11 +140,13 @@ public class ClienteDAO extends AbstractDAO
         }
     }
     
+    @Override
     public int getIndex()
     {
         return index;
     }
     
+    @Override
     public void acrescerIndex()
     {
         index += 1;
