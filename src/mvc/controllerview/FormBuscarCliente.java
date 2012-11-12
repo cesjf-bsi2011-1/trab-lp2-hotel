@@ -357,10 +357,10 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         int linha = jTableClientes.getSelectedRow();
-        String codigo = (String)jTableClientes.getModel().getValueAt(linha, 0);
+        int codigo = (int)jTableClientes.getModel().getValueAt(linha, 0);
         ClienteDAO clienteDAO = new ClienteDAO();
 
-        clienteDAO.remover(codigo);
+        clienteDAO.remover(Integer.toString(codigo));
         tfLocalizaClienteCodigo.requestFocus();
         btCliEditar1.setEnabled(false);
         btCliExcluir1.setEnabled(false);
