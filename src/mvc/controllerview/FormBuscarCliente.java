@@ -39,7 +39,6 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         tfLocalizaClienteCodigo = new javax.swing.JTextField();
         btLocalizaClienteCpf = new javax.swing.JButton();
         lbLocCliCPF1 = new javax.swing.JLabel();
-        tfLocalizaClienteCpf = new javax.swing.JTextField();
         btLocaizaClienteCodigo = new javax.swing.JButton();
         btBuscarTodosClientes1 = new javax.swing.JButton();
         btCliNovo1 = new javax.swing.JButton();
@@ -48,6 +47,7 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableClientes = new javax.swing.JTable();
         btSair = new javax.swing.JButton();
+        tformatadoCpf = new javax.swing.JFormattedTextField();
         lbErro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -57,6 +57,7 @@ public class FormBuscarCliente extends javax.swing.JFrame {
 
         lbLocalizaClienteCodigo.setText("Localizar cliente por código: ");
 
+        btLocalizaClienteCpf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btLocalizaClienteCpf.setText("...");
         btLocalizaClienteCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,8 +65,9 @@ public class FormBuscarCliente extends javax.swing.JFrame {
             }
         });
 
-        lbLocCliCPF1.setText("Localizar cliente por CPF: ");
+        lbLocCliCPF1.setText("Localizar por CPF: ");
 
+        btLocaizaClienteCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btLocaizaClienteCodigo.setText("...");
         btLocaizaClienteCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,6 +75,7 @@ public class FormBuscarCliente extends javax.swing.JFrame {
             }
         });
 
+        btBuscarTodosClientes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search.png"))); // NOI18N
         btBuscarTodosClientes1.setText("BuscarTodos");
         btBuscarTodosClientes1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +132,11 @@ public class FormBuscarCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableClientesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableClientes);
         jTableClientes.getColumnModel().getColumn(0).setResizable(false);
         jTableClientes.getColumnModel().getColumn(1).setResizable(false);
@@ -143,6 +151,12 @@ public class FormBuscarCliente extends javax.swing.JFrame {
             }
         });
 
+        try {
+            tformatadoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanelClientesLayout = new javax.swing.GroupLayout(jPanelClientes);
         jPanelClientes.setLayout(jPanelClientesLayout);
         jPanelClientesLayout.setHorizontalGroup(
@@ -153,29 +167,27 @@ public class FormBuscarCliente extends javax.swing.JFrame {
                     .addGroup(jPanelClientesLayout.createSequentialGroup()
                         .addComponent(lbLocalizaClienteCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfLocalizaClienteCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addComponent(tfLocalizaClienteCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btLocaizaClienteCodigo)
-                        .addGap(28, 28, 28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbLocCliCPF1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfLocalizaClienteCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tformatadoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btLocalizaClienteCpf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btBuscarTodosClientes1)
-                        .addGap(43, 43, 43))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btBuscarTodosClientes1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
                         .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btCliEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btCliExcluir1)
                             .addComponent(btCliNovo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2)
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btSair)
+                        .addComponent(jScrollPane2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btSair)))
                 .addContainerGap())
         );
         jPanelClientesLayout.setVerticalGroup(
@@ -186,10 +198,10 @@ public class FormBuscarCliente extends javax.swing.JFrame {
                     .addComponent(lbLocalizaClienteCodigo)
                     .addComponent(tfLocalizaClienteCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbLocCliCPF1)
-                    .addComponent(tfLocalizaClienteCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btLocaizaClienteCodigo)
-                    .addComponent(btLocalizaClienteCpf)
-                    .addComponent(btBuscarTodosClientes1))
+                    .addComponent(btLocaizaClienteCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btLocalizaClienteCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btBuscarTodosClientes1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tformatadoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelClientesLayout.createSequentialGroup()
@@ -238,7 +250,7 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         btCliExcluir1.setEnabled(false);
         limparTabela();
         ClienteDAO clienteDAO = new ClienteDAO();
-        String cpf = tfLocalizaClienteCodigo.getText();
+        String cpf = tformatadoCpf.getText();
         cliente = clienteDAO.buscarPorCpf(cpf);
         
         if(cliente != null)
@@ -257,18 +269,24 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         btCliEditar1.setEnabled(false);
         btCliExcluir1.setEnabled(false);
         limparTabela();
-        ClienteDAO clienteDAO = new ClienteDAO();
-        String codigo = tfLocalizaClienteCodigo.getText();
-        cliente = clienteDAO.buscarPorCpf(codigo);
-        
-        if(cliente != null)
+        try
         {
-            DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();            
-            modelo.addRow(cliente.getDadosEmVetor());
-        }
-        else
+            ClienteDAO clienteDAO = new ClienteDAO();
+            String codigo = tfLocalizaClienteCodigo.getText();
+            cliente = clienteDAO.buscar(codigo);
+
+            if(cliente != null)
+            {
+                DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();            
+                modelo.addRow(cliente.getDadosEmVetor());
+            }
+            else
+            {
+                lbErro.setText("Nenhum cliente encontrado!");
+            }
+        }catch(Exception e)
         {
-            lbErro.setText("Nenhum cliente encontrado!");
+            JOptionPane.showMessageDialog(null, e);
         }
         
         
@@ -293,7 +311,7 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         btCliExcluir1.setEnabled(false);
         limparTabela();
         tfLocalizaClienteCodigo.setText("");
-        tfLocalizaClienteCpf.setText("");
+        tformatadoCpf.setText("");
 
         DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();
         ClienteDAO clienteDAO = new ClienteDAO();
@@ -348,6 +366,12 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         btCliExcluir1.setEnabled(false);
         limparTabela();
     }//GEN-LAST:event_btCliExcluir1ActionPerformed
+
+    private void jTableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClientesMouseClicked
+        // TODO add your handling code here:
+        btCliEditar1.setEnabled(true);
+        btCliExcluir1.setEnabled(true);
+    }//GEN-LAST:event_jTableClientesMouseClicked
 
         
     private void limparTabela()
@@ -407,6 +431,6 @@ public class FormBuscarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lbLocCliCPF1;
     private javax.swing.JLabel lbLocalizaClienteCodigo;
     private javax.swing.JTextField tfLocalizaClienteCodigo;
-    private javax.swing.JTextField tfLocalizaClienteCpf;
+    private javax.swing.JFormattedTextField tformatadoCpf;
     // End of variables declaration//GEN-END:variables
 }

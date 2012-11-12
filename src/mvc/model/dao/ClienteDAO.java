@@ -100,7 +100,7 @@ public class ClienteDAO extends AbstractDAO
     public Cliente buscarPorCpf(String cpf) 
     {
         for (Cliente clienteDaLista : clientes) {
-                if (clienteDaLista.getCpf() == cpf) {
+                if (clienteDaLista.getCpf().equals(cpf)) {
                     return clienteDaLista;
                     
                 }

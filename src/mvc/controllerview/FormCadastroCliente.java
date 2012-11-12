@@ -116,6 +116,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        btBuscarCpf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btBuscarCpf.setText("Buscar");
         btBuscarCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,7 +175,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbDataNasc)
                     .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -185,9 +186,9 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                     .addComponent(tformatadoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tformatadoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btBuscarCpf)
-                    .addComponent(lbModeloData))
-                .addContainerGap())
+                    .addComponent(lbModeloData)
+                    .addComponent(btBuscarCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
 
         painelContato.setBorder(javax.swing.BorderFactory.createTitledBorder("Contato"));
@@ -431,7 +432,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                                 .addComponent(painelEndereco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbObservacao, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 21, Short.MAX_VALUE))))
+                        .addGap(0, 29, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,11 +461,11 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btAtualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btCadastrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-793)/2, (screenSize.height-727)/2, 793, 727);
+        setBounds((screenSize.width-829)/2, (screenSize.height-727)/2, 829, 727);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
@@ -536,6 +537,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         // TODO add your handling code here:
+        btCadastrar.setEnabled(true);
         FormCustomizer.limparTodosCampos(painelContato);
         FormCustomizer.limparTodosCampos(painelDadosPessoais);
         FormCustomizer.limparTodosCampos(painelEndereco);
@@ -550,34 +552,60 @@ public class FormCadastroCliente extends javax.swing.JFrame {
 
     private void btBuscarCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCpfActionPerformed
         // TODO add your handling code here:
+
+//        Cliente cliente = new Cliente();
+//        cliente.getDadosEmVetor();
+        //Ai vem um vetor de Object, essa busca ai é essa aqui oooh
+        //Isso nao eh uma busca! Ele apenas retorna um vetor com os dados
+        //do ojeto cliente. A busca é feita na DAO. 
+        //ClienteDAO.buscarPorCPF() - clienteDAO.buscar(codigo) e etc...
+        //tô fazedo isso e olha o erro, não sei o porque, ta cadastrando
+        //Esse erro ai fui eu q coloquei, repare q ta em portugues =D.
+        //Por isso pedi pra sempre q der erro exibir o erro em um joption pane.
+        //Vou debugar aqui
         
-        String cpfBusca = tformatadoCpf.getText();
-        ClienteDAO clienteBusca = new ClienteDAO();
-        cliente = clienteBusca.buscarPorCpf(cpfBusca);
-        if(cliente != null)
+        try
         {
-            //Dados Pessoais
-            
-            tfCodigo.setText(Integer.toString(cliente.getCodigo()));
-            tfNome.setText(cliente.getNome());
-            
-            tfRg.setText(cliente.getRg());
-            tformatadoDataNasc.setText(DateCustomizer.DateToStr(cliente.getDataNascimento()));
-            JOptionPane.showMessageDialog(null, "Erro!");
-            //Endereço
-            tfRua.setText(cliente.getRua());
-            tfComplemento.setText(cliente.getComplemento());
-            tfNumeroEnd.setText(cliente.getNumeroEnd());
-            tfCidade.setText(cliente.getCidade());
-            comboEstado.setSelectedItem((String)cliente.getEstado());
-            tformatadoCep.setText(cliente.getCep());
-            
-            //contato
-            tfTelResidencial.setText(cliente.getFoneResidencial());
-            tformatadoTelCelular.setText(cliente.getFoneCelular());
-            tformatadoTelComercial.setText(cliente.getFoneComercial());
-            
-            taObs.setText(cliente.getObservação());
+        
+            String cpfBusca = tformatadoCpf.getText();
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente clienteBusca = clienteDAO.buscarPorCpf(cpfBusca);
+            if(clienteBusca != null)
+            {
+                btCadastrar.setEnabled(false);
+                lbErro.setVisible(false);
+                lbConfirma.setVisible(false);
+                //Dados Pessoais
+
+                tfCodigo.setText(Integer.toString(clienteBusca.getCodigo()));
+                tfNome.setText(clienteBusca.getNome());
+
+                tfRg.setText(clienteBusca.getRg());
+                tformatadoDataNasc.setText(DateCustomizer.DateToStr(clienteBusca.getDataNascimento()));
+   
+                //Endereço
+                tfRua.setText(clienteBusca.getRua());
+                tfComplemento.setText(clienteBusca.getComplemento());
+                tfNumeroEnd.setText(clienteBusca.getNumeroEnd());
+                tfCidade.setText(clienteBusca.getCidade());
+                comboEstado.setSelectedItem((String)clienteBusca.getEstado());
+                tformatadoCep.setText(clienteBusca.getCep());
+
+                //contato
+                tfTelResidencial.setText(clienteBusca.getFoneResidencial());
+                tformatadoTelCelular.setText(clienteBusca.getFoneCelular());
+                tformatadoTelComercial.setText(clienteBusca.getFoneComercial());
+
+                taObs.setText(clienteBusca.getObservação());
+            }
+            else            
+            {
+                lbErro.setVisible(true);
+                lbErro.setText("Nenhum cliente encontrado!");
+            }
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btBuscarCpfActionPerformed
 
