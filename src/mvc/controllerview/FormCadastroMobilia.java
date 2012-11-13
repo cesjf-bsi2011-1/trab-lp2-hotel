@@ -5,6 +5,7 @@
 package mvc.controllerview;
 
 import entity.Mobilia;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 import mvc.model.dao.MobiliaDAO;
 
@@ -92,7 +93,7 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
             }
         });
 
-        lbErro.setForeground(new java.awt.Color(204, 0, 0));
+        lbErro.setForeground(new java.awt.Color(255, 102, 0));
 
         lbConfirma.setForeground(new java.awt.Color(0, 204, 204));
 
@@ -164,7 +165,7 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         // TODO add your handling code here:
-        if(tfCodigo.getText().equals("") || tfNome.getText().equals(""))
+        if(camposObrigatorios() == true)
         {
             lbConfirma.setVisible(false);
             lbErro.setVisible(true);
@@ -240,6 +241,30 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
         lbConfirma.setText("Mobilia Atualizada com sucesso!");
     }//GEN-LAST:event_btAtualizarActionPerformed
 
+    private boolean camposObrigatorios()
+    {
+        boolean retorno = false;
+        if(tfCodigo.getText().equals(""))
+        {
+            tfCodigo.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfCodigo.setBackground(Color.WHITE);
+        }
+        
+        if(tfNome.getText().equals(""))
+        {
+            tfNome.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfNome.setBackground(Color.WHITE);
+        }
+        return retorno;
+    }
     /**
      * @param args the command line arguments
      */

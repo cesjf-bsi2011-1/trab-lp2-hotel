@@ -6,6 +6,7 @@ package mvc.controllerview;
 
 import entity.Quarto;
 import entity.TipoQuarto;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -121,7 +122,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         taObs.setRows(5);
         jScrollPane1.setViewportView(taObs);
 
-        lbErro.setForeground(new java.awt.Color(204, 0, 0));
+        lbErro.setForeground(new java.awt.Color(255, 51, 0));
 
         lbConfirma.setForeground(new java.awt.Color(0, 204, 204));
 
@@ -211,8 +212,10 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         // TODO add your handling code here:
-        if(tfCodigo.getText().equals("") || tfValor.getText().equals(""))
+        if(camposObrigatorios() == true)
         {
+            lbConfirma.setVisible(false);
+            lbErro.setVisible(true);
             lbErro.setText("Os Campos com * são obrigatorios!");
         }
         else
@@ -242,6 +245,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e);
             }
             lbErro.setVisible(false);
+            lbConfirma.setVisible(true);
             lbConfirma.setText("Quarto Cadastrado com sucesso!");
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
@@ -255,6 +259,30 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         lbErro.setText("");
     }//GEN-LAST:event_btCancelarActionPerformed
 
+     private boolean camposObrigatorios()
+    {
+        boolean retorno = false;
+        if(tfCodigo.getText().equals(""))
+        {
+            tfCodigo.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfCodigo.setBackground(Color.WHITE);
+        }
+        
+        if(tfValor.getText().equals(""))
+        {
+            tfValor.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfValor.setBackground(Color.WHITE);
+        }
+        return retorno;
+    }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened

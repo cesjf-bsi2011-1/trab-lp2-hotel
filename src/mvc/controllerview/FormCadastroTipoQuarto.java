@@ -2,6 +2,7 @@ package mvc.controllerview;
 
 import entity.Mobilia;
 import entity.TipoQuarto;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -190,7 +191,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
             }
         });
 
-        lbErro.setForeground(new java.awt.Color(255, 0, 51));
+        lbErro.setForeground(new java.awt.Color(255, 102, 0));
 
         lbConfirma.setForeground(new java.awt.Color(0, 153, 204));
 
@@ -323,7 +324,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         // TODO add your handling code here:
         btIncluirMobilia.setEnabled(false);
         btLimpar.setEnabled(false);        
-        if(tfCodigo.getText().equals("") || tfNome.getText().equals(""))
+        if(camposObrigatorios() == true)
         {
             lbConfirma.setVisible(false);
             lbErro.setVisible(true);
@@ -469,6 +470,31 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
        
     }
 
+     private boolean camposObrigatorios()
+    {
+        boolean retorno = false;
+        if(tfCodigo.getText().equals(""))
+        {
+            tfCodigo.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfCodigo.setBackground(Color.WHITE);
+        }
+        
+        if(tfNome.getText().equals(""))
+        {
+            tfNome.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfNome.setBackground(Color.WHITE);
+        }
+        return retorno;
+    }
+     
     public static void main(String args[]) 
     {
         /* Set the Nimbus look and feel */

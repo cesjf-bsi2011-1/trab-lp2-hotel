@@ -216,7 +216,7 @@
     <Component class="javax.swing.JLabel" name="lbErro">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="cc" type="rgb"/>
+          <Color blue="0" green="33" red="ff" type="rgb"/>
         </Property>
       </Properties>
     </Component>
