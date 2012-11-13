@@ -12,7 +12,7 @@ package mvc.controllerview;
 public class FormPrincipal extends javax.swing.JFrame {
 
     public FormPrincipal() {
-        initComponents();
+         initComponents();
          setExtendedState(FormPrincipal.MAXIMIZED_BOTH);
     }
 
