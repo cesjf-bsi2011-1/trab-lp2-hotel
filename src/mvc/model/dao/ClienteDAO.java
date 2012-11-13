@@ -141,12 +141,13 @@ public class ClienteDAO extends AbstractDAO
     }
     
     public int getIndex()
-    {
-        return index;
+    {        
+        return index += 1;
     }
     
     public void acrescerIndex()
     {
         index += 1;
+        
     }
 }

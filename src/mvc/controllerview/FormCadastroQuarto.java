@@ -220,7 +220,6 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         }
         else
         {
-            Quarto quarto = new Quarto();
             quarto.setCodigo(tfCodigo.getText());
             quarto.setObservacao(taObs.getText());
             quarto.setValor(Float.parseFloat(tfValor.getText()));

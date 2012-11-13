@@ -18,10 +18,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
      */
     public FormCadastroCliente() {
         initComponents();
-        if(!tfNome.getText().equals(""))
-        {
-            lbConfirma.setVisible(false);
-        }
+
     }
 
     /**
@@ -76,7 +73,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         btCancelar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
         btRemover = new javax.swing.JButton();
-        lbConfirma = new javax.swing.JLabel();
         lbErro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -378,6 +374,11 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Refresh.png"))); // NOI18N
         btAtualizar.setText("Atualizar");
         btAtualizar.setEnabled(false);
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarActionPerformed(evt);
+            }
+        });
 
         btCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Close.png"))); // NOI18N
         btCancelar.setText("Cancelar");
@@ -398,8 +399,11 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         btRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Remove.png"))); // NOI18N
         btRemover.setText("Remover");
         btRemover.setEnabled(false);
-
-        lbConfirma.setForeground(new java.awt.Color(0, 102, 255));
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
         lbErro.setForeground(new java.awt.Color(255, 153, 0));
 
@@ -414,8 +418,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPaneObs, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbConfirma)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(6, 6, 6)
                                 .addComponent(lbErro)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -441,9 +444,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbConfirma, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                    .addComponent(lbErro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lbErro, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
@@ -494,7 +495,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         
         if(camposObrigatorios() == true)
         {
-            lbConfirma.setVisible(false);
             lbErro.setVisible(true);
             lbErro.setText("Os Campos com * são obrigatorios!");
             
@@ -531,11 +531,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             FormCustomizer.limparTodosCampos(painelContato);
             taObs.setText("");
             lbErro.setVisible(false);
-            lbConfirma.setVisible(true);
-            lbConfirma.setText("Cliente Cadastrado com Sucesso!");
+            JOptionPane.showMessageDialog(null, "Cliente Cadastrado com sucesso!");
             tfNome.requestFocus();
-            
-
         }
         
 
@@ -593,8 +590,9 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             if(clienteBusca != null)
             {
                 btCadastrar.setEnabled(false);
+                btAtualizar.setEnabled(true);
+                btRemover.setEnabled(true);
                 lbErro.setVisible(false);
-                lbConfirma.setVisible(false);
                 //Dados Pessoais
 
                 tfCodigo.setText(Integer.toString(clienteBusca.getCodigo()));
@@ -620,15 +618,44 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 taObs.setText(clienteBusca.getObservação());
             }
             else            
-            {
-                lbErro.setVisible(true);
-                lbErro.setText("Nenhum cliente encontrado!");
+            {                
+              JOptionPane.showMessageDialog(null, "Nenhum Cliente com o CPF: " + tformatadoCpf.getText());
+              btAtualizar.setEnabled(false);
+              btRemover.setEnabled(false);
+              btCadastrar.setEnabled(true);
             }
         }catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btBuscarCpfActionPerformed
+
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        // TODO add your handling code here:
+        int codigo = Integer.parseInt(tfCodigo.getText());
+        
+        int i = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente: " + tfNome.getText());
+        
+        if(i == 0)
+        {
+               ClienteDAO clienteDAO = new ClienteDAO();
+               clienteDAO.remover(Integer.toString(codigo));
+               FormCustomizer.limparTodosCampos(painelDadosPessoais);
+               FormCustomizer.limparTodosCampos(painelContato);
+               FormCustomizer.limparTodosCampos(painelEndereco);
+        }
+        else
+        {
+            tfNome.requestFocus();
+        }
+        
+        
+    }//GEN-LAST:event_btRemoverActionPerformed
 
     public boolean camposObrigatorios()
     {
@@ -752,7 +779,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lbCep;
     private javax.swing.JLabel lbCidade;
     private javax.swing.JLabel lbCodigo;
-    private javax.swing.JLabel lbConfirma;
     private javax.swing.JLabel lbCpf;
     private javax.swing.JLabel lbDataNasc;
     private javax.swing.JLabel lbEmail;
