@@ -3,6 +3,7 @@ package mvc.controllerview;
 import myutils.DateCustomizer;
 import myutils.FormCustomizer;
 import entity.Cliente;
+import java.awt.Color;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,6 +88,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         });
 
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 0)));
+
+        tfCodigo.setEnabled(false);
 
         lbCodigo.setText("Código:");
 
@@ -398,7 +401,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
 
         lbConfirma.setForeground(new java.awt.Color(0, 102, 255));
 
-        lbErro.setForeground(new java.awt.Color(255, 0, 51));
+        lbErro.setForeground(new java.awt.Color(255, 153, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -489,16 +492,18 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         Cliente cli = new Cliente();
         
-        if(tfNome.getText().equals("") || tformatadoCpf.getText().equals("   .   .   -  ") || tfRg.getText().equals("") || tformatadoDataNasc.getText().equals("  /  /    ") || tfRua.getText().equals("") || tfCidade.getText().equals(""))
+        if(camposObrigatorios() == true)
         {
             lbConfirma.setVisible(false);
             lbErro.setVisible(true);
             lbErro.setText("Os Campos com * são obrigatorios!");
+            
         }
         else
         {
+            ClienteDAO clienteDAO = new ClienteDAO();
             cli.setNome(tfNome.getText());
-            cli.setCodigo(Integer.parseInt(tfCodigo.getText()));
+            cli.setCodigo(clienteDAO.getIndex());
             cli.setCpf(tformatadoCpf.getText());
             cli.setRg(tfRg.getText());
             try {
@@ -518,7 +523,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             cli.setEmail(tfEmail.getText());
             cli.setObservação(taObs.getText());
             
-            ClienteDAO clienteDAO = new ClienteDAO();
+            
             clienteDAO.inserir(cli);
             
             FormCustomizer.limparTodosCampos(painelDadosPessoais);
@@ -625,6 +630,81 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btBuscarCpfActionPerformed
 
+    public boolean camposObrigatorios()
+    {
+        boolean retorno = false;
+        if(tfNome.getText().equals(""))
+        {
+            tfNome.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfNome.setBackground(Color.WHITE);
+        }
+        
+        if(tformatadoCpf.getText().equals("   .   .   -  "))
+        {
+            tformatadoCpf.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tformatadoCpf.setBackground(Color.WHITE);
+        }
+        
+        if(tfRg.getText().equals(""))
+        {
+            tfRg.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfRg.setBackground(Color.WHITE);
+        }
+        
+        if(tformatadoDataNasc.getText().equals("  /  /    "))
+        {
+            tformatadoDataNasc.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tformatadoDataNasc.setBackground(Color.WHITE);
+        }
+        
+        if(tfRua.getText().equals(""))
+        {
+            tfRua.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfRua.setBackground(Color.WHITE);
+        }
+        
+        if(tfNumeroEnd.getText().equals(""))
+        {
+            tfNumeroEnd.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfNumeroEnd.setBackground(Color.WHITE);
+        }
+        
+        if(tfCidade.getText().equals(""))
+        {
+            tfCidade.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfCidade.setBackground(Color.WHITE);
+        }
+        
+        return retorno;
+    }
     /**
      * @param args the command line arguments
      */

@@ -236,6 +236,8 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
         tfCodigo.setText("");
         tfNome.setText("");
         taDescricao.setText("");
+        lbConfirma.setEnabled(true);
+        lbConfirma.setText("Mobilia Atualizada com sucesso!");
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     /**
