@@ -3,6 +3,7 @@ package mvc.controllerview;
 import myutils.DateCustomizer;
 import myutils.FormCustomizer;
 import entity.Cliente;
+import java.awt.Color;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,10 +18,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
      */
     public FormCadastroCliente() {
         initComponents();
-        if(!tfNome.getText().equals(""))
-        {
-            lbConfirma.setVisible(false);
-        }
+
     }
 
     /**
@@ -75,7 +73,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         btCancelar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
         btRemover = new javax.swing.JButton();
-        lbConfirma = new javax.swing.JLabel();
         lbErro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -87,6 +84,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         });
 
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 0)));
+
+        tfCodigo.setEnabled(false);
 
         lbCodigo.setText("Código:");
 
@@ -116,6 +115,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        btBuscarCpf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btBuscarCpf.setText("Buscar");
         btBuscarCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,7 +174,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbDataNasc)
                     .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -185,9 +185,9 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                     .addComponent(tformatadoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tformatadoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btBuscarCpf)
-                    .addComponent(lbModeloData))
-                .addContainerGap())
+                    .addComponent(lbModeloData)
+                    .addComponent(btBuscarCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
         );
 
         painelContato.setBorder(javax.swing.BorderFactory.createTitledBorder("Contato"));
@@ -374,6 +374,11 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Refresh.png"))); // NOI18N
         btAtualizar.setText("Atualizar");
         btAtualizar.setEnabled(false);
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarActionPerformed(evt);
+            }
+        });
 
         btCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Close.png"))); // NOI18N
         btCancelar.setText("Cancelar");
@@ -394,10 +399,13 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         btRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Remove.png"))); // NOI18N
         btRemover.setText("Remover");
         btRemover.setEnabled(false);
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
-        lbConfirma.setForeground(new java.awt.Color(0, 102, 255));
-
-        lbErro.setForeground(new java.awt.Color(255, 0, 51));
+        lbErro.setForeground(new java.awt.Color(255, 153, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -410,8 +418,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPaneObs, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbConfirma)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(6, 6, 6)
                                 .addComponent(lbErro)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -431,15 +438,13 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                                 .addComponent(painelEndereco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbObservacao, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 21, Short.MAX_VALUE))))
+                        .addGap(0, 29, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbConfirma, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                    .addComponent(lbErro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lbErro, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
@@ -460,11 +465,11 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btAtualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btCadastrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(793, 727));
-        setLocationRelativeTo(null);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-829)/2, (screenSize.height-727)/2, 829, 727);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
@@ -488,14 +493,17 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         Cliente cli = new Cliente();
         
-        if(tfNome.getText().equals("") || tformatadoCpf.getText().equals("   .   .   -  ") || tfRg.getText().equals("") || tformatadoDataNasc.getText().equals("  /  /    ") || tfRua.getText().equals(""))
+        if(camposObrigatorios() == true)
         {
+            lbErro.setVisible(true);
             lbErro.setText("Os Campos com * são obrigatorios!");
+            
         }
         else
         {
+            ClienteDAO clienteDAO = new ClienteDAO();
             cli.setNome(tfNome.getText());
-            cli.setCodigo(Integer.parseInt(tfCodigo.getText()));
+            cli.setCodigo(clienteDAO.getIndex());
             cli.setCpf(tformatadoCpf.getText());
             cli.setRg(tfRg.getText());
             try {
@@ -512,11 +520,10 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             cli.setFoneCelular(tformatadoTelCelular.getText());
             cli.setFoneResidencial(tformatadoTelResidencial.getText());
             cli.setFoneComercial(tformatadoTelComercial.getText());
+            cli.setEmail(tfEmail.getText());
             cli.setObservação(taObs.getText());
             
-            JOptionPane.showMessageDialog(null, "erro");
             
-            ClienteDAO clienteDAO = new ClienteDAO();
             clienteDAO.inserir(cli);
             
             FormCustomizer.limparTodosCampos(painelDadosPessoais);
@@ -524,10 +531,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             FormCustomizer.limparTodosCampos(painelContato);
             taObs.setText("");
             lbErro.setVisible(false);
-            lbConfirma.setText("Cliente Cadastrado com Sucesso!");
+            JOptionPane.showMessageDialog(null, "Cliente Cadastrado com sucesso!");
             tfNome.requestFocus();
-            
-
         }
         
 
@@ -535,6 +540,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         // TODO add your handling code here:
+        btCadastrar.setEnabled(true);
         FormCustomizer.limparTodosCampos(painelContato);
         FormCustomizer.limparTodosCampos(painelDadosPessoais);
         FormCustomizer.limparTodosCampos(painelEndereco);
@@ -545,44 +551,187 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         btAtualizar.setEnabled(false);
         btRemover.setEnabled(false);
+        if(cliente != null)
+        {
+            btAtualizar.setEnabled(true);
+            btRemover.setEnabled(true);
+            btCadastrar.setEnabled(false);
+            
+            tfNome.setText(cliente.getNome());
+            tfCodigo.setText(Integer.toString(cliente.getCodigo()));
+            tformatadoCpf.setText(cliente.getCpf());
+            tfRg.setText(cliente.getRg());
+            tformatadoDataNasc.setText(DateCustomizer.DateToStr(cliente.getDataNascimento()));
+            
+            tfRua.setText(cliente.getRua());
+            tfNumeroEnd.setText(cliente.getNumeroEnd());
+            tfComplemento.setText(cliente.getComplemento());
+            comboEstado.setSelectedItem((String)cliente.getEstado());
+            tfCidade.setText(cliente.getCidade());
+            tformatadoCep.setText(cliente.getCep());
+            
+            tformatadoTelCelular.setText(cliente.getFoneCelular());
+            tformatadoTelComercial.setText(cliente.getFoneComercial());
+            tformatadoTelResidencial.setText(cliente.getFoneResidencial());
+            tfEmail.setText(cliente.getEmail());
+            taObs.setText(cliente.getObservação());
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btBuscarCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCpfActionPerformed
         // TODO add your handling code here:
-        
-        String cpfBusca = tformatadoCpf.getText();
-        JOptionPane.showMessageDialog(null, "Erro!1");
-        ClienteDAO clienteBusca = new ClienteDAO(); 
-        JOptionPane.showMessageDialog(null, "Erro!2");
-        cliente = clienteBusca.buscarPorCpf(cpfBusca);
-        JOptionPane.showMessageDialog(null, "Erro!3");
-        if(cliente != null)
+
+        try
         {
-            //Dados Pessoais
-            JOptionPane.showMessageDialog(null, "Erro!4");
-            tfCodigo.setText(Integer.toString(cliente.getCodigo()));
-            tfNome.setText(cliente.getNome());
-            JOptionPane.showMessageDialog(null, "Erro!5");
-            tfRg.setText(cliente.getRg());
-            tformatadoDataNasc.setText(DateCustomizer.DateToStr(cliente.getDataNascimento()));
-            
-            //Endereço
-            tfRua.setText(cliente.getRua());
-            tfComplemento.setText(cliente.getComplemento());
-            tfNumeroEnd.setText(cliente.getNumeroEnd());
-            tfCidade.setText(cliente.getCidade());
-            comboEstado.setSelectedItem((String)cliente.getEstado());
-            tformatadoCep.setText(cliente.getCep());
-            
-            //contato
-            tfTelResidencial.setText(cliente.getFoneResidencial());
-            tformatadoTelCelular.setText(cliente.getFoneCelular());
-            tformatadoTelComercial.setText(cliente.getFoneComercial());
-            
-            taObs.setText(cliente.getObservação());
+        
+            String cpfBusca = tformatadoCpf.getText();
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente clienteBusca = clienteDAO.buscarPorCpf(cpfBusca);
+            if(clienteBusca != null)
+            {
+                btCadastrar.setEnabled(false);
+                btAtualizar.setEnabled(true);
+                btRemover.setEnabled(true);
+                lbErro.setVisible(false);
+                //Dados Pessoais
+
+                tfCodigo.setText(Integer.toString(clienteBusca.getCodigo()));
+                tfNome.setText(clienteBusca.getNome());
+
+                tfRg.setText(clienteBusca.getRg());
+                tformatadoDataNasc.setText(DateCustomizer.DateToStr(clienteBusca.getDataNascimento()));
+   
+                //Endereço
+                tfRua.setText(clienteBusca.getRua());
+                tfComplemento.setText(clienteBusca.getComplemento());
+                tfNumeroEnd.setText(clienteBusca.getNumeroEnd());
+                tfCidade.setText(clienteBusca.getCidade());
+                comboEstado.setSelectedItem((String)clienteBusca.getEstado());
+                tformatadoCep.setText(clienteBusca.getCep());
+
+                //contato
+                tfTelResidencial.setText(clienteBusca.getFoneResidencial());
+                tformatadoTelCelular.setText(clienteBusca.getFoneCelular());
+                tformatadoTelComercial.setText(clienteBusca.getFoneComercial());
+                tfEmail.setText(clienteBusca.getEmail());
+
+                taObs.setText(clienteBusca.getObservação());
+            }
+            else            
+            {                
+              JOptionPane.showMessageDialog(null, "Nenhum Cliente com o CPF: " + tformatadoCpf.getText());
+              btAtualizar.setEnabled(false);
+              btRemover.setEnabled(false);
+              btCadastrar.setEnabled(true);
+            }
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btBuscarCpfActionPerformed
 
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        // TODO add your handling code here:
+        int codigo = Integer.parseInt(tfCodigo.getText());
+        
+        int i = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente: " + tfNome.getText());
+        
+        if(i == 0)
+        {
+               ClienteDAO clienteDAO = new ClienteDAO();
+               clienteDAO.remover(Integer.toString(codigo));
+               FormCustomizer.limparTodosCampos(painelDadosPessoais);
+               FormCustomizer.limparTodosCampos(painelContato);
+               FormCustomizer.limparTodosCampos(painelEndereco);
+        }
+        else
+        {
+            tfNome.requestFocus();
+        }
+        
+        
+    }//GEN-LAST:event_btRemoverActionPerformed
+
+    public boolean camposObrigatorios()
+    {
+        boolean retorno = false;
+        if(tfNome.getText().equals(""))
+        {
+            tfNome.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfNome.setBackground(Color.WHITE);
+        }
+        
+        if(tformatadoCpf.getText().equals("   .   .   -  "))
+        {
+            tformatadoCpf.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tformatadoCpf.setBackground(Color.WHITE);
+        }
+        
+        if(tfRg.getText().equals(""))
+        {
+            tfRg.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfRg.setBackground(Color.WHITE);
+        }
+        
+        if(tformatadoDataNasc.getText().equals("  /  /    "))
+        {
+            tformatadoDataNasc.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tformatadoDataNasc.setBackground(Color.WHITE);
+        }
+        
+        if(tfRua.getText().equals(""))
+        {
+            tfRua.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfRua.setBackground(Color.WHITE);
+        }
+        
+        if(tfNumeroEnd.getText().equals(""))
+        {
+            tfNumeroEnd.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfNumeroEnd.setBackground(Color.WHITE);
+        }
+        
+        if(tfCidade.getText().equals(""))
+        {
+            tfCidade.setBackground(Color.orange);
+            retorno = true;
+        }
+        else
+        {
+            tfCidade.setBackground(Color.WHITE);
+        }
+        
+        return retorno;
+    }
     /**
      * @param args the command line arguments
      */
@@ -630,7 +779,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lbCep;
     private javax.swing.JLabel lbCidade;
     private javax.swing.JLabel lbCodigo;
-    private javax.swing.JLabel lbConfirma;
     private javax.swing.JLabel lbCpf;
     private javax.swing.JLabel lbDataNasc;
     private javax.swing.JLabel lbEmail;
