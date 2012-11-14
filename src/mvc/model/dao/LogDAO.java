@@ -88,21 +88,7 @@ public class LogDAO extends AbstractDAO
                     
                 }
         }
-        /*Se não houve retorno, não encontrou 
-         * e, sendo assim, se torna uma Exception
-         * por regra.
-         */
-        try {
-            throw new Exception("Não foi possível encontrar um log "
-                                + "que possua o codigo " + codigo + "."
-                      );
-        } catch (Exception ex) {
-            Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } finally {
-            return null;
-        }
-        
+        return null;       
     }
     public boolean objetoEUmLog(Object o) 
     {

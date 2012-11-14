@@ -80,21 +80,7 @@ public class TipoQuartoDAO extends AbstractDAO
                     
                 }
         }
-        /*Se não houve retorno, não encontrou 
-         * e, sendo assim, se torna uma Exception
-         * por regra.
-         */
-        try {
-            throw new Exception("Não foi possível encontrar um tipo de quarto "
-                                + "que possua o codigo " + codigo + "."
-                      );
-        } catch (Exception ex) {
-            Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } finally {
-            return null;
-        }
-        
+        return null;
     }
     public boolean objetoEUmTipoQuarto(Object o) 
     {

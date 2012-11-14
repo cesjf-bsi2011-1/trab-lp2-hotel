@@ -80,21 +80,7 @@ public class QuartoDAO extends AbstractDAO
                     
                 }
         }
-        /*Se não houve retorno, não encontrou 
-         * e, sendo assim, se torna uma Exception
-         * por regra.
-         */
-        try {
-            throw new Exception("Não foi possível encontrar um quarto "
-                                + "que possua o codigo " + codigo + "."
-                      );
-        } catch (Exception ex) {
-            Logger.getLogger(QuartoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } finally {
-            return null;
-        }
-        
+        return null;
     }
     public boolean objetoEUmQuarto(Object o) 
     {

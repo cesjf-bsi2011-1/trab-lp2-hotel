@@ -80,20 +80,7 @@ public class ClienteDAO extends AbstractDAO
                     
                 }
         }
-        /*Se não houve retorno, não encontrou 
-         * e, sendo assim, se torna uma Exception
-         * por regra.
-         */
-        try {
-            throw new Exception("Não foi possível encontrar um cliente "
-                                + "que possua o codigo " + codigo + "."
-                      );
-        } catch (Exception ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } finally {
-            return null;
-        }
+        return null;
         
     }
     
@@ -106,21 +93,7 @@ public class ClienteDAO extends AbstractDAO
                     
                 }
         }
-        /*Se não houve retorno, não encontrou 
-         * e, sendo assim, se torna uma Exception
-         * por regra.
-         */
-        try {
-            throw new Exception("Não foi possível encontrar um cliente "
-                                + "que possua o CPF " + cpf + "."
-                      );
-        } catch (Exception ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } finally {
-            return null;
-        }
-        
+        return null;       
     }
     
     public boolean objetoEUmCliente(Object o) 

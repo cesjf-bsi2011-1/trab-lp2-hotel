@@ -8,7 +8,6 @@ import entity.Cliente;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.soap.Detail;
 import mvc.model.dao.ClienteDAO;
 
 /**
@@ -239,8 +238,8 @@ public class FormBuscarCliente extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-866)/2, (screenSize.height-550)/2, 866, 550);
+        setSize(new java.awt.Dimension(866, 550));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLocalizaClienteCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocalizaClienteCpfActionPerformed
@@ -253,13 +252,10 @@ public class FormBuscarCliente extends javax.swing.JFrame {
         String cpf = tformatadoCpf.getText();
         cliente = clienteDAO.buscarPorCpf(cpf);
         
-        if(cliente != null)
-        {
+        if (cliente != null) {
             DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();            
             modelo.addRow(cliente.getDadosEmVetor());
-        }
-        else
-        {
+        } else {
             lbErro.setText("Nenhum cliente encontrado!");
         }
     }//GEN-LAST:event_btLocalizaClienteCpfActionPerformed

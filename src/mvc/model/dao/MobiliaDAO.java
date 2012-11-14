@@ -78,21 +78,7 @@ public class MobiliaDAO extends AbstractDAO
                     return mobiliaDaLista;           
                 }
         }
-        /*Se não houve retorno, não encontrou 
-         * e, sendo assim, se torna uma Exception
-         * por regra.
-         */
-        try {
-            throw new Exception("Não foi possível encontrar uma mobília "
-                                + "que possua o codigo " + codigo + "."
-                      );
-        } catch (Exception ex) {
-            Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } finally {
-            return null;
-        }
-        
+        return null; 
     }
     
     public boolean objetoEUmaMobilia(Object o) 
