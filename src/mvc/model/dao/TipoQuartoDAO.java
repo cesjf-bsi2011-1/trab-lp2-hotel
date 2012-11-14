@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class TipoQuartoDAO extends AbstractDAO
 {
-    private static List<TipoQuarto> tiposQuarto = new ArrayList<>();
+    private static List<TipoQuarto> listTiposQuarto = new ArrayList<>();
     private static int index = 0000;
     
     @Override
@@ -21,8 +21,9 @@ public class TipoQuartoDAO extends AbstractDAO
             TipoQuarto tipoQuartoParaInserir = (TipoQuarto) o;
             /*Garantindo que o código equivale ao index*/
             tipoQuartoParaInserir.setCodigo(String.valueOf(getIndex()));
-            tiposQuarto.add(tipoQuartoParaInserir);
+            listTiposQuarto.add(tipoQuartoParaInserir);
             getHistorico().inserir("Inserção do Tipo de Quarto " + tipoQuartoParaInserir.getNome());
+            acrescerIndex();
         }       
     }
 
@@ -31,7 +32,7 @@ public class TipoQuartoDAO extends AbstractDAO
     {
         if (objetoEUmTipoQuarto(o)) {
             TipoQuarto novoTipoQuarto = (TipoQuarto) o;
-            tiposQuarto.remove((TipoQuarto) o);
+            listTiposQuarto.remove((TipoQuarto) o);
             getHistorico().inserir("Remoção do Tipo de Quarto " + novoTipoQuarto.getNome());
         }
     }
@@ -41,7 +42,7 @@ public class TipoQuartoDAO extends AbstractDAO
     {        
         TipoQuarto tipoQuartoEncontrado = buscar(codigo);
         if (null != tipoQuartoEncontrado) {
-            tiposQuarto.remove(tipoQuartoEncontrado);
+            listTiposQuarto.remove(tipoQuartoEncontrado);
             getHistorico().inserir("Remoção do Tipo de Quarto " + tipoQuartoEncontrado.getNome());
         }
     }
@@ -54,10 +55,10 @@ public class TipoQuartoDAO extends AbstractDAO
             TipoQuarto tipoQuartoParaRemover = buscar(codigo);
             
             if (null != tipoQuartoParaRemover) {
-                tiposQuarto.remove(tipoQuartoParaRemover);
+                listTiposQuarto.remove(tipoQuartoParaRemover);
                 /*Garantindo que o código equivale ao index*/
                 tipoQuartoParaInserir.setCodigo(String.valueOf(getIndex()));
-                tiposQuarto.add(tipoQuartoParaInserir);
+                listTiposQuarto.add(tipoQuartoParaInserir);
                 getHistorico().inserir("Atualização do tipo de quarto " + tipoQuartoParaInserir.getNome());
             }
         }
@@ -66,14 +67,14 @@ public class TipoQuartoDAO extends AbstractDAO
     @Override
     public List buscarTodos() 
     {
-        return tiposQuarto;
+        return listTiposQuarto;
         
     }
 
     @Override
     public TipoQuarto buscar(String codigo) 
     {
-        for (TipoQuarto tipoQuartoDaLista : tiposQuarto) {
+        for (TipoQuarto tipoQuartoDaLista : listTiposQuarto) {
                 if (tipoQuartoDaLista.getCodigo().equals(codigo)) {
                     return tipoQuartoDaLista;
                     
@@ -127,7 +128,7 @@ public class TipoQuartoDAO extends AbstractDAO
     {
         List<String> listaDeNomes = new ArrayList<String>();
         
-        for (TipoQuarto tipoQuartoDaLista : tiposQuarto) {
+        for (TipoQuarto tipoQuartoDaLista : listTiposQuarto) {
             listaDeNomes.add(tipoQuartoDaLista.getNome());
         }
    

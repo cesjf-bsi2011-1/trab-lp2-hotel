@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class ClienteDAO extends AbstractDAO
 {
-    private static List<Cliente> clientes = new ArrayList<>();
+    private static List<Cliente> listClientes = new ArrayList<>();
     private static int index = 0000;
     
     @Override
@@ -21,8 +21,9 @@ public class ClienteDAO extends AbstractDAO
             Cliente clienteParaInserir = (Cliente) o;
             /*Garantindo que o código equivale ao index*/
             clienteParaInserir.setCodigo(getIndex());
-            clientes.add(clienteParaInserir);
+            listClientes.add(clienteParaInserir);
             getHistorico().inserir("Inserção do Cliente " + clienteParaInserir.getNome());
+            acrescerIndex();
         }       
     }
 
@@ -31,7 +32,7 @@ public class ClienteDAO extends AbstractDAO
     {
         if (objetoEUmCliente(o)) {
             Cliente clienteParaInserir = (Cliente) o;
-            clientes.remove((Cliente) o);
+            listClientes.remove((Cliente) o);
             getHistorico().inserir("Remoção do Cliente " + clienteParaInserir.getNome());
         }
     }
@@ -41,7 +42,7 @@ public class ClienteDAO extends AbstractDAO
     {        
         Cliente clienteEncontrado = buscar(codigo);
         if (null != clienteEncontrado) {
-            clientes.remove(clienteEncontrado);
+            listClientes.remove(clienteEncontrado);
             getHistorico().inserir("Remoção do Cliente " + clienteEncontrado.getNome());
         }
     }
@@ -54,10 +55,10 @@ public class ClienteDAO extends AbstractDAO
             Cliente clienteParaRemover = buscar(codigo);
             
             if (null != clienteParaRemover) {
-                clientes.remove(clienteParaRemover);
+                listClientes.remove(clienteParaRemover);
                 /*Garantindo que o código equivale ao index*/
                 clienteParaInserir.setCodigo(getIndex());
-                clientes.add(clienteParaInserir);
+                listClientes.add(clienteParaInserir);
                 getHistorico().inserir("Atualização do Cliente " + clienteParaInserir.getNome());
             }
         }
@@ -66,14 +67,14 @@ public class ClienteDAO extends AbstractDAO
     @Override
     public List buscarTodos() 
     {
-        return clientes;
+        return listClientes;
         
     }
 
     @Override
     public Cliente buscar(String codigo) 
     {
-        for (Cliente clienteDaLista : clientes) {
+        for (Cliente clienteDaLista : listClientes) {
                 if (clienteDaLista.getCodigo() == Integer.parseInt(codigo)) {
                     return clienteDaLista;
                     
@@ -99,7 +100,7 @@ public class ClienteDAO extends AbstractDAO
 
     public Cliente buscarPorCpf(String cpf) 
     {
-        for (Cliente clienteDaLista : clientes) {
+        for (Cliente clienteDaLista : listClientes) {
                 if (clienteDaLista.getCpf().equals(cpf)) {
                     return clienteDaLista;
                     

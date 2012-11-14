@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class LogDAO extends AbstractDAO
 {
-    private static List<Log> historico = new ArrayList<>();
+    private static List<Log> listLogs = new ArrayList<>();
     private static int index = 0000;
     
     @Override
@@ -23,8 +23,8 @@ public class LogDAO extends AbstractDAO
             Log logParaInserir = (Log) o;
             /*Garantindo que o código equivale ao index*/
             logParaInserir.setCodigo(String.valueOf(getIndex()));
-            historico.add(logParaInserir);
-            
+            listLogs.add(logParaInserir);
+            acrescerIndex();
         }       
     }
 
@@ -32,6 +32,7 @@ public class LogDAO extends AbstractDAO
         Date data = new Date();
         Log log = new Log(String.valueOf(getIndex()), AbstractForm.logado, mensagem, data);
         inserir(log);
+        acrescerIndex();
     }
     
     @Override
@@ -39,7 +40,7 @@ public class LogDAO extends AbstractDAO
     {
         if (objetoEUmLog(o)) {
             Log logParaRemover = (Log) o;
-            historico.remove((Log) o);
+            listLogs.remove((Log) o);
             getHistorico().inserir("Remoção do Log :" + logParaRemover.getAcao());
         }
     }
@@ -49,7 +50,7 @@ public class LogDAO extends AbstractDAO
     {        
         Log logEncontrado = buscar(codigo);
         if (null != logEncontrado) {
-            historico.remove(logEncontrado);
+            listLogs.remove(logEncontrado);
             getHistorico().inserir("Remoção do Log :" + logEncontrado.getAcao());
         }
     }
@@ -62,10 +63,10 @@ public class LogDAO extends AbstractDAO
             Log logParaInserir = buscar(codigo);
             
             if (null != logParaRemover) {
-                historico.remove(logParaRemover);
+                listLogs.remove(logParaRemover);
                 /*Garantindo que o código equivale ao index*/
                 logParaInserir.setCodigo(String.valueOf(getIndex()));
-                historico.add(logParaInserir);
+                listLogs.add(logParaInserir);
                 getHistorico().inserir("Atualização do Log :" + logParaInserir.getAcao());
             }
         }
@@ -74,14 +75,14 @@ public class LogDAO extends AbstractDAO
     @Override
     public List buscarTodos() 
     {
-        return historico;
+        return listLogs;
         
     }
 
     @Override
     public Log buscar(String codigo) 
     {
-        for (Log logDaLista : historico) {
+        for (Log logDaLista : listLogs) {
                 if (logDaLista.getCodigo().equals(codigo)) {
                     return logDaLista;
                     

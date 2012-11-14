@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class MobiliaDAO extends AbstractDAO
 {
-    private static List<Mobilia> mobilias = new ArrayList<>();
+    private static List<Mobilia> listMobilias = new ArrayList<>();
     private static int index = 0000;
     
     @Override
@@ -21,8 +21,9 @@ public class MobiliaDAO extends AbstractDAO
             Mobilia mobiliaParaInserir = (Mobilia) o;
             /*Garantindo que o código equivale ao index*/
             mobiliaParaInserir.setCodigo(String.valueOf(getIndex()));
-            mobilias.add(mobiliaParaInserir);
+            listMobilias.add(mobiliaParaInserir);
             getHistorico().inserir("Inserção da Mobília " + mobiliaParaInserir.getNome());
+            acrescerIndex();
         }       
     }
 
@@ -31,7 +32,7 @@ public class MobiliaDAO extends AbstractDAO
     {
         if (objetoEUmaMobilia(o)) {
             Mobilia mobiliaParaRemover = (Mobilia) o;
-            mobilias.remove(mobiliaParaRemover);
+            listMobilias.remove(mobiliaParaRemover);
             getHistorico().inserir("Remoção da Mobília " + mobiliaParaRemover.getNome());
         }
     }
@@ -41,7 +42,7 @@ public class MobiliaDAO extends AbstractDAO
     {        
         Mobilia mobiliaEncontrada = buscar(codigo);
         if (null != mobiliaEncontrada) {
-            mobilias.remove(mobiliaEncontrada);
+            listMobilias.remove(mobiliaEncontrada);
             getHistorico().inserir("Remoção da Mobília " + mobiliaEncontrada.getNome());
         }
     }
@@ -54,10 +55,10 @@ public class MobiliaDAO extends AbstractDAO
             Mobilia mobiliaParaRemover = buscar(codigo);
             
             if (null != mobiliaParaRemover) {
-                mobilias.remove(mobiliaParaRemover);
+                listMobilias.remove(mobiliaParaRemover);
                 /*Garantindo que o código equivale ao index*/
                 mobiliaParaRemover.setCodigo(String.valueOf(getIndex()));
-                mobilias.add(mobiliaParaInserir);
+                listMobilias.add(mobiliaParaInserir);
                 getHistorico().inserir("Atualização do mobilia " + mobiliaParaInserir.getNome());
             }
         } 
@@ -66,13 +67,13 @@ public class MobiliaDAO extends AbstractDAO
     @Override
     public List buscarTodos() 
     {
-        return mobilias;   
+        return listMobilias;   
     }
 
     @Override
     public Mobilia buscar(String codigo) 
     {
-        for (Mobilia mobiliaDaLista : mobilias) {
+        for (Mobilia mobiliaDaLista : listMobilias) {
                 if (mobiliaDaLista.getCodigo().equals(codigo)) {
                     return mobiliaDaLista;           
                 }

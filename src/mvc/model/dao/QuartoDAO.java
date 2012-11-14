@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class QuartoDAO extends AbstractDAO
 {
-    private static List<Quarto> quartos = new ArrayList<>();
+    private static List<Quarto> listQuartos = new ArrayList<>();
     private static int index = 000;
     
     @Override
@@ -21,8 +21,9 @@ public class QuartoDAO extends AbstractDAO
             Quarto quartoParaInserir = (Quarto) o;
             /*Garantindo que o código equivale ao index*/
             quartoParaInserir.setCodigo(String.valueOf(getIndex()));
-            quartos.add(quartoParaInserir);
+            listQuartos.add(quartoParaInserir);
             getHistorico().inserir("Inserção do Quarto " + quartoParaInserir.getCodigo());
+            acrescerIndex();
         }       
     }
 
@@ -31,7 +32,7 @@ public class QuartoDAO extends AbstractDAO
     {
         if (objetoEUmQuarto(o)) {
             Quarto novoQuarto = (Quarto) o;
-            quartos.remove((Quarto) o);
+            listQuartos.remove((Quarto) o);
             getHistorico().inserir("Remoção do Quarto " + novoQuarto.getCodigo());
         }
     }
@@ -41,7 +42,7 @@ public class QuartoDAO extends AbstractDAO
     {        
         Quarto quartoEncontrado = buscar(codigo);
         if (null != quartoEncontrado) {
-            quartos.remove(quartoEncontrado);
+            listQuartos.remove(quartoEncontrado);
             getHistorico().inserir("Remoção do Quarto " + quartoEncontrado.getCodigo());
         }
     }
@@ -54,10 +55,10 @@ public class QuartoDAO extends AbstractDAO
             Quarto quartoParaRemover = buscar(codigo);
             
             if (null != quartoParaRemover) {
-                quartos.remove(quartoParaRemover);
+                listQuartos.remove(quartoParaRemover);
                 /*Garantindo que o código equivale ao index*/
                 quartoParaInserir.setCodigo(String.valueOf(getIndex()));
-                quartos.add(quartoParaInserir);
+                listQuartos.add(quartoParaInserir);
                 getHistorico().inserir("Atualização do tipo de quarto " + quartoParaInserir.getCodigo());
             }
         }
@@ -66,14 +67,14 @@ public class QuartoDAO extends AbstractDAO
     @Override
     public List buscarTodos() 
     {
-        return quartos;
+        return listQuartos;
         
     }
 
     @Override
     public Quarto buscar(String codigo) 
     {
-        for (Quarto quartoDaLista : quartos) {
+        for (Quarto quartoDaLista : listQuartos) {
                 if (quartoDaLista.getCodigo().equals(codigo)) {
                     return quartoDaLista;
                     
