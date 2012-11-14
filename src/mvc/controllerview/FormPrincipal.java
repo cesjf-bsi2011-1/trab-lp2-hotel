@@ -1,17 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.controllerview;
-
-
-
 
 /**
  *
  * @author Willian
  */
-public class FormPrincipal extends javax.swing.JFrame {
+public class FormPrincipal extends AbstractForm {
 
     
     /**
@@ -19,7 +12,7 @@ public class FormPrincipal extends javax.swing.JFrame {
      */
     public FormPrincipal() {
         initComponents();
-         setExtendedState(FormPrincipal.MAXIMIZED_BOTH);
+        setExtendedState(FormPrincipal.MAXIMIZED_BOTH);
     }
 
     /**
@@ -329,7 +322,6 @@ public class FormPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
     private void btClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btClientesActionPerformed
-        // TODO add your handling code here:
         FormBuscarCliente fBuscarCliente = new FormBuscarCliente();
         fBuscarCliente.setVisible(true);
     }//GEN-LAST:event_btClientesActionPerformed
