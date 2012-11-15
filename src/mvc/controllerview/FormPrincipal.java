@@ -292,31 +292,26 @@ public class FormPrincipal extends AbstractForm {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClienteActionPerformed
-        // TODO add your handling code here:
         FormCadastroCliente cadCli = new FormCadastroCliente();
         cadCli.setVisible(true);
     }//GEN-LAST:event_jMenuItemClienteActionPerformed
 
     private void jMenuItemQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemQuartoActionPerformed
-        // TODO add your handling code here:
         FormCadastroQuarto cadQuarto = new FormCadastroQuarto();
         cadQuarto.setVisible(true);
     }//GEN-LAST:event_jMenuItemQuartoActionPerformed
 
     private void jMenuItemTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTipoQuartoActionPerformed
-        // TODO add your handling code here:
         FormCadastroTipoQuarto cadTipoQuarto = new FormCadastroTipoQuarto();
         cadTipoQuarto.setVisible(true);
     }//GEN-LAST:event_jMenuItemTipoQuartoActionPerformed
 
     private void jMenuItemMobiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMobiliaActionPerformed
-        // TODO add your handling code here:
         FormCadastroMobilia cadMobilia = new FormCadastroMobilia();
         cadMobilia.setVisible(true);
     }//GEN-LAST:event_jMenuItemMobiliaActionPerformed
 
     private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
-        // TODO add your handling code here:
         FormSobre fSobre = new FormSobre();
         fSobre.setVisible(true);
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
@@ -327,13 +322,11 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_btClientesActionPerformed
 
     private void btHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedagemActionPerformed
-        // TODO add your handling code here:
         FormBuscarHospedagem fBuscarHospedagem = new FormBuscarHospedagem();        
         fBuscarHospedagem.setVisible(true);
     }//GEN-LAST:event_btHospedagemActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
@@ -343,13 +336,11 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_btCalculadoraActionPerformed
 
     private void btQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartosActionPerformed
-        // TODO add your handling code here:
         FormBuscarQuartos fBuscarQuartos = new FormBuscarQuartos();
         fBuscarQuartos.setVisible(true);
     }//GEN-LAST:event_btQuartosActionPerformed
 
     private void btMobiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMobiliaActionPerformed
-        // TODO add your handling code here:
         FormBuscarMobilia fBuscarMobilia = new FormBuscarMobilia();
         fBuscarMobilia.setVisible(true);
     }//GEN-LAST:event_btMobiliaActionPerformed
@@ -359,13 +350,11 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_formWindowOpened
 
     private void btHospedarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedarActionPerformed
-        // TODO add your handling code here:
         FormReserva fReserva = new FormReserva();
         fReserva.setVisible(true);
     }//GEN-LAST:event_btHospedarActionPerformed
 
     private void btSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSair1ActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSair1ActionPerformed
     

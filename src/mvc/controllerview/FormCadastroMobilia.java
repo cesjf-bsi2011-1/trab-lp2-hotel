@@ -8,10 +8,13 @@ import entity.Mobilia;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import mvc.model.dao.MobiliaDAO;
+import myutils.Notificacao;
 
-public class FormCadastroMobilia extends javax.swing.JFrame {
+public class FormCadastroMobilia extends AbstractForm {
 
     public static Mobilia mobilia = null;
+    private Notificacao notificacao = new Notificacao();
+    
     /**
      * Creates new form FormCadastroMobilia
      */
@@ -164,35 +167,29 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        // TODO add your handling code here:
-        if(camposObrigatorios() == true)
-        {
-            lbConfirma.setVisible(false);
-            lbErro.setVisible(true);
-            lbErro.setText("Os Campos com * são Obrigatorios!");
-            
-        }
-        else
-        {
-            
+        if(camposObrigatoriosPreenchidos()){
             Mobilia newMobilia = new Mobilia();
             newMobilia.setCodigo(tfCodigo.getText());
             newMobilia.setNome(tfNome.getText());           
             newMobilia.setDescricao(taDescricao.getText());
-            MobiliaDAO mobiliaDAO = new MobiliaDAO();
-            try
-            {
+            
+            try {
+                MobiliaDAO mobiliaDAO = new MobiliaDAO();
                 mobiliaDAO.inserir(newMobilia);
-            }catch(Exception e)
-            {
-                JOptionPane.showMessageDialog(null, e);
-            }            
+                notificacao.exibir("Mobília " + newMobilia.getNome() + " "
+                        + "foi cadastrada com sucesso", Notificacao.SUCESSO);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }  
+            
             lbErro.setVisible(false);
-            lbConfirma.setVisible(true);
-            lbConfirma.setText("Mobilia cadastrada com sucesso!");
             tfCodigo.setText("");
             tfNome.setText("");
-            taDescricao.setText("");
+            taDescricao.setText("");  
+        } else {
+            lbConfirma.setVisible(false);
+            lbErro.setVisible(true);
+            lbErro.setText("Os Campos com * são Obrigatorios!");
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -210,8 +207,7 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if(mobilia != null)
-        {
+        if(mobilia != null) {
             tfCodigo.setText(mobilia.getCodigo());
             tfNome.setText(mobilia.getNome());
             taDescricao.setText(mobilia.getDescricao());
@@ -221,48 +217,43 @@ public class FormCadastroMobilia extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        // TODO add your handling code here:
         mobilia.setCodigo(tfCodigo.getText());
         mobilia.setNome(tfNome.getText());
         mobilia.setDescricao(taDescricao.getText());
-        MobiliaDAO mobiliaDAO = new MobiliaDAO();
-        try
-        {
+          
+        try {
+            MobiliaDAO mobiliaDAO = new MobiliaDAO();
             mobiliaDAO.atualizar(mobilia.getCodigo(), mobilia);
-        }catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e);
-        }
+            notificacao.exibir("Mobília " + mobilia.getNome() + " "
+                           + "foi atualizada com sucesso", Notificacao.SUCESSO);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        } 
+        
         mobilia = null;
         tfCodigo.setText("");
         tfNome.setText("");
         taDescricao.setText("");
-        lbConfirma.setEnabled(true);
-        lbConfirma.setText("Mobilia Atualizada com sucesso!");
     }//GEN-LAST:event_btAtualizarActionPerformed
 
-    private boolean camposObrigatorios()
+    private boolean camposObrigatoriosPreenchidos()
     {
-        boolean retorno = false;
-        if(tfCodigo.getText().equals(""))
-        {
+        boolean retorno = true;
+        
+        if(tfCodigo.getText().equals("")) {
             tfCodigo.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfCodigo.setBackground(Color.WHITE);
         }
         
-        if(tfNome.getText().equals(""))
-        {
+        if(tfNome.getText().equals("")) {
             tfNome.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfNome.setBackground(Color.WHITE);
         }
+        
         return retorno;
     }
     /**
