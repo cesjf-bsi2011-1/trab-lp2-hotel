@@ -16,7 +16,8 @@ public class Notificacao{
 
     private static Notificacao instance;
     private Mensagem alerta;
-
+    public static final int SUCESSO = 1;
+    public static final int ERRO = 0;
     
     public static synchronized Notificacao getInstance() 
     {
@@ -27,9 +28,9 @@ public class Notificacao{
         return instance;
     }
 
-    public void exibir(String mensagem) 
+    public void exibir(String mensagem, int tipo) 
     {
-        alerta = new Mensagem(mensagem);
+        alerta = new Mensagem(mensagem, tipo);
         alerta.setVisible(true);
         new Timer().schedule(new TimerTask() {
 
@@ -45,7 +46,7 @@ public class Notificacao{
 
     private class Mensagem extends JDialog
     {
-        public Mensagem(String text) {
+        public Mensagem(String text, int tipo) {
             super();
             JPanel panel = new JPanel();
             getContentPane().add(panel);
@@ -53,10 +54,20 @@ public class Notificacao{
             JLabel mensagem = new JLabel(text);
             Font font = new Font("Verdana", Font.BOLD, 14);
             mensagem.setFont(font);
-            mensagem.setForeground(Color.red);
-            
             panel.add(mensagem);
-            panel.setBackground(Color.yellow);
+            
+            switch(tipo) {
+                case Notificacao.ERRO:
+                    mensagem.setForeground(Color.red);
+                    panel.setBackground(Color.yellow);
+                    break;
+                case Notificacao.SUCESSO:
+                    mensagem.setForeground(Color.green);
+                    panel.setBackground(Color.BLUE);
+                default :
+                    break;
+            }
+            
             pack();
             
         }

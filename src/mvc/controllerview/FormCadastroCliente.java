@@ -9,10 +9,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import mvc.model.dao.ClienteDAO;
+import myutils.Notificacao;
 
 public class FormCadastroCliente extends javax.swing.JFrame {
 
     public static Cliente cliente = null;
+    private Notificacao notificacao = new Notificacao();
+    
     /**
      * Creates new form FormCadastroCliente
      */
@@ -485,61 +488,56 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_tformatadoTelCelularActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        // TODO add your handling code here:
-        Cliente cli = new Cliente();
+        Cliente novoCliente = new Cliente();
         
-        if(camposObrigatorios() == true)
-        {
-            lbErro.setVisible(true);
-            lbErro.setText("Os Campos com * são obrigatorios!");
-            
-        }
-        else
-        {
-            ClienteDAO clienteDAO = new ClienteDAO();
-            cli.setNome(tfNome.getText());
-            cli.setCodigo(clienteDAO.getIndex());
-            cli.setCpf(tformatadoCpf.getText());
-            cli.setRg(tfRg.getText());
+        if(camposObrigatoriosPreenchidos()) {
+            novoCliente.setNome(tfNome.getText());
+            novoCliente.setCpf(tformatadoCpf.getText());
+            novoCliente.setRg(tfRg.getText());
             try {
-                cli.setDataNascimento(DateCustomizer.StrToDate(tformatadoDataNasc.getText()));
+                novoCliente.setDataNascimento(DateCustomizer.StrToDate(tformatadoDataNasc.getText()));
             } catch (ParseException ex) {
                 Logger.getLogger(FormCadastroCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            cli.setComplemento(tfComplemento.getText());
-            cli.setRua(tfRua.getText());
-            cli.setNumeroEnd(tfNumeroEnd.getText());
-            cli.setCidade(tfCidade.getText());
-            cli.setEstado((String)comboEstado.getSelectedItem());
-            cli.setCep(tformatadoCep.getText());
-            cli.setFoneCelular(tformatadoTelCelular.getText());
-            cli.setFoneResidencial(tformatadoTelResidencial.getText());
-            cli.setFoneComercial(tformatadoTelComercial.getText());
-            cli.setEmail(tfEmail.getText());
-            cli.setObservação(taObs.getText());
+            novoCliente.setComplemento(tfComplemento.getText());
+            novoCliente.setRua(tfRua.getText());
+            novoCliente.setNumeroEnd(tfNumeroEnd.getText());
+            novoCliente.setCidade(tfCidade.getText());
+            novoCliente.setEstado((String)comboEstado.getSelectedItem());
+            novoCliente.setCep(tformatadoCep.getText());
+            novoCliente.setFoneCelular(tformatadoTelCelular.getText());
+            novoCliente.setFoneResidencial(tformatadoTelResidencial.getText());
+            novoCliente.setFoneComercial(tformatadoTelComercial.getText());
+            novoCliente.setEmail(tfEmail.getText());
+            novoCliente.setObservação(taObs.getText());
             
-            
-            clienteDAO.inserir(cli);
+            try {
+                ClienteDAO clienteDAO = new ClienteDAO();
+                novoCliente.setCodigo(clienteDAO.getIndex());
+                clienteDAO.inserir(novoCliente);
+                notificacao.exibir("Cliente " + novoCliente.getNome() + " "
+                        + "foi cadastrado com sucesso", Notificacao.SUCESSO);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }
             
             FormCustomizer.limparTodosCampos(painelDadosPessoais);
             FormCustomizer.limparTodosCampos(painelEndereco);
             FormCustomizer.limparTodosCampos(painelContato);
+            
             taObs.setText("");
-            lbErro.setVisible(false);
-            JOptionPane.showMessageDialog(null, "Cliente Cadastrado com sucesso!");
-            tfNome.requestFocus();
+            tfNome.requestFocus();   
+        } else {
+            lbErro.setVisible(true);
+            lbErro.setText("Os Campos com * são obrigatorios!");
         }
-        
-
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        // TODO add your handling code here:
         btCadastrar.setEnabled(true);
         FormCustomizer.limparTodosCampos(painelContato);
         FormCustomizer.limparTodosCampos(painelDadosPessoais);
@@ -548,11 +546,10 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
         btAtualizar.setEnabled(false);
         btRemover.setEnabled(false);
-        if(cliente != null)
-        {
+        
+        if(cliente != null) {
             btAtualizar.setEnabled(true);
             btRemover.setEnabled(true);
             btCadastrar.setEnabled(false);
@@ -579,22 +576,17 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btBuscarCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCpfActionPerformed
-        // TODO add your handling code here:
-
-        try
-        {
-        
+        try {
             String cpfBusca = tformatadoCpf.getText();
             ClienteDAO clienteDAO = new ClienteDAO();
             Cliente clienteBusca = clienteDAO.buscarPorCpf(cpfBusca);
-            if(clienteBusca != null)
-            {
+            if(clienteBusca != null) {
                 btCadastrar.setEnabled(false);
                 btAtualizar.setEnabled(true);
                 btRemover.setEnabled(true);
                 lbErro.setVisible(false);
+                
                 //Dados Pessoais
-
                 tfCodigo.setText(Integer.toString(clienteBusca.getCodigo()));
                 tfNome.setText(clienteBusca.getNome());
 
@@ -616,17 +608,14 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 tfEmail.setText(clienteBusca.getEmail());
 
                 taObs.setText(clienteBusca.getObservação());
-            }
-            else            
-            {                
-              JOptionPane.showMessageDialog(null, "Nenhum Cliente com o CPF: " + tformatadoCpf.getText());
+            } else {  
+              notificacao.exibir("Nenhum Cliente com o CPF: " + tformatadoCpf.getText(), Notificacao.SUCESSO);
               btAtualizar.setEnabled(false);
               btRemover.setEnabled(false);
               btCadastrar.setEnabled(true);
             }
-        }catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (Exception ex) {
+              JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
     }//GEN-LAST:event_btBuscarCpfActionPerformed
 
@@ -636,97 +625,79 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-        // TODO add your handling code here:
         int codigo = Integer.parseInt(tfCodigo.getText());
+        String nomeCliente = tfNome.getText();
         
         int i = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente: " + tfNome.getText());
         
-        if(i == 0)
-        {
-               ClienteDAO clienteDAO = new ClienteDAO();
-               clienteDAO.remover(Integer.toString(codigo));
-               FormCustomizer.limparTodosCampos(painelDadosPessoais);
-               FormCustomizer.limparTodosCampos(painelContato);
-               FormCustomizer.limparTodosCampos(painelEndereco);
-        }
-        else
-        {
+        if(i == 0) {
+            try {
+                 ClienteDAO clienteDAO = new ClienteDAO();
+                 clienteDAO.remover(Integer.toString(codigo));
+                 notificacao.exibir("Cliente " + nomeCliente + " "
+                         + "foi removido com sucesso", Notificacao.SUCESSO);
+            } catch (Exception ex) {
+                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }
+            
+            FormCustomizer.limparTodosCampos(painelDadosPessoais);
+            FormCustomizer.limparTodosCampos(painelContato);
+            FormCustomizer.limparTodosCampos(painelEndereco);
+        } else {
             tfNome.requestFocus();
-        }
-        
-        
+        }        
     }//GEN-LAST:event_btRemoverActionPerformed
 
-    public boolean camposObrigatorios()
+    public boolean camposObrigatoriosPreenchidos()
     {
-        boolean retorno = false;
-        if(tfNome.getText().equals(""))
-        {
+        boolean retorno = true;
+        
+        if(tfNome.getText().equals("")) {
             tfNome.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfNome.setBackground(Color.WHITE);
         }
         
-        if(tformatadoCpf.getText().equals("   .   .   -  "))
-        {
+        if(tformatadoCpf.getText().equals("   .   .   -  ")) {
             tformatadoCpf.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tformatadoCpf.setBackground(Color.WHITE);
         }
         
-        if(tfRg.getText().equals(""))
-        {
+        if(tfRg.getText().equals("")) {
             tfRg.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfRg.setBackground(Color.WHITE);
         }
         
-        if(tformatadoDataNasc.getText().equals("  /  /    "))
-        {
+        if(tformatadoDataNasc.getText().equals("  /  /    ")) {
             tformatadoDataNasc.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tformatadoDataNasc.setBackground(Color.WHITE);
         }
         
-        if(tfRua.getText().equals(""))
-        {
+        if(tfRua.getText().equals("")) {
             tfRua.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfRua.setBackground(Color.WHITE);
         }
         
-        if(tfNumeroEnd.getText().equals(""))
-        {
+        if(tfNumeroEnd.getText().equals("")) {
             tfNumeroEnd.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfNumeroEnd.setBackground(Color.WHITE);
         }
         
-        if(tfCidade.getText().equals(""))
-        {
+        if(tfCidade.getText().equals("")) {
             tfCidade.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfCidade.setBackground(Color.WHITE);
         }
         
