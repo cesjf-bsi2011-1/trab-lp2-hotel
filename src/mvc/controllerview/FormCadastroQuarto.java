@@ -21,10 +21,14 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         initComponents();   
         
         try {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            tfCodigo.setText(String.valueOf(quartoDAO.getIndex()));
+            
             tipoQuartoNomes = (ArrayList) tipoQuartoDAO.listarNomesTipoQuarto();
             for(String nomeDoTipoQuarto : tipoQuartoNomes) {
                 jComboBoxTipoQuarto.addItem(nomeDoTipoQuarto);
-            } 
+            }
+            jComboBoxTipoQuarto.requestFocus();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
@@ -73,6 +77,8 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         });
 
         lbCodigo.setText("Código: *");
+
+        tfCodigo.setEditable(false);
 
         lbTipoQuarto.setText("Tipo Quarto: *");
 
@@ -131,19 +137,17 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lbCodigo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfCodigo))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbValor)
                                 .addGap(11, 11, 11)
                                 .addComponent(tfValor))
+                            .addComponent(lbObs)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbObs)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
+                                .addComponent(lbCodigo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 75, Short.MAX_VALUE)
                         .addComponent(lbTipoQuarto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBoxTipoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,8 +221,8 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
             
                 QuartoDAO quartoDAO = new QuartoDAO();
                 quartoDAO.inserir(quarto);
-                notificacao.exibir("Quarto Cadastrado com sucesso!",
-                                                           Notificacao.SUCESSO);
+                notificacao.exibir("Quarto " + quarto.getObservacao() 
+                             + " Cadastrado com sucesso!", Notificacao.SUCESSO);
                 limparForm();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);

@@ -18,6 +18,14 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     
     public FormCadastroTipoQuarto() {
         initComponents();
+        
+        try {
+            tfNome.requestFocus();
+            TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
+            tfCodigo.setText(String.valueOf(tipoQuartoDAO.getIndex()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -53,6 +61,8 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         setTitle("Hotel Rooms | Cadastro Tipo de Quarto");
 
         lbCodigo.setText("Código: *");
+
+        tfCodigo.setEditable(false);
 
         lbnome.setText("Nome: *");
 

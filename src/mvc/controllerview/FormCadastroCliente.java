@@ -19,6 +19,13 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     public FormCadastroCliente() {
         initComponents();
  
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            tfCodigo.setText(String.valueOf(clienteDAO.getIndex()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
+        
         /*Caso o Form esteja sendo aberto com intuito de 
         * realizar uma atualização, o objeto global
         * cliente foi preenchido diretamente por outro

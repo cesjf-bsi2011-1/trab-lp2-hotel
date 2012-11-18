@@ -13,6 +13,14 @@ public class FormCadastroMobilia extends AbstractForm {
     public FormCadastroMobilia() {
         initComponents();
         
+        try {
+            MobiliaDAO mobiliaDAO = new MobiliaDAO();
+            tfCodigo.setText(String.valueOf(mobiliaDAO.getIndex()));
+            tfNome.requestFocus();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
+        
         /*Caso o Form esteja sendo aberto com intuito de 
         * realizar uma atualização, o objeto global
         * mobilia foi preenchido diretamente por outro
@@ -57,6 +65,8 @@ public class FormCadastroMobilia extends AbstractForm {
         });
 
         lbCodigo.setText("Código:");
+
+        tfCodigo.setEditable(false);
 
         lbNome.setText("Nome: *");
 
@@ -165,8 +175,8 @@ public class FormCadastroMobilia extends AbstractForm {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-587)/2, (screenSize.height-359)/2, 587, 359);
+        setSize(new java.awt.Dimension(587, 359));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
