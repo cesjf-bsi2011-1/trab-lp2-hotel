@@ -64,8 +64,6 @@ public class LogDAO extends AbstractDAO
             
             if (null != logParaRemover) {
                 listLogs.remove(logParaRemover);
-                /*Garantindo que o código equivale ao index*/
-                logParaInserir.setCodigo(String.valueOf(getIndex()));
                 listLogs.add(logParaInserir);
                 getHistorico().inserir("Atualização do Log :" + logParaInserir.getAcao());
             }

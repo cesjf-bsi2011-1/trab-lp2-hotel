@@ -56,8 +56,6 @@ public class QuartoDAO extends AbstractDAO
             
             if (null != quartoParaRemover) {
                 listQuartos.remove(quartoParaRemover);
-                /*Garantindo que o código equivale ao index*/
-                quartoParaInserir.setCodigo(String.valueOf(getIndex()));
                 listQuartos.add(quartoParaInserir);
                 getHistorico().inserir("Atualização do tipo de quarto " + quartoParaInserir.getCodigo());
             }

@@ -56,8 +56,6 @@ public class ClienteDAO extends AbstractDAO
             
             if (null != clienteParaRemover) {
                 listClientes.remove(clienteParaRemover);
-                /*Garantindo que o código equivale ao index*/
-                clienteParaInserir.setCodigo(getIndex());
                 listClientes.add(clienteParaInserir);
                 getHistorico().inserir("Atualização do Cliente " + clienteParaInserir.getNome());
             }

@@ -82,6 +82,18 @@ public class TipoQuartoDAO extends AbstractDAO
         }
         return null;
     }
+    
+    public TipoQuarto buscarPorNome(String nome) 
+    {
+        for (TipoQuarto tipoQuartoDaLista : listTiposQuarto) {
+                if (tipoQuartoDaLista.getNome().equals(nome)) {
+                    return tipoQuartoDaLista;
+                    
+                }
+        }
+        return null;
+    }
+    
     public boolean objetoEUmTipoQuarto(Object o) 
     {
         if (o instanceof TipoQuarto) {

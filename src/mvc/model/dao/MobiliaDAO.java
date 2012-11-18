@@ -56,8 +56,6 @@ public class MobiliaDAO extends AbstractDAO
             
             if (null != mobiliaParaRemover) {
                 listMobilias.remove(mobiliaParaRemover);
-                /*Garantindo que o código equivale ao index*/
-                mobiliaParaRemover.setCodigo(String.valueOf(getIndex()));
                 listMobilias.add(mobiliaParaInserir);
                 getHistorico().inserir("Atualização do mobilia " + mobiliaParaInserir.getNome());
             }
