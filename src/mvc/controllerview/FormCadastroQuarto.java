@@ -29,7 +29,11 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
         
-        //Caso o Form esteha sendo aberto para uma edição
+        /*Caso o Form esteja sendo aberto com intuito de 
+        * realizar uma atualização, o objeto global
+        * quarto foi preenchido diretamente por outro
+        * Form.
+        */
         if (quarto != null) {
             preencherFormCom(quarto);
             btAtualizar.setEnabled(true);

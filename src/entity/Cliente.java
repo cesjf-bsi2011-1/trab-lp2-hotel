@@ -213,8 +213,8 @@ public class Cliente implements InterfaceEntity
         Object[] dados = new Object[] {
             codigo,
             nome,
-            rg,
             cpf,
+            rg,
             cidade
         };
         

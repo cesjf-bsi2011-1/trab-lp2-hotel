@@ -13,6 +13,11 @@ public class FormCadastroMobilia extends AbstractForm {
     public FormCadastroMobilia() {
         initComponents();
         
+        /*Caso o Form esteja sendo aberto com intuito de 
+        * realizar uma atualização, o objeto global
+        * mobilia foi preenchido diretamente por outro
+        * Form.
+        */
         if(mobilia != null) {
             preencherFormCom(mobilia);
             btAtualizar.setEnabled(true);

@@ -18,7 +18,18 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     
     public FormCadastroCliente() {
         initComponents();
-
+ 
+        /*Caso o Form esteja sendo aberto com intuito de 
+        * realizar uma atualização, o objeto global
+        * cliente foi preenchido diretamente por outro
+        * Form.
+        */
+        if(cliente != null) {
+            btAtualizar.setEnabled(true);
+            btRemover.setEnabled(true);
+            btCadastrar.setEnabled(false);         
+            preencherFormCom(cliente);
+        }
     }
 
     /**
@@ -486,6 +497,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
         this.dispose();
+        cliente = null;
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
@@ -527,8 +539,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
             }   
         } else {
-            lbErro.setVisible(true);
-            lbErro.setText("Os Campos com * são obrigatorios!");
+            notificacao.exibir("Os Campos com * são obrigatorios!", Notificacao.ERRO);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -541,33 +552,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        btAtualizar.setEnabled(false);
-        btRemover.setEnabled(false);
         
-        if(cliente != null) {
-            btAtualizar.setEnabled(true);
-            btRemover.setEnabled(true);
-            btCadastrar.setEnabled(false);
-            
-            tfNome.setText(cliente.getNome());
-            tfCodigo.setText(Integer.toString(cliente.getCodigo()));
-            tformatadoCpf.setText(cliente.getCpf());
-            tfRg.setText(cliente.getRg());
-            tformatadoDataNasc.setText(DateCustomizer.DateToStr(cliente.getDataNascimento()));
-            
-            tfRua.setText(cliente.getRua());
-            tfNumeroEnd.setText(cliente.getNumeroEnd());
-            tfComplemento.setText(cliente.getComplemento());
-            comboEstado.setSelectedItem((String)cliente.getEstado());
-            tfCidade.setText(cliente.getCidade());
-            tformatadoCep.setText(cliente.getCep());
-            
-            tformatadoTelCelular.setText(cliente.getFoneCelular());
-            tformatadoTelComercial.setText(cliente.getFoneComercial());
-            tformatadoTelResidencial.setText(cliente.getFoneResidencial());
-            tfEmail.setText(cliente.getEmail());
-            taObs.setText(cliente.getObservação());
-        }
     }//GEN-LAST:event_formWindowOpened
 
     private void btBuscarCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarCpfActionPerformed
@@ -579,32 +564,27 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 btCadastrar.setEnabled(false);
                 btAtualizar.setEnabled(true);
                 btRemover.setEnabled(true);
-                lbErro.setVisible(false);
-                
-                //Dados Pessoais
+
                 tfCodigo.setText(Integer.toString(clienteBusca.getCodigo()));
                 tfNome.setText(clienteBusca.getNome());
-
                 tfRg.setText(clienteBusca.getRg());
-                tformatadoDataNasc.setText(DateCustomizer.DateToStr(clienteBusca.getDataNascimento()));
-   
-                //Endereço
+                tformatadoDataNasc.setText(DateCustomizer.DateToStr(
+                            clienteBusca.getDataNascimento())
+                        );
                 tfRua.setText(clienteBusca.getRua());
                 tfComplemento.setText(clienteBusca.getComplemento());
                 tfNumeroEnd.setText(clienteBusca.getNumeroEnd());
                 tfCidade.setText(clienteBusca.getCidade());
                 comboEstado.setSelectedItem((String)clienteBusca.getEstado());
                 tformatadoCep.setText(clienteBusca.getCep());
-
-                //contato
-                tfTelResidencial.setText(clienteBusca.getFoneResidencial());
+                tformatadoTelResidencial.setText(clienteBusca.getFoneResidencial());
                 tformatadoTelCelular.setText(clienteBusca.getFoneCelular());
                 tformatadoTelComercial.setText(clienteBusca.getFoneComercial());
                 tfEmail.setText(clienteBusca.getEmail());
-
                 taObs.setText(clienteBusca.getObservação());
             } else {  
-              notificacao.exibir("Nenhum Cliente com o CPF: " + tformatadoCpf.getText(), Notificacao.SUCESSO);
+              notificacao.exibir("Nenhum Cliente com o CPF: " + 
+                                    tformatadoCpf.getText(), Notificacao.ERRO);
               btAtualizar.setEnabled(false);
               btRemover.setEnabled(false);
               btCadastrar.setEnabled(true);
@@ -615,8 +595,33 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btBuscarCpfActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        // TODO add your handling code here:
-        
+         String codigo = tfCodigo.getText();
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente clienteParaAtualizar = clienteDAO.buscar(codigo);
+            clienteParaAtualizar.setCidade(tfCidade.getText());
+            clienteParaAtualizar.setCep(tformatadoCep.getText());
+            clienteParaAtualizar.setComplemento(tfComplemento.getText());
+            clienteParaAtualizar.setCpf(tformatadoCpf.getText());
+            clienteParaAtualizar.setDataNascimento(
+                    DateCustomizer.StrToDate(tformatadoDataNasc.getText())
+                    );
+            clienteParaAtualizar.setEmail(tfEmail.getText());
+            clienteParaAtualizar.setEstado((String) comboEstado.getSelectedItem());
+            clienteParaAtualizar.setFoneCelular(tformatadoTelCelular.getText());
+            clienteParaAtualizar.setFoneComercial(tformatadoTelComercial.getText());
+            clienteParaAtualizar.setFoneResidencial(tformatadoTelResidencial.getText());
+            clienteParaAtualizar.setNome(tfNome.getText());
+            clienteParaAtualizar.setNumeroEnd(tfNumeroEnd.getText());
+            clienteParaAtualizar.setObservação(taObs.getText());
+            clienteParaAtualizar.setRg(tfRg.getText());
+            clienteParaAtualizar.setRua(tfRua.getText());
+            clienteDAO.atualizar(codigo, clienteParaAtualizar);
+            notificacao.exibir("Cliente " + clienteParaAtualizar.getNome() +
+                    " atualizado com sucesso!", Notificacao.SUCESSO);
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }  
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
@@ -698,6 +703,28 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         }
         
         return retorno;
+    }
+    
+    public void preencherFormCom(Cliente cliente)
+    {
+        tfNome.setText(cliente.getNome());
+        tfCodigo.setText(Integer.toString(cliente.getCodigo()));
+        tformatadoCpf.setText(cliente.getCpf());
+        tfRg.setText(cliente.getRg());
+        tformatadoDataNasc.setText(DateCustomizer.DateToStr(cliente.getDataNascimento()));
+
+        tfRua.setText(cliente.getRua());
+        tfNumeroEnd.setText(cliente.getNumeroEnd());
+        tfComplemento.setText(cliente.getComplemento());
+        comboEstado.setSelectedItem((String)cliente.getEstado());
+        tfCidade.setText(cliente.getCidade());
+        tformatadoCep.setText(cliente.getCep());
+
+        tformatadoTelCelular.setText(cliente.getFoneCelular());
+        tformatadoTelComercial.setText(cliente.getFoneComercial());
+        tformatadoTelResidencial.setText(cliente.getFoneResidencial());
+        tfEmail.setText(cliente.getEmail());
+        taObs.setText(cliente.getObservação());
     }
     
     public static void main(String args[]) {
