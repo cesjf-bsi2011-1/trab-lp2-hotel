@@ -304,14 +304,21 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
         int linha = jTableQuartos.getSelectedRow();
         String observacao = (String)jTableQuartos.getModel().getValueAt(linha, 4);
         
-        try {
-           QuartoDAO quartoDAO = new QuartoDAO();
-           quartoDAO.remover((String)jTableQuartos.getModel().getValueAt(linha, 0));
-           ((DefaultTableModel)jTableQuartos.getModel()).removeRow(linha);
-           notificacao.exibir("Quarto " + observacao + " foi removido com "
-                   + "sucesso!", Notificacao.SUCESSO);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do "
+                                              + "quarto: " + observacao);
+        if(confirmacao == 0) {
+            try {
+                QuartoDAO quartoDAO = new QuartoDAO();
+                quartoDAO.remover((String)jTableQuartos.getModel().getValueAt(linha, 0));
+                ((DefaultTableModel)jTableQuartos.getModel()).removeRow(linha);
+                notificacao.exibir("Quarto " + observacao + " foi removido com "
+                        + "sucesso!", Notificacao.SUCESSO);
+             } catch (Exception ex) {
+                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+             }
+        } else {
+            
         }
     }//GEN-LAST:event_btQuartoExcluirActionPerformed
 

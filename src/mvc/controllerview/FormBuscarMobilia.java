@@ -218,19 +218,25 @@ public class FormBuscarMobilia extends javax.swing.JFrame
     private void btMobiliaExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMobiliaExcluirActionPerformed
 
         int linha = jTableMobilia.getSelectedRow();
-        String codigo = (String)jTableMobilia.getModel().getValueAt(linha, 0);
+        String codigoMobiliaSelecionada = (String)jTableMobilia.getModel().getValueAt(linha, 0);
+        String nomeMobiliaSelecionada = (String)jTableMobilia.getModel().getValueAt(linha, 1);
         
-        try {
-            MobiliaDAO mobiliaDAO = new MobiliaDAO();
-            mobiliaDAO.remover(codigo);
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Confirma a exclusão da "
+                                              + "mobília: " + nomeMobiliaSelecionada);
+        if(confirmacao == 0) {
+            try {
+                MobiliaDAO mobiliaDAO = new MobiliaDAO();
+                mobiliaDAO.remover(codigoMobiliaSelecionada);
+                tfLocMobiliaNumero.requestFocus();
+                btMobiliaExcluir.setEnabled(false);
+                btMobiliaEditar.setEnabled(false);
+                limparTabela();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }
+        } else {
             tfLocMobiliaNumero.requestFocus();
-            btMobiliaExcluir.setEnabled(false);
-            btMobiliaEditar.setEnabled(false);
-            limparTabela();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
-        
     }//GEN-LAST:event_btMobiliaExcluirActionPerformed
 
     private void jTableMobiliaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMobiliaMouseClicked

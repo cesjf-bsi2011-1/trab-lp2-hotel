@@ -329,20 +329,26 @@ public class FormBuscarCliente extends AbstractForm {
         int codigo = (int)jTableClientes.getModel().getValueAt(linha, 0);
         String clienteNome = (String)jTableClientes.getModel().getValueAt(linha, 1);
         
-        try {
-            ClienteDAO clienteDAO = new ClienteDAO();
-            clienteDAO.remover(Integer.toString(codigo));
-            notificacao.exibir("Cliente " + clienteNome + " "
-                    + "foi excluído com sucesso", Notificacao.SUCESSO);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do "
+                                              + "cliente: " + clienteNome);
+        if(confirmacao == 0) {
+            try {
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.remover(Integer.toString(codigo));
+                notificacao.exibir("Cliente " + clienteNome + " "
+                        + "foi excluído com sucesso", Notificacao.SUCESSO);
+                tfLocalizaClienteCodigo.requestFocus();
+                btCliEditar1.setEnabled(false);
+                btCliExcluir1.setEnabled(false);
+
+                limparTabela();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }
+        } else {
+            tfLocalizaClienteCodigo.requestFocus();
         }
         
-        tfLocalizaClienteCodigo.requestFocus();
-        btCliEditar1.setEnabled(false);
-        btCliExcluir1.setEnabled(false);
-        
-        limparTabela();
     }//GEN-LAST:event_btCliExcluir1ActionPerformed
 
     private void jTableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClientesMouseClicked
