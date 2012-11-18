@@ -53,8 +53,6 @@ public class TipoQuartoDAO extends AbstractDAO
             
             if (null != tipoQuartoParaRemover) {
                 listTiposQuarto.remove(tipoQuartoParaRemover);
-                /*Garantindo que o código equivale ao index*/
-                tipoQuartoParaInserir.setCodigo(String.valueOf(getIndex()));
                 listTiposQuarto.add(tipoQuartoParaInserir);
                 getHistorico().inserir("Atualização do tipo de quarto " + tipoQuartoParaInserir.getNome());
             }
