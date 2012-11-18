@@ -8,12 +8,14 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mvc.model.dao.MobiliaDAO;
 import mvc.model.dao.TipoQuartoDAO;
+import myutils.Notificacao;
 
 public class FormCadastroTipoQuarto extends javax.swing.JFrame {
 
     public static Mobilia mobilia = null;
-    public static ArrayList<Mobilia> listMobilias = new ArrayList<>();
-
+    private static ArrayList<Mobilia> listMobilias = new ArrayList<>();
+    private Notificacao notificacao = new Notificacao();
+    
     public FormCadastroTipoQuarto() {
         initComponents();
     }
@@ -321,100 +323,99 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        // TODO add your handling code here:
         btIncluirMobilia.setEnabled(false);
-        btLimpar.setEnabled(false);        
-        if(camposObrigatorios() == true)
-        {
+        btLimpar.setEnabled(false); 
+        
+        if (camposObrigatoriosPreenchidos()) {
             lbConfirma.setVisible(false);
             lbErro.setVisible(true);
             lbErro.setText("Os campos com * são obrigatorios!");
-        }
-        else
-        {
+        } else {
             TipoQuarto tipoQuarto = new TipoQuarto();
             tipoQuarto.setCodigo(tfCodigo.getText());
             tipoQuarto.setNome(tfNome.getText());
             tipoQuarto.setDescricao(taDescricao.getText());
             tipoQuarto.setMobilias(listMobilias);
-            lbErro.setVisible(false);
-            lbConfirma.setVisible(true);
-            tfCodigo.setText("");
-            taDescricao.setText("");
-            tfBuscarMobilia.setText("");
-            tfNome.setText("");
-            limparTabelaAdicionarMobilia();
-            limparTabelaBuscaMobilia();
-            TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
-            tipoQuartoDAO.inserir(tipoQuarto);
-            lbConfirma.setText("Tipo de Quarto cadastrado com sucesso!");
-            listMobilias.clear();
+            
+            try {
+                tfCodigo.setText("");
+                taDescricao.setText("");
+                tfBuscarMobilia.setText("");
+                tfNome.setText("");
+                
+                limparTabelaAdicionarMobilia();
+                limparTabelaBuscaMobilia();
+                
+                TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
+                tipoQuartoDAO.inserir(tipoQuarto);
+                notificacao.exibir("Tipo de Quarto cadastrado com sucesso!", 
+                                                           Notificacao.SUCESSO);
+                listMobilias.clear();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        // TODO add your handling code here:
         btIncluirMobilia.setEnabled(false);
         btLimpar.setEnabled(false);
         limparTabelaBuscaMobilia();
         
-        String cod = tfBuscarMobilia.getText();
-        MobiliaDAO mDao = new MobiliaDAO();
-        mobilia = mDao.buscar(cod);
-        
-        DefaultTableModel modelo = (DefaultTableModel)jTableBuscaMobilia.getModel();
-        
-        if(mobilia != null)
-        {
-            modelo.addRow(mobilia.getDadosEmVetor());
-            lbResultMobilia.setVisible(false);
-        }           
-        else
-        {
-            lbResultMobilia.setText("Nenhuma Mobilia encontrada!");
-            tfBuscarMobilia.requestFocus();
+        try {
+            String cod = tfBuscarMobilia.getText();
+            MobiliaDAO mobiliaDAO = new MobiliaDAO();
+            mobilia = mobiliaDAO.buscar(cod);
+            DefaultTableModel modelo = (DefaultTableModel)jTableBuscaMobilia.getModel();
+
+            if (mobilia != null) {
+                modelo.addRow(mobilia.getDadosEmVetor());
+            } else {
+                notificacao.exibir("Nenhuma Mobilia encontrada!", Notificacao.ERRO);
+                tfBuscarMobilia.requestFocus();
+            }
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
     }//GEN-LAST:event_btBuscarActionPerformed
 
     private void btBuscarTodasMobiliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarTodasMobiliasActionPerformed
-
+        DefaultTableModel modelo = (DefaultTableModel)jTableBuscaMobilia.getModel();
+        
         btIncluirMobilia.setEnabled(false);
         btLimpar.setEnabled(false);
         tfBuscarMobilia.setText("");
         limparTabelaBuscaMobilia();
-        MobiliaDAO mobiliaDAO = new MobiliaDAO();
         
-        DefaultTableModel modelo = (DefaultTableModel)jTableBuscaMobilia.getModel();
-        
-        ArrayList<Mobilia> listaMobilia = (ArrayList<Mobilia>) mobiliaDAO.buscarTodos();
-        
-        if(!listaMobilia.isEmpty()) {
-            for(int i = 0; i < listaMobilia.size(); i++)
-            {
-                modelo.addRow(listaMobilia.get(i).getDadosEmVetor());
-                lbResultMobilia.setVisible(false);
+        try {
+            MobiliaDAO mobiliaDAO = new MobiliaDAO();
+            ArrayList<Mobilia> listaMobilia = (ArrayList<Mobilia>) mobiliaDAO.buscarTodos();
+            if(!listaMobilia.isEmpty()) {
+                for(Mobilia mobiliaDaLista : listaMobilia) {
+                    modelo.addRow(mobiliaDaLista.getDadosEmVetor());
+                }
+            } else {
+                notificacao.exibir("Nenhuma Mobilia encontrada.", Notificacao.ERRO);
+                tfBuscarMobilia.requestFocus();
             }
-        }           
-        else {
-            lbResultMobilia.setText("Nenhuma Mobilia encontrada!");
-            tfBuscarMobilia.requestFocus();
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
     }//GEN-LAST:event_btBuscarTodasMobiliasActionPerformed
 
     private void btIncluirMobiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncluirMobiliaActionPerformed
-        
-        tfBuscarMobilia.requestFocus();
         int linha = jTableBuscaMobilia.getSelectedRow();
         Mobilia mobiliaIncluir = new Mobilia();
+        
+        tfBuscarMobilia.requestFocus();
+        
         mobiliaIncluir.setCodigo((String)jTableBuscaMobilia.getModel().getValueAt(linha, 0));
         mobiliaIncluir.setNome((String)jTableBuscaMobilia.getModel().getValueAt(linha, 1));
         mobiliaIncluir.setDescricao((String)jTableBuscaMobilia.getModel().getValueAt(linha, 2));
-        
         listMobilias.add(mobiliaIncluir);  
  
         updateTabela();
@@ -443,8 +444,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     private void limparTabelaBuscaMobilia()
     {
         DefaultTableModel modelo = (DefaultTableModel)jTableBuscaMobilia.getModel();
-        for(int i = jTableBuscaMobilia.getRowCount() - 1; i >= 0; i--)
-        {
+        for (int i = jTableBuscaMobilia.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
@@ -452,8 +452,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     private void limparTabelaAdicionarMobilia()
     {
         DefaultTableModel modelo = (DefaultTableModel)jTableMobiliasAdd.getModel();
-        for(int i = jTableMobiliasAdd.getRowCount() - 1; i >= 0; i--)
-        {
+        for (int i = jTableMobiliasAdd.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
@@ -462,36 +461,30 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     {
         limparTabelaBuscaMobilia();
         limparTabelaAdicionarMobilia();
+        
         DefaultTableModel modelo = (DefaultTableModel)jTableMobiliasAdd.getModel();
-        for(int i = 0; i < listMobilias.size(); i++)
-        {
-             modelo.addRow(listMobilias.get(i).getDadosEmVetor());
-        }
-       
+        for (Mobilia mobiliaDaLista : listMobilias) {
+             modelo.addRow(mobiliaDaLista.getDadosEmVetor());
+        }    
     }
 
-     private boolean camposObrigatorios()
+     private boolean camposObrigatoriosPreenchidos()
     {
-        boolean retorno = false;
-        if(tfCodigo.getText().equals(""))
-        {
+        boolean retorno = true;
+        if (tfCodigo.getText().equals("")) {
             tfCodigo.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfCodigo.setBackground(Color.WHITE);
         }
         
-        if(tfNome.getText().equals(""))
-        {
+        if(tfNome.getText().equals("")) {
             tfNome.setBackground(Color.orange);
-            retorno = true;
-        }
-        else
-        {
+            retorno = false;
+        } else {
             tfNome.setBackground(Color.WHITE);
         }
+        
         return retorno;
     }
      

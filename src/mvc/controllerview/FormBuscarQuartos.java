@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.controllerview;
 
 import entity.Quarto;
@@ -9,16 +5,12 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mvc.model.dao.QuartoDAO;
+import myutils.Notificacao;
 
-/**
- *
- * @author Willian
- */
 public class FormBuscarQuartos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormBuscarQuartos
-     */
+    private Notificacao notificacao = new Notificacao();
+ 
     public FormBuscarQuartos() {
         initComponents();
     }
@@ -241,8 +233,7 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
             if(quarto != null) {
                 modelo.addRow(quarto.getDadosEmVetor());
             } else {
-                lbErro.setVisible(true);
-                lbErro.setText("Nenhum Quarto Encontrado!");
+                notificacao.exibir("Nenhum Quarto Encontrado.", Notificacao.ERRO);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
@@ -279,10 +270,8 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
                 for (int i = 0; i < listaQuarto.size(); i++) {
                     modelo.addRow(listaQuarto.get(i).getDadosEmVetor());
                 }
-                lbErro.setVisible(false);
             } else {
-                lbErro.setVisible(true);
-                lbErro.setText("Nenhum Quarto Encontrado!");
+                notificacao.exibir("Nenhum Quarto Encontrado.", Notificacao.ERRO);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
@@ -290,8 +279,6 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
     }//GEN-LAST:event_btBuscarTodosQuartosActionPerformed
 
     private void btQuartoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartoEditarActionPerformed
-        // TODO add your handling code here:
-
         int linha = jTableQuartos.getSelectedRow();
 
         Quarto newQuarto = new Quarto();
@@ -314,9 +301,7 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
             modelo.removeRow(i);
         }
     }
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

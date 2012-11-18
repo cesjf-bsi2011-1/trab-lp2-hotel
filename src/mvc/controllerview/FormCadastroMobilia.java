@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.controllerview;
 
 import entity.Mobilia;
@@ -11,13 +7,9 @@ import mvc.model.dao.MobiliaDAO;
 import myutils.Notificacao;
 
 public class FormCadastroMobilia extends AbstractForm {
-
     public static Mobilia mobilia = null;
     private Notificacao notificacao = new Notificacao();
     
-    /**
-     * Creates new form FormCadastroMobilia
-     */
     public FormCadastroMobilia() {
         initComponents();
     }
@@ -180,12 +172,11 @@ public class FormCadastroMobilia extends AbstractForm {
                         + "foi cadastrada com sucesso", Notificacao.SUCESSO);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-            }  
-            
-            lbErro.setVisible(false);
-            tfCodigo.setText("");
-            tfNome.setText("");
-            taDescricao.setText("");  
+            } finally {
+                tfCodigo.setText("");
+                tfNome.setText("");
+                taDescricao.setText("");  
+            }   
         } else {
             lbConfirma.setVisible(false);
             lbErro.setVisible(true);
@@ -228,12 +219,12 @@ public class FormCadastroMobilia extends AbstractForm {
                            + "foi atualizada com sucesso", Notificacao.SUCESSO);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-        } 
-        
-        mobilia = null;
-        tfCodigo.setText("");
-        tfNome.setText("");
-        taDescricao.setText("");
+        } finally {
+            mobilia = null;
+            tfCodigo.setText("");
+            tfNome.setText("");
+            taDescricao.setText("");
+        }   
     }//GEN-LAST:event_btAtualizarActionPerformed
 
     private boolean camposObrigatoriosPreenchidos()
@@ -256,9 +247,7 @@ public class FormCadastroMobilia extends AbstractForm {
         
         return retorno;
     }
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mvc.model.dao.MobiliaDAO;
+import myutils.Notificacao;
 
 public class FormBuscarMobilia extends javax.swing.JFrame 
 {
+    private Notificacao notificacao = new Notificacao();
 
     public FormBuscarMobilia() {
         initComponents();
@@ -200,9 +202,8 @@ public class FormBuscarMobilia extends javax.swing.JFrame
     }//GEN-LAST:event_btMobiliaNovoActionPerformed
 
     private void btMobiliaEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMobiliaEditarActionPerformed
-        
         int linha = jTableMobilia.getSelectedRow();
-
+        
         Mobilia newMobilia = new Mobilia();
         newMobilia.setCodigo((String)jTableMobilia.getModel().getValueAt(linha, 0));
         newMobilia.setNome((String)jTableMobilia.getModel().getValueAt(linha, 1));
@@ -222,19 +223,17 @@ public class FormBuscarMobilia extends javax.swing.JFrame
         try {
             MobiliaDAO mobiliaDAO = new MobiliaDAO();
             mobiliaDAO.remover(codigo);
+            tfLocMobiliaNumero.requestFocus();
+            btMobiliaExcluir.setEnabled(false);
+            btMobiliaEditar.setEnabled(false);
+            limparTabela();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
         
-        DefaultTableModel modelo = (DefaultTableModel)jTableMobilia.getModel();//@TODO: modelo nunca é usado
-        tfLocMobiliaNumero.requestFocus();
-        btMobiliaExcluir.setEnabled(false);
-        btMobiliaEditar.setEnabled(false);
-        limparTabela();
     }//GEN-LAST:event_btMobiliaExcluirActionPerformed
 
     private void jTableMobiliaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMobiliaMouseClicked
-
         btMobiliaEditar.setEnabled(true);
         btMobiliaExcluir.setEnabled(true);
     }//GEN-LAST:event_jTableMobiliaMouseClicked
@@ -249,43 +248,34 @@ public class FormBuscarMobilia extends javax.swing.JFrame
         try {
             MobiliaDAO mobiliaDAO = new MobiliaDAO();
             Mobilia mobilia = mobiliaDAO.buscar(numero);
-            DefaultTableModel modelo = (DefaultTableModel)jTableMobilia.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) jTableMobilia.getModel();
             if(mobilia != null) {
                 modelo.addRow(mobilia.getDadosEmVetor());
-                lbResultMobilia.setVisible(false);
             } else {
-                lbResultMobilia.setVisible(true);
-                lbResultMobilia.setText("Nenhuma Mobilia Encontrada!");
+                notificacao.exibir("Nenhuma Mobilia Encontrada.", Notificacao.ERRO);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
-       
-
     }//GEN-LAST:event_btLocMobiliaNumeroActionPerformed
 
     private void btBuscarTodosMobiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarTodosMobiliaActionPerformed
-        // TODO add your handling code here:
         btMobiliaEditar.setEnabled(false);
         btMobiliaExcluir.setEnabled(false);
         limparTabela();
         tfLocMobiliaNumero.setText("");
         
-        DefaultTableModel modelo = (DefaultTableModel)jTableMobilia.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) jTableMobilia.getModel();
         
-        MobiliaDAO mobiliaDAO = new MobiliaDAO();
         try {
+            MobiliaDAO mobiliaDAO = new MobiliaDAO();
             ArrayList<Mobilia> listaMobilia = (ArrayList<Mobilia>) mobiliaDAO.buscarTodos();
-
-            if(!listaMobilia.isEmpty()) {
-                for(int i = 0; i < listaMobilia.size(); i++)
-                {
+            if  (!listaMobilia.isEmpty()) {
+                for (int i = 0; i < listaMobilia.size(); i++) {
                     modelo.addRow(listaMobilia.get(i).getDadosEmVetor());
                 }
-                lbResultMobilia.setVisible(false);
             } else {
-                lbResultMobilia.setVisible(true);
-                lbResultMobilia.setText("Nenhuma Mobilia Encontrada!");
+                notificacao.exibir("Nenhuma Mobilia Encontrada.", Notificacao.ERRO);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
@@ -297,14 +287,12 @@ public class FormBuscarMobilia extends javax.swing.JFrame
     }//GEN-LAST:event_btSairActionPerformed
     private void limparTabela()
     {
-        DefaultTableModel modelo = (DefaultTableModel)jTableMobilia.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) jTableMobilia.getModel();
         for (int i = jTableMobilia.getRowCount() - 1; i >= 0; i--) {
             modelo.removeRow(i);
         }
     }
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -16,9 +16,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
     public static Cliente cliente = null;
     private Notificacao notificacao = new Notificacao();
     
-    /**
-     * Creates new form FormCadastroCliente
-     */
     public FormCadastroCliente() {
         initComponents();
 
@@ -521,16 +518,14 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 clienteDAO.inserir(novoCliente);
                 notificacao.exibir("Cliente " + novoCliente.getNome() + " "
                         + "foi cadastrado com sucesso", Notificacao.SUCESSO);
+                FormCustomizer.limparTodosCampos(painelDadosPessoais);
+                FormCustomizer.limparTodosCampos(painelEndereco);
+                FormCustomizer.limparTodosCampos(painelContato);
+                taObs.setText("");
+                tfNome.requestFocus();  
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-            }
-            
-            FormCustomizer.limparTodosCampos(painelDadosPessoais);
-            FormCustomizer.limparTodosCampos(painelEndereco);
-            FormCustomizer.limparTodosCampos(painelContato);
-            
-            taObs.setText("");
-            tfNome.requestFocus();   
+            }   
         } else {
             lbErro.setVisible(true);
             lbErro.setText("Os Campos com * são obrigatorios!");
@@ -628,7 +623,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         int codigo = Integer.parseInt(tfCodigo.getText());
         String nomeCliente = tfNome.getText();
         
-        int i = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente: " + tfNome.getText());
+        int i = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do "
+                                              + "cliente: " + tfNome.getText());
         
         if(i == 0) {
             try {
@@ -636,13 +632,13 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                  clienteDAO.remover(Integer.toString(codigo));
                  notificacao.exibir("Cliente " + nomeCliente + " "
                          + "foi removido com sucesso", Notificacao.SUCESSO);
+                   
+                FormCustomizer.limparTodosCampos(painelDadosPessoais);
+                FormCustomizer.limparTodosCampos(painelContato);
+                FormCustomizer.limparTodosCampos(painelEndereco);
             } catch (Exception ex) {
                  JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
             }
-            
-            FormCustomizer.limparTodosCampos(painelDadosPessoais);
-            FormCustomizer.limparTodosCampos(painelContato);
-            FormCustomizer.limparTodosCampos(painelEndereco);
         } else {
             tfNome.requestFocus();
         }        
@@ -703,9 +699,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         
         return retorno;
     }
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

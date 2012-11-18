@@ -1,18 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.controllerview;
 
-/**
- *
- * @author Willian
- */
 public class FormBuscarHospedagem extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormBuscarHospedagem
-     */
     public FormBuscarHospedagem() {
         initComponents();
     }
@@ -123,9 +112,6 @@ public class FormBuscarHospedagem extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -7,18 +7,11 @@ import javax.swing.table.DefaultTableModel;
 import mvc.model.dao.ClienteDAO;
 import myutils.Notificacao;
 
-/**
- *
- * @author Willian
- */
 public class FormBuscarCliente extends AbstractForm {
 
     private Cliente cliente = null;
     private Notificacao notificacao = new Notificacao();
     
-    /**
-     * Creates new form FormBuscarCliente
-     */
     public FormBuscarCliente() {
         initComponents();
     }
@@ -250,15 +243,14 @@ public class FormBuscarCliente extends AbstractForm {
             ClienteDAO clienteDAO = new ClienteDAO();
             String cpf = tformatadoCpf.getText();
             cliente = clienteDAO.buscarPorCpf(cpf);
+            if (cliente != null) {
+                DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();            
+                modelo.addRow(cliente.getDadosEmVetor());
+            } else {
+                notificacao.exibir("Nenhum cliente encontrado.", Notificacao.ERRO);
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-        }
-        
-        if (cliente != null) {
-            DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();            
-            modelo.addRow(cliente.getDadosEmVetor());
-        } else {
-            notificacao.exibir("Nenhum cliente encontrado.", Notificacao.ERRO);
         }
     }//GEN-LAST:event_btLocalizaClienteCpfActionPerformed
 
@@ -271,16 +263,15 @@ public class FormBuscarCliente extends AbstractForm {
             ClienteDAO clienteDAO = new ClienteDAO();
             String codigo = tfLocalizaClienteCodigo.getText();
             cliente = clienteDAO.buscar(codigo);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-        }
-        
-        if (cliente != null) {
+            if (cliente != null) {
                 DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();            
                 modelo.addRow(cliente.getDadosEmVetor());
-        } else {
-            notificacao.exibir("Nenhum cliente encontrado.", Notificacao.ERRO);
-        }
+            } else {
+                notificacao.exibir("Nenhum cliente encontrado.", Notificacao.ERRO);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }   
     }//GEN-LAST:event_btLocaizaClienteCodigoActionPerformed
 
     private void btCliNovo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCliNovo1ActionPerformed
@@ -304,37 +295,33 @@ public class FormBuscarCliente extends AbstractForm {
         try {
             ClienteDAO clienteDAO = new ClienteDAO();
             listaCliente = (ArrayList<Cliente>) clienteDAO.buscarTodos();
+            if(!listaCliente.isEmpty()) {
+                for(Cliente clienteDaLista : listaCliente) {
+                    modelo.addRow(clienteDaLista.getDadosEmVetor());
+                }
+            } else {
+                notificacao.exibir("Nenhum cliente encontrado.", Notificacao.ERRO);
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
-        
-        if(!listaCliente.isEmpty()) {
-            for(Cliente clienteDaLista : listaCliente) {
-                modelo.addRow(clienteDaLista.getDadosEmVetor());
-            }
-        } else {
-            notificacao.exibir("Nenhum cliente encontrado.", Notificacao.ERRO);
-        }
-        
     }//GEN-LAST:event_btBuscarTodosClientes1ActionPerformed
 
     private void btCliEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCliEditar1ActionPerformed
         int linha = jTableClientes.getSelectedRow();
         int codigo = (int) jTableClientes.getModel().getValueAt(linha, 0);
-        
-        Cliente clienteBuscado = null;
+
         try {
             ClienteDAO clienteDAO = new ClienteDAO();
-            clienteBuscado = clienteDAO.buscar(Integer.toString(codigo));
+            Cliente clienteBuscado = clienteDAO.buscar(Integer.toString(codigo));
+            FormCadastroCliente.cliente = clienteBuscado;
+            FormCadastroCliente fCliente = new FormCadastroCliente();
+            fCliente.setVisible(true);
+
+            limparTabela();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-        }
-        
-        FormCadastroCliente.cliente = clienteBuscado;
-        FormCadastroCliente fCliente = new FormCadastroCliente();
-        fCliente.setVisible(true);
-        
-        limparTabela();
+        }     
     }//GEN-LAST:event_btCliEditar1ActionPerformed
 
     private void btCliExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCliExcluir1ActionPerformed

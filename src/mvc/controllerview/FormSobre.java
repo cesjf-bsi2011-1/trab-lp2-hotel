@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.controllerview;
 
-/**
- *
- * @author Willian
- */
 public class FormSobre extends javax.swing.JFrame {
 
     public FormSobre() {
@@ -60,9 +52,6 @@ public class FormSobre extends javax.swing.JFrame {
         setBounds((screenSize.width-346)/2, (screenSize.height-368)/2, 346, 368);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
