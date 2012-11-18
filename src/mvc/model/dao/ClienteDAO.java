@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- * @author Tássio Auad
- */
 public class ClienteDAO extends AbstractDAO
 {
     private static List<Cliente> listClientes = new ArrayList<>();

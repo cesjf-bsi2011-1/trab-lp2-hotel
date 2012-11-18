@@ -8,9 +8,6 @@ import java.util.logging.Logger;
 import mvc.controllerview.AbstractForm;
 import java.util.Date;
 
-/*
- * @author Tássio Auad
- */
 public class LogDAO extends AbstractDAO
 {
     private static List<Log> listLogs = new ArrayList<>();
