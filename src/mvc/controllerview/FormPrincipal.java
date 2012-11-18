@@ -32,6 +32,14 @@ public class FormPrincipal extends AbstractForm {
         btCancelarHosp = new javax.swing.JButton();
         btEditarHops = new javax.swing.JButton();
         btSair1 = new javax.swing.JButton();
+        lbBuscarHospedagem = new javax.swing.JLabel();
+        tfBuscarHospedagemCodigo = new javax.swing.JTextField();
+        btListarPorCodigo = new javax.swing.JButton();
+        btListarTodas = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btExcluirReserva = new javax.swing.JButton();
         jMenuBarPrincipal = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemCliente = new javax.swing.JMenuItem();
@@ -145,12 +153,19 @@ public class FormPrincipal extends AbstractForm {
 
         btFecharHospedagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Dollar.png"))); // NOI18N
         btFecharHospedagem.setText("Fechar Hospedagem");
+        btFecharHospedagem.setEnabled(false);
+        btFecharHospedagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFecharHospedagemActionPerformed(evt);
+            }
+        });
 
         btCancelarHosp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/No-entry.png"))); // NOI18N
         btCancelarHosp.setText("Cancelar");
 
         btEditarHops.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Modify.png"))); // NOI18N
         btEditarHops.setText("Editar");
+        btEditarHops.setEnabled(false);
 
         btSair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Close.png"))); // NOI18N
         btSair1.setText("Sair");
@@ -160,34 +175,109 @@ public class FormPrincipal extends AbstractForm {
             }
         });
 
+        lbBuscarHospedagem.setText("Código:");
+
+        btListarPorCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
+        btListarPorCodigo.setText("Listar");
+
+        btListarTodas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search.png"))); // NOI18N
+        btListarTodas.setText("Listar Todas");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Blue tag.png"))); // NOI18N
+        jButton1.setText("Listar Hospedagens");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Cliente", "Quarto", "Tipo Quarto", "Data Entrada", "Qtd Hopedes", "Valor"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getColumn(0).setResizable(false);
+        jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTable1.getColumnModel().getColumn(5).setResizable(false);
+        jTable1.getColumnModel().getColumn(6).setResizable(false);
+
+        btExcluirReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Remove.png"))); // NOI18N
+        btExcluirReserva.setText("Excluir");
+        btExcluirReserva.setEnabled(false);
+
         javax.swing.GroupLayout jPanelHospedagemLayout = new javax.swing.GroupLayout(jPanelHospedagem);
         jPanelHospedagem.setLayout(jPanelHospedagemLayout);
         jPanelHospedagemLayout.setHorizontalGroup(
             jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHospedagemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btHospedar)
-                .addGap(18, 18, 18)
-                .addComponent(btFecharHospedagem)
-                .addGap(18, 18, 18)
-                .addComponent(btEditarHops)
-                .addGap(18, 18, 18)
-                .addComponent(btCancelarHosp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(btSair1)
+                .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelHospedagemLayout.createSequentialGroup()
+                        .addComponent(btHospedar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btFecharHospedagem)
+                        .addGap(18, 18, 18)
+                        .addComponent(btEditarHops)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btExcluirReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btCancelarHosp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btSair1))
+                    .addGroup(jPanelHospedagemLayout.createSequentialGroup()
+                        .addComponent(lbBuscarHospedagem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfBuscarHospedagemCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btListarPorCodigo)
+                        .addGap(18, 18, 18)
+                        .addComponent(btListarTodas)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(0, 201, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         jPanelHospedagemLayout.setVerticalGroup(
             jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHospedagemLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
                 .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btHospedar)
-                    .addComponent(btFecharHospedagem)
-                    .addComponent(btCancelarHosp)
-                    .addComponent(btEditarHops)
-                    .addComponent(btSair1))
-                .addContainerGap())
+                    .addComponent(lbBuscarHospedagem)
+                    .addComponent(tfBuscarHospedagemCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btListarPorCodigo)
+                    .addComponent(btListarTodas)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btHospedar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btFecharHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btEditarHops, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btSair1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btExcluirReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btCancelarHosp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(30, 30, 30))
         );
 
         jMenuCadastro.setText("Cadastro");
@@ -258,10 +348,10 @@ public class FormPrincipal extends AbstractForm {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 796, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbLogo))
         );
@@ -271,13 +361,12 @@ public class FormPrincipal extends AbstractForm {
                 .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
                         .addComponent(lbLogo)
                         .addGap(26, 26, 26))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jPanelHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE))))
         );
 
         pack();
@@ -314,8 +403,7 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_btClientesActionPerformed
 
     private void btHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedagemActionPerformed
-        FormBuscarHospedagem fBuscarHospedagem = new FormBuscarHospedagem();        
-        fBuscarHospedagem.setVisible(true);
+        
     }//GEN-LAST:event_btHospedagemActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -350,6 +438,15 @@ public class FormPrincipal extends AbstractForm {
         this.dispose();
     }//GEN-LAST:event_btSair1ActionPerformed
 
+    private void btFecharHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharHospedagemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btFecharHospedagemActionPerformed
+    
+
+    
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -386,13 +483,17 @@ public class FormPrincipal extends AbstractForm {
     private javax.swing.JButton btCancelarHosp;
     private javax.swing.JButton btClientes;
     private javax.swing.JButton btEditarHops;
+    private javax.swing.JButton btExcluirReserva;
     private javax.swing.JButton btFecharHospedagem;
     private javax.swing.JButton btHospedagem;
     private javax.swing.JButton btHospedar;
+    private javax.swing.JButton btListarPorCodigo;
+    private javax.swing.JButton btListarTodas;
     private javax.swing.JButton btMobilia;
     private javax.swing.JButton btQuartos;
     private javax.swing.JButton btSair;
     private javax.swing.JButton btSair1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBarPrincipal;
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenu jMenuConsultas;
@@ -406,10 +507,14 @@ public class FormPrincipal extends AbstractForm {
     private javax.swing.JMenuItem jMenuItemTipoQuarto;
     private javax.swing.JMenu jMenuSuporte;
     private javax.swing.JPanel jPanelHospedagem;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBarPrincipal;
+    private javax.swing.JLabel lbBuscarHospedagem;
     private javax.swing.JLabel lbLogo;
+    private javax.swing.JTextField tfBuscarHospedagemCodigo;
     // End of variables declaration//GEN-END:variables
 }

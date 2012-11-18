@@ -112,10 +112,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBarPrincipal" alignment="1" max="32767" attributes="0"/>
+          <Component id="jToolBarPrincipal" alignment="1" pref="1202" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanelHospedagem" min="-2" pref="656" max="-2" attributes="0"/>
+              <Component id="jPanelHospedagem" min="-2" pref="796" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="lbLogo" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -127,14 +127,13 @@
               <Component id="jToolBarPrincipal" min="-2" pref="99" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="287" max="32767" attributes="0"/>
+                      <EmptySpace pref="402" max="32767" attributes="0"/>
                       <Component id="lbLogo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jPanelHospedagem" pref="559" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanelHospedagem" pref="685" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -263,31 +262,65 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btHospedar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btFecharHospedagem" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btEditarHops" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btCancelarHosp" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="33" max="32767" attributes="0"/>
-                  <Component id="btSair1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btHospedar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btFecharHospedagem" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btEditarHops" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btExcluirReserva" min="-2" pref="99" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btCancelarHosp" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btSair1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="lbBuscarHospedagem" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="tfBuscarHospedagemCodigo" min="-2" pref="107" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btListarPorCodigo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btListarTodas" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="201" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
+              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btHospedar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btFecharHospedagem" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btCancelarHosp" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btEditarHops" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btSair1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbBuscarHospedagem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tfBuscarHospedagemCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btListarPorCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btListarTodas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="495" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btHospedar" max="32767" attributes="0"/>
+                          <Component id="btFecharHospedagem" max="32767" attributes="0"/>
+                          <Component id="btEditarHops" max="32767" attributes="0"/>
+                          <Component id="btSair1" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btExcluirReserva" alignment="3" max="32767" attributes="0"/>
+                          <Component id="btCancelarHosp" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -310,7 +343,11 @@
               <Image iconType="3" name="/images/24x24/Dollar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Fechar Hospedagem"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btFecharHospedagemActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btCancelarHosp">
           <Properties>
@@ -326,6 +363,7 @@
               <Image iconType="3" name="/images/24x24/Modify.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Editar"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btSair1">
@@ -338,6 +376,112 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSair1ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbBuscarHospedagem">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="tfBuscarHospedagemCodigo">
+        </Component>
+        <Component class="javax.swing.JButton" name="btListarPorCodigo">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/24x24/Search_1.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Listar"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btListarTodas">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/24x24/Search.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Listar Todas"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/24x24/Blue tag.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Listar Hospedagens"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="jTable1">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="7" rowCount="0">
+                    <Column editable="false" title="C&#xf3;digo" type="java.lang.Integer"/>
+                    <Column editable="false" title="Cliente" type="java.lang.Object"/>
+                    <Column editable="false" title="Quarto" type="java.lang.Object"/>
+                    <Column editable="false" title="Tipo Quarto" type="java.lang.Object"/>
+                    <Column editable="false" title="Data Entrada" type="java.lang.String"/>
+                    <Column editable="false" title="Qtd Hopedes" type="java.lang.Integer"/>
+                    <Column editable="false" title="Valor" type="java.lang.Float"/>
+                  </Table>
+                </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="btExcluirReserva">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/24x24/Remove.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Excluir"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
