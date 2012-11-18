@@ -12,6 +12,12 @@ public class FormCadastroMobilia extends AbstractForm {
     
     public FormCadastroMobilia() {
         initComponents();
+        
+        if(mobilia != null) {
+            preencherFormCom(mobilia);
+            btAtualizar.setEnabled(true);
+            btCadastrar.setEnabled(false);
+        }
     }
 
     /**
@@ -198,13 +204,7 @@ public class FormCadastroMobilia extends AbstractForm {
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        if(mobilia != null) {
-            tfCodigo.setText(mobilia.getCodigo());
-            tfNome.setText(mobilia.getNome());
-            taDescricao.setText(mobilia.getDescricao());
-            btAtualizar.setEnabled(true);
-            btCadastrar.setEnabled(false);
-        }
+        
     }//GEN-LAST:event_formWindowOpened
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
@@ -221,9 +221,6 @@ public class FormCadastroMobilia extends AbstractForm {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         } finally {
             mobilia = null;
-            tfCodigo.setText("");
-            tfNome.setText("");
-            taDescricao.setText("");
         }   
     }//GEN-LAST:event_btAtualizarActionPerformed
 
@@ -247,7 +244,14 @@ public class FormCadastroMobilia extends AbstractForm {
         
         return retorno;
     }
-
+    
+    public void preencherFormCom(Mobilia mobilia)
+    {
+        tfCodigo.setText(mobilia.getCodigo());
+        tfNome.setText(mobilia.getNome());
+        taDescricao.setText(mobilia.getDescricao());
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
