@@ -47,8 +47,6 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         btLimpar = new javax.swing.JButton();
         btBuscarTodasMobilias = new javax.swing.JButton();
         btRemoverItem = new javax.swing.JButton();
-        lbErro = new javax.swing.JLabel();
-        lbConfirma = new javax.swing.JLabel();
         lbResultMobilia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -193,10 +191,6 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
             }
         });
 
-        lbErro.setForeground(new java.awt.Color(255, 102, 0));
-
-        lbConfirma.setForeground(new java.awt.Color(0, 153, 204));
-
         lbResultMobilia.setForeground(new java.awt.Color(255, 0, 51));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -221,11 +215,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btRemoverItem))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lbErro)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lbConfirma))))
+                                    .addComponent(btRemoverItem))))
                         .addGap(0, 4, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,10 +255,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbErro, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(lbConfirma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -318,8 +305,8 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
                 .addGap(37, 37, 37))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-657)/2, (screenSize.height-702)/2, 657, 702);
+        setSize(new java.awt.Dimension(657, 702));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
@@ -327,10 +314,6 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         btLimpar.setEnabled(false); 
         
         if (camposObrigatoriosPreenchidos()) {
-            lbConfirma.setVisible(false);
-            lbErro.setVisible(true);
-            lbErro.setText("Os campos com * são obrigatorios!");
-        } else {
             TipoQuarto tipoQuarto = new TipoQuarto();
             tipoQuarto.setCodigo(tfCodigo.getText());
             tipoQuarto.setNome(tfNome.getText());
@@ -348,12 +331,15 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
                 
                 TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
                 tipoQuartoDAO.inserir(tipoQuarto);
-                notificacao.exibir("Tipo de Quarto cadastrado com sucesso!", 
-                                                           Notificacao.SUCESSO);
+                notificacao.exibir("Tipo de Quarto " + tipoQuarto.getNome()
+                        + " cadastrado com sucesso!", Notificacao.SUCESSO);
                 listMobilias.clear();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
             }
+        } else {
+            notificacao.exibir("Os campos com * são obrigatorios!", 
+                                                           Notificacao.SUCESSO);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -537,8 +523,6 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     private javax.swing.JTable jTableBuscaMobilia;
     private javax.swing.JTable jTableMobiliasAdd;
     private javax.swing.JLabel lbCodigo;
-    private javax.swing.JLabel lbConfirma;
-    private javax.swing.JLabel lbErro;
     private javax.swing.JLabel lbLocalizaMob;
     private javax.swing.JLabel lbMobiliasAdd;
     private javax.swing.JLabel lbResultMobilia;
