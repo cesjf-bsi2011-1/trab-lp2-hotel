@@ -96,8 +96,8 @@ public class TipoQuartoDAO extends AbstractDAO
             
         } else {
             try {
-                throw new Exception("TipoQuartoDAO.atualizar(String codigo, "
-                        + "Object o) recebendo um objeto que não é uma instância"
+                throw new Exception("objetoEUmTipoQuarto(Object o)"
+                        + " recebendo um objeto que não é uma instância"
                         + " de TipoQuarto");
             } catch (Exception ex) {
                 Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex);

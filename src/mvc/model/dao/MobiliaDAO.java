@@ -83,8 +83,8 @@ public class MobiliaDAO extends AbstractDAO
             
         } else {
             try {
-                throw new Exception("MobiliaDAO.atualizar(String codigo, "
-                        + "Object o) recebendo um objeto que não é uma instância"
+                throw new Exception("objetoEUmaMobilia(Object o)"
+                        + " recebendo um objeto que não é uma instância"
                         + " de Mobília");
             } catch (Exception ex) {
                 Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex);

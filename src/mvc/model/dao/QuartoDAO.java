@@ -84,8 +84,8 @@ public class QuartoDAO extends AbstractDAO
             
         } else {
             try {
-                throw new Exception("QuartoDAO.atualizar(String codigo, "
-                        + "Object o) recebendo um objeto que não é uma instância"
+                throw new Exception("objetoEUmQuarto(Object o)"
+                        + " recebendo um objeto que não é uma instância"
                         + " de Quarto");
             } catch (Exception ex) {
                 Logger.getLogger(QuartoDAO.class.getName()).log(Level.SEVERE, null, ex);

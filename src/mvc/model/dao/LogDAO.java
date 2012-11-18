@@ -92,8 +92,8 @@ public class LogDAO extends AbstractDAO
             
         } else {
             try {
-                throw new Exception("LogDAO.atualizar(String codigo, "
-                        + "Object o) recebendo um objeto que não é uma instância"
+                throw new Exception("objetoEUmLog(Object o)"
+                        + " recebendo um objeto que não é uma instância"
                         + " de Log");
             } catch (Exception ex) {
                 Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex);

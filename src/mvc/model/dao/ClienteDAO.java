@@ -98,8 +98,8 @@ public class ClienteDAO extends AbstractDAO
             
         } else {
             try {
-                throw new Exception("ClienteDAO.atualizar(String codigo, "
-                        + "Object o) recebendo um objeto que não é uma instância"
+                throw new Exception("objetoEUmCliente(Object o)"
+                        + " recebendo um objeto que não é uma instância"
                         + " de Cliente");
             } catch (Exception ex) {
                 Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
