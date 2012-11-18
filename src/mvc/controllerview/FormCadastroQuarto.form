@@ -44,11 +44,9 @@
                               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                               <Component id="tfValor" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="lbObs" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lbErro" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lbConfirma" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lbObs" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -79,15 +77,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lbErro" pref="21" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="lbConfirma" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="38" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tfCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lbCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -131,7 +121,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lbTipoQuarto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tipo Quarto:"/>
+        <Property name="text" type="java.lang.String" value="Tipo Quarto: *"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxTipoQuarto">
@@ -185,6 +175,9 @@
         <Property name="text" type="java.lang.String" value="Atualizar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAtualizarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbValor">
       <Properties>
@@ -213,19 +206,5 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="lbErro">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="33" red="ff" type="rgb"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lbConfirma">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="0" type="rgb"/>
-        </Property>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>

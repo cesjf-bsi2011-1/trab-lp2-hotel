@@ -12,9 +12,9 @@ import myutils.Notificacao;
 
 public class FormCadastroQuarto extends javax.swing.JFrame {
 
-    static TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();    
-    static ArrayList<String> tipoQuartoNomes; 
-    static Quarto quarto = null;
+    public static TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();    
+    public static ArrayList<String> tipoQuartoNomes = new ArrayList<String>(); 
+    public static Quarto quarto = null;
     private Notificacao notificacao = new Notificacao();
     
     public FormCadastroQuarto() {
@@ -27,9 +27,16 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
             } 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-        }           
+        }
+        
+        //Caso o Form esteha sendo aberto para uma edição
+        if (quarto != null) {
+            preencherFormCom(quarto);
+            btAtualizar.setEnabled(true);
+            btCadastrar.setEnabled(false);
+        }
     }
-
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,8 +59,6 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         lbObs = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taObs = new javax.swing.JTextArea();
-        lbErro = new javax.swing.JLabel();
-        lbConfirma = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Cadastro de Quartos");
@@ -65,7 +70,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
 
         lbCodigo.setText("Código: *");
 
-        lbTipoQuarto.setText("Tipo Quarto:");
+        lbTipoQuarto.setText("Tipo Quarto: *");
 
         jComboBoxTipoQuarto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +105,11 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Refresh.png"))); // NOI18N
         btAtualizar.setText("Atualizar");
         btAtualizar.setEnabled(false);
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarActionPerformed(evt);
+            }
+        });
 
         lbValor.setText("Valor: *");
 
@@ -108,10 +118,6 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         taObs.setColumns(20);
         taObs.setRows(5);
         jScrollPane1.setViewportView(taObs);
-
-        lbErro.setForeground(new java.awt.Color(255, 51, 0));
-
-        lbConfirma.setForeground(new java.awt.Color(0, 204, 204));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,11 +136,9 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                                 .addComponent(lbValor)
                                 .addGap(11, 11, 11)
                                 .addComponent(tfValor))
-                            .addComponent(lbObs)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbErro)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbConfirma)))
+                                .addComponent(lbObs)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addComponent(lbTipoQuarto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -156,13 +160,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbErro, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbConfirma)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbCodigo)
@@ -188,50 +186,47 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                         .addContainerGap())))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-514)/2, (screenSize.height-406)/2, 514, 406);
+        setSize(new java.awt.Dimension(514, 406));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        quarto = null;
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         if(camposObrigatoriosPreenchidos()) {
-            lbConfirma.setVisible(false);
-            lbErro.setVisible(true);
-            lbErro.setText("Os Campos com * são obrigatorios!");
-        } else {
+            quarto = new Quarto();
             quarto.setCodigo(tfCodigo.getText());
             quarto.setObservacao(taObs.getText());
             quarto.setValor(Float.parseFloat(tfValor.getText()));
             quarto.setStatus(false);
-            List<TipoQuarto> tipoQuartoList = tipoQuartoDAO.buscarTodos();
-            
-            for(TipoQuarto tipoQuarto : tipoQuartoList) {                
-                if(tipoQuarto.getNome().equals((String)jComboBoxTipoQuarto.getSelectedItem())) {
-                    quarto.setTipoQuarto(tipoQuarto);
-                }               
-            }
-            
             try {
+                List<TipoQuarto> tipoQuartoList = tipoQuartoDAO.buscarTodos();
+
+                for(TipoQuarto tipoQuarto : tipoQuartoList) {                
+                    if(tipoQuarto.getNome().equals((String)jComboBoxTipoQuarto.getSelectedItem())) {
+                        quarto.setTipoQuarto(tipoQuarto);
+                    }               
+                }
+            
                 QuartoDAO quartoDAO = new QuartoDAO();
                 quartoDAO.inserir(quarto);
-                tipoQuartoDAO.inserir(quarto);
                 notificacao.exibir("Quarto Cadastrado com sucesso!",
                                                            Notificacao.SUCESSO);
+                limparForm();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
             }
+        } else {
+            notificacao.exibir("Os Campos com * são obrigatorios!",
+                                                           Notificacao.ERRO);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        tfCodigo.setText("");
-        tfValor.setText("");
-        taObs.setText("");
-        lbConfirma.setText("");
-        lbErro.setText("");
+        limparForm();
     }//GEN-LAST:event_btCancelarActionPerformed
 
      private boolean camposObrigatoriosPreenchidos()
@@ -253,6 +248,22 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         
         return retorno;
     }
+     
+    private void preencherFormCom(Quarto quarto)
+    {
+        tfValor.setText(String.valueOf(quarto.getValor()));
+        tfCodigo.setText(quarto.getCodigo());
+        taObs.setText(quarto.getObservacao());
+        jComboBoxTipoQuarto.setSelectedItem(quarto.getTipoQuarto()); 
+    }
+    
+    private void limparForm()
+    {
+        tfValor.setText("");
+        tfCodigo.setText("");
+        taObs.setText("");
+        jComboBoxTipoQuarto.setSelectedItem(""); 
+    }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
@@ -260,6 +271,27 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
     private void jComboBoxTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoQuartoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTipoQuartoActionPerformed
+
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        String codigo = tfCodigo.getText();
+        try {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            Quarto quartoParaAtualizar = quartoDAO.buscar(codigo);
+            quartoParaAtualizar.setObservacao(taObs.getText());
+            TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
+            quartoParaAtualizar.setTipoQuarto(
+                    tipoQuartoDAO.buscarPorNome(
+                        (String)jComboBoxTipoQuarto.getSelectedItem()
+                        )
+                    );
+            quartoParaAtualizar.setValor(Float.parseFloat(tfValor.getText()));
+            quartoDAO.atualizar(codigo, quartoParaAtualizar);
+            notificacao.exibir("Quarto " + quartoParaAtualizar.getObservacao() +
+                    " atualizado com sucesso!", Notificacao.SUCESSO);
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
+    }//GEN-LAST:event_btAtualizarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -300,8 +332,6 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBoxTipoQuarto;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbCodigo;
-    private javax.swing.JLabel lbConfirma;
-    private javax.swing.JLabel lbErro;
     private javax.swing.JLabel lbObs;
     private javax.swing.JLabel lbTipoQuarto;
     private javax.swing.JLabel lbValor;

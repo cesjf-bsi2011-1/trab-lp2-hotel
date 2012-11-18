@@ -64,6 +64,11 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
         btQuartoExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Remove.png"))); // NOI18N
         btQuartoExcluir.setText("Excluir");
         btQuartoExcluir.setEnabled(false);
+        btQuartoExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btQuartoExcluirActionPerformed(evt);
+            }
+        });
 
         btLocQuartoNumero.setText("...");
         btLocQuartoNumero.addActionListener(new java.awt.event.ActionListener() {
@@ -211,13 +216,13 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
                 .addGap(33, 33, 33))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-866)/2, (screenSize.height-550)/2, 866, 550);
+        setSize(new java.awt.Dimension(866, 550));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btQuartoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartoNovoActionPerformed
-        FormCadastroQuarto formQuarto = new FormCadastroQuarto();
-        formQuarto.setVisible(true);
+        FormCadastroQuarto formCadastratQuarto = new FormCadastroQuarto();
+        formCadastratQuarto.setVisible(true);
     }//GEN-LAST:event_btQuartoNovoActionPerformed
 
     private void btLocQuartoNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLocQuartoNumeroActionPerformed
@@ -246,8 +251,8 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableQuartosMouseClicked
 
     private void btNovoTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoTipoQuartoActionPerformed
-        FormCadastroTipoQuarto fTipo = new FormCadastroTipoQuarto();
-        fTipo.setVisible(true);
+        FormCadastroTipoQuarto formTipoQuarto = new FormCadastroTipoQuarto();
+        formTipoQuarto.setVisible(true);
     }//GEN-LAST:event_btNovoTipoQuartoActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -280,19 +285,35 @@ public class FormBuscarQuartos extends javax.swing.JFrame {
 
     private void btQuartoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartoEditarActionPerformed
         int linha = jTableQuartos.getSelectedRow();
-
-        Quarto newQuarto = new Quarto();
-        newQuarto.setCodigo((String)jTableQuartos.getModel().getValueAt(linha, 0));
-        //PArei aqui linha do tipoQuarto
-        newQuarto.setObservacao((String)jTableQuartos.getModel().getValueAt(linha, 2));
-        newQuarto.setStatus((Boolean)jTableQuartos.getModel().getValueAt(linha, 3));
-        newQuarto.setValor((Float)jTableQuartos.getModel().getValueAt(linha, 4));
-
-        FormCadastroQuarto.quarto = newQuarto;
-        FormCadastroQuarto formCadastroQuarto = new FormCadastroQuarto();
-        formCadastroQuarto.setVisible(true);
-        limparTabela();
+        
+        try {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            Quarto quartoSelecionado = quartoDAO.buscar(
+                    (String)jTableQuartos.getModel().getValueAt(linha, 0)
+                    );
+            FormCadastroQuarto.quarto = quartoSelecionado;
+            FormCadastroQuarto formCadastroQuarto = new FormCadastroQuarto();
+            formCadastroQuarto.setVisible(true);
+            limparTabela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
     }//GEN-LAST:event_btQuartoEditarActionPerformed
+
+    private void btQuartoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartoExcluirActionPerformed
+        int linha = jTableQuartos.getSelectedRow();
+        String observacao = (String)jTableQuartos.getModel().getValueAt(linha, 4);
+        
+        try {
+           QuartoDAO quartoDAO = new QuartoDAO();
+           quartoDAO.remover((String)jTableQuartos.getModel().getValueAt(linha, 0));
+           ((DefaultTableModel)jTableQuartos.getModel()).removeRow(linha);
+           notificacao.exibir("Quarto " + observacao + " foi removido com "
+                   + "sucesso!", Notificacao.SUCESSO);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
+    }//GEN-LAST:event_btQuartoExcluirActionPerformed
 
     private void limparTabela()
     {
