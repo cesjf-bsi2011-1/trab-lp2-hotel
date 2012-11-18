@@ -4,12 +4,16 @@
  */
 package mvc.controllerview;
 
+import entity.Reserva;
+
 /**
  *
  * @author Willian
  */
 public class FormReserva extends javax.swing.JFrame {
 
+    public static Reserva reserva = null;
+    
     public FormReserva() {
         initComponents();
     }
@@ -28,10 +32,6 @@ public class FormReserva extends javax.swing.JFrame {
         lbQuarto = new javax.swing.JLabel();
         jComboBoxQuartos = new javax.swing.JComboBox();
         lbTipoQuarto = new javax.swing.JLabel();
-        jComboBoxTipoQuartos = new javax.swing.JComboBox();
-        lbTarifa = new javax.swing.JLabel();
-        jScrollPaneListaTarifa = new javax.swing.JScrollPane();
-        jListTarifa = new javax.swing.JList();
         lbValorDiaria = new javax.swing.JLabel();
         tfValorDiaria = new javax.swing.JTextField();
         lbCliente = new javax.swing.JLabel();
@@ -42,12 +42,6 @@ public class FormReserva extends javax.swing.JFrame {
         tfQtdHospedes = new javax.swing.JTextField();
         lbDataEntrada = new javax.swing.JLabel();
         tformatadoDataEntrada = new javax.swing.JFormattedTextField();
-        lbHoraChegada = new javax.swing.JLabel();
-        tformatadoHoraEntrada = new javax.swing.JFormattedTextField();
-        lbDataSaida = new javax.swing.JLabel();
-        tformatadoDataSaida = new javax.swing.JFormattedTextField();
-        tformatadoHoraSaida = new javax.swing.JFormattedTextField();
-        lbHoraSaida = new javax.swing.JLabel();
         lbQtdDiarias = new javax.swing.JLabel();
         tfQtdDiarias = new javax.swing.JTextField();
         jPanelValores = new javax.swing.JPanel();
@@ -57,42 +51,31 @@ public class FormReserva extends javax.swing.JFrame {
         tfValorTotal = new javax.swing.JTextField();
         lbDesconto = new javax.swing.JLabel();
         tfDesconto = new javax.swing.JTextField();
+        btCalcularValorTotal = new javax.swing.JButton();
         btGravar = new javax.swing.JButton();
         btAtualizar = new javax.swing.JButton();
-        btExcluir = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
-        btNovoQuarto = new javax.swing.JButton();
-        btNovoTipoQuarto = new javax.swing.JButton();
+        tfTipoQuarto = new javax.swing.JTextField();
+        btCalcularValorDiaria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Reserva");
 
         lbCodigo.setText("Código:");
 
+        tfCodigo.setEnabled(false);
+
         lbQuarto.setText("Quarto:");
 
-        jComboBoxQuartos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        lbTipoQuarto.setText("Tipo:");
-
-        jComboBoxTipoQuartos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        lbTarifa.setText("Tarifa:");
-
-        jListTarifa.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPaneListaTarifa.setViewportView(jListTarifa);
+        lbTipoQuarto.setText("Tipo Quarto:");
 
         lbValorDiaria.setText("Valor Diaria:");
 
         lbCliente.setText("Cliente:");
 
-        btNovo.setText(".");
+        btNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/New document.png"))); // NOI18N
 
-        btBuscar.setText("...");
+        btBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/search.png"))); // NOI18N
 
         jLabel1.setText("Qtd Hospedes:");
 
@@ -110,30 +93,6 @@ public class FormReserva extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        lbHoraChegada.setText("Hora Chegada:");
-
-        try {
-            tformatadoHoraEntrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        lbDataSaida.setText("Data Saída:");
-
-        try {
-            tformatadoDataSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            tformatadoHoraSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        lbHoraSaida.setText("Hora Saída:");
-
         lbQtdDiarias.setText("Qtd Diárias: ");
 
         jPanelValores.setBorder(javax.swing.BorderFactory.createTitledBorder("Valores"));
@@ -143,6 +102,9 @@ public class FormReserva extends javax.swing.JFrame {
         lbValorTotal.setText("Total:");
 
         lbDesconto.setText("Desconto:");
+
+        btCalcularValorTotal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/Dollar.png"))); // NOI18N
+        btCalcularValorTotal.setText("Calc. Total");
 
         javax.swing.GroupLayout jPanelValoresLayout = new javax.swing.GroupLayout(jPanelValores);
         jPanelValores.setLayout(jPanelValoresLayout);
@@ -156,11 +118,13 @@ public class FormReserva extends javax.swing.JFrame {
                 .addComponent(lbDesconto)
                 .addGap(18, 18, 18)
                 .addComponent(tfDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btCalcularValorTotal)
+                .addGap(18, 18, 18)
                 .addComponent(lbValorTotal)
                 .addGap(18, 18, 18)
                 .addComponent(tfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanelValoresLayout.setVerticalGroup(
             jPanelValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,21 +136,30 @@ public class FormReserva extends javax.swing.JFrame {
                     .addComponent(lbValorTotal)
                     .addComponent(tfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbDesconto)
-                    .addComponent(tfDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btCalcularValorTotal))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Save.png"))); // NOI18N
         btGravar.setText("Gravar");
 
+        btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Refresh.png"))); // NOI18N
         btAtualizar.setText("Atualizar");
+        btAtualizar.setEnabled(false);
 
-        btExcluir.setText("Excluir");
-
+        btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Close.png"))); // NOI18N
         btSair.setText("Sair");
+        btSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSairActionPerformed(evt);
+            }
+        });
 
-        btNovoQuarto.setText(".");
+        tfTipoQuarto.setEnabled(false);
 
-        btNovoTipoQuarto.setText(".");
+        btCalcularValorDiaria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/16x16/Calculator.png"))); // NOI18N
+        btCalcularValorDiaria.setText("Calc. Diaria");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -198,75 +171,54 @@ public class FormReserva extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPaneListaTarifa, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxQuartos, javax.swing.GroupLayout.Alignment.LEADING, 0, 224, Short.MAX_VALUE)
-                                    .addComponent(lbQuarto, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbValorDiaria)
-                                    .addComponent(tfValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(btNovoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbTipoQuarto)
-                                            .addComponent(jComboBoxTipoQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(lbValorDiaria)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbCodigo)
+                            .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbCliente)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbCodigo)
-                                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbTarifa)
-                                    .addComponent(lbCliente)
-                                    .addComponent(jPanelValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addComponent(btNovoTipoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lbQuarto)
+                                .addGap(203, 203, 203)
+                                .addComponent(lbTipoQuarto))
+                            .addComponent(jPanelValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(25, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lbDataEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(tformatadoDataEntrada))
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbHoraChegada)
-                                    .addComponent(tformatadoHoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(39, 39, 39)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tformatadoDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbDataSaida))
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbHoraSaida)
-                                    .addComponent(tformatadoHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbQtdDiarias))
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jComboBoxQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfTipoQuarto))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lbDataEntrada)
+                                        .addComponent(tformatadoDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lbQtdDiarias)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(tfQtdDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btCalcularValorDiaria))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(4, 4, 4)
-                                        .addComponent(btGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36)
+                                        .addComponent(btGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
                                         .addComponent(btAtualizar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(tfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btNovo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel1)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfQtdHospedes, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                                    .addComponent(tfQtdDiarias)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btSair)))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                                        .addComponent(btSair))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(tfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tfQtdHospedes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,65 +234,52 @@ public class FormReserva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxTipoQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btNovoQuarto)
-                    .addComponent(btNovoTipoQuarto))
+                    .addComponent(tfTipoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(lbTarifa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneListaTarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(lbValorDiaria)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbValorDiaria)
+                    .addComponent(tfValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(lbCliente)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(tfQtdHospedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbDataEntrada)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btNovo)
-                    .addComponent(btBuscar)
-                    .addComponent(tfQtdHospedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbDataEntrada)
-                            .addComponent(lbHoraChegada)
-                            .addComponent(lbDataSaida)
-                            .addComponent(lbHoraSaida))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tformatadoDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tformatadoHoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tformatadoDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tformatadoHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbQtdDiarias)
-                            .addComponent(tfQtdDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(28, 28, 28)
+                    .addComponent(tformatadoDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbQtdDiarias)
+                    .addComponent(tfQtdDiarias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btCalcularValorDiaria))
+                .addGap(42, 42, 42)
                 .addComponent(jPanelValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(623, 584));
-        setLocationRelativeTo(null);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-566)/2, (screenSize.height-618)/2, 566, 618);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfQtdHospedesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfQtdHospedesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfQtdHospedesActionPerformed
+
+    private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -379,29 +318,21 @@ public class FormReserva extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAtualizar;
     private javax.swing.JButton btBuscar;
-    private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btCalcularValorDiaria;
+    private javax.swing.JButton btCalcularValorTotal;
     private javax.swing.JButton btGravar;
     private javax.swing.JButton btNovo;
-    private javax.swing.JButton btNovoQuarto;
-    private javax.swing.JButton btNovoTipoQuarto;
     private javax.swing.JButton btSair;
     private javax.swing.JComboBox jComboBoxQuartos;
-    private javax.swing.JComboBox jComboBoxTipoQuartos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList jListTarifa;
     private javax.swing.JPanel jPanelValores;
-    private javax.swing.JScrollPane jScrollPaneListaTarifa;
     private javax.swing.JLabel lbCliente;
     private javax.swing.JLabel lbCodigo;
     private javax.swing.JLabel lbDataEntrada;
-    private javax.swing.JLabel lbDataSaida;
     private javax.swing.JLabel lbDesconto;
-    private javax.swing.JLabel lbHoraChegada;
-    private javax.swing.JLabel lbHoraSaida;
     private javax.swing.JLabel lbQtdDiarias;
     private javax.swing.JLabel lbQuarto;
-    private javax.swing.JLabel lbTarifa;
     private javax.swing.JLabel lbTipoQuarto;
     private javax.swing.JLabel lbValorDiaria;
     private javax.swing.JLabel lbValorTotal;
@@ -410,12 +341,10 @@ public class FormReserva extends javax.swing.JFrame {
     private javax.swing.JTextField tfNomeCliente;
     private javax.swing.JTextField tfQtdDiarias;
     private javax.swing.JTextField tfQtdHospedes;
+    private javax.swing.JTextField tfTipoQuarto;
     private javax.swing.JTextField tfValorDiaria;
     private javax.swing.JTextField tfValorTotal;
     private javax.swing.JTextField tfValorTotalDiaria;
     private javax.swing.JFormattedTextField tformatadoDataEntrada;
-    private javax.swing.JFormattedTextField tformatadoDataSaida;
-    private javax.swing.JFormattedTextField tformatadoHoraEntrada;
-    private javax.swing.JFormattedTextField tformatadoHoraSaida;
     // End of variables declaration//GEN-END:variables
 }
