@@ -1,14 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
-/**
- *
- * @author Developer
- */
-public interface InterfaceEntity {
+public interface InterfaceEntity{
     /**
      * Método criado para captura de todas as informações
      * da entidade em formato de vetor de Objects.

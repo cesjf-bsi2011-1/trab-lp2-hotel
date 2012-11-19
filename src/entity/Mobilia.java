@@ -1,10 +1,8 @@
 package entity;
 
-/**
- *
- * @author Tássio Auad
- */
-public class Mobilia implements InterfaceEntity
+import java.io.Serializable;
+
+public class Mobilia implements InterfaceEntity, Serializable
 {
     private String codigo;
     private String nome;

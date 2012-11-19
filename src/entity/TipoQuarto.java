@@ -1,13 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Tássio Auad
- */
-public class TipoQuarto implements InterfaceEntity
+public class TipoQuarto implements InterfaceEntity, Serializable
 {
     private String codigo;
     private String nome;

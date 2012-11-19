@@ -1,12 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Tássio Auad
- */
-public class Log implements InterfaceEntity
+public class Log implements InterfaceEntity, Serializable
 {    
     private String codigo;
     private Usuario usuario;

@@ -1,6 +1,8 @@
 package entity;
 
-public class Usuario 
+import java.io.Serializable;
+
+public class Usuario implements InterfaceEntity, Serializable
 {
     private int codigo;
     private String login;
@@ -53,5 +55,15 @@ public class Usuario
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public Object[] getDadosEmVetor() {
+        Object[] dados = new Object[] {
+            login,
+            nomeCompleto
+        };
+        
+        return dados;
     }
 }

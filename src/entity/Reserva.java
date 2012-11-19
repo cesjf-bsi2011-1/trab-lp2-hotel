@@ -1,16 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Tássio Auad
- */
-public class Reserva implements InterfaceEntity
+public class Reserva implements InterfaceEntity, Serializable
 {
     
     private int codigo;

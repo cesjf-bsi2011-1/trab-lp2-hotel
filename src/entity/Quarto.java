@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
-/**
- *
- * @author Tássio Auad
- */
-public class Quarto implements InterfaceEntity
+import java.io.Serializable;
+
+public class Quarto implements InterfaceEntity, Serializable
 {
     private String codigo;
     private TipoQuarto tipoQuarto;
