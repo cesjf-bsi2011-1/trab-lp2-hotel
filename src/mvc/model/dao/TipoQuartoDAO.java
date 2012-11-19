@@ -14,6 +14,9 @@ public class TipoQuartoDAO extends AbstractDAO
     public TipoQuartoDAO() throws IOException 
     {
         super();
+        nomeArquivoDados = "tipoquarto.data";
+        atualizarListaComArquivo();
+        index = getMaiorIndexDaLista()+ 1;
     }
     
     @Override
@@ -26,6 +29,7 @@ public class TipoQuartoDAO extends AbstractDAO
             listTiposQuarto.add(tipoQuartoParaInserir);
             getHistorico().inserir("Inserção do Tipo de Quarto " + tipoQuartoParaInserir.getNome());
             acrescerIndex();
+            salvarListaEmArquivo();
         }       
     }
 
@@ -36,6 +40,7 @@ public class TipoQuartoDAO extends AbstractDAO
             TipoQuarto novoTipoQuarto = (TipoQuarto) o;
             listTiposQuarto.remove((TipoQuarto) o);
             getHistorico().inserir("Remoção do Tipo de Quarto " + novoTipoQuarto.getNome());
+            salvarListaEmArquivo();
         }
     }
     
@@ -46,6 +51,7 @@ public class TipoQuartoDAO extends AbstractDAO
         if (null != tipoQuartoEncontrado) {
             listTiposQuarto.remove(tipoQuartoEncontrado);
             getHistorico().inserir("Remoção do Tipo de Quarto " + tipoQuartoEncontrado.getNome());
+            salvarListaEmArquivo();
         }
     }
     
@@ -60,6 +66,7 @@ public class TipoQuartoDAO extends AbstractDAO
                 listTiposQuarto.remove(tipoQuartoParaRemover);
                 listTiposQuarto.add(tipoQuartoParaInserir);
                 getHistorico().inserir("Atualização do tipo de quarto " + tipoQuartoParaInserir.getNome());
+                salvarListaEmArquivo();
             }
         }
     }
@@ -124,17 +131,51 @@ public class TipoQuartoDAO extends AbstractDAO
     }
 
     @Override
-    public void atualizarListaComArquivo() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void salvarListaEmArquivo() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public int getMaiorIndexDaLista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int maiorIndex = 0;
+        for (TipoQuarto tipoQuartoDaLista : listTiposQuarto) {
+            int codigoDoTipoQuartoDaLista = Integer.parseInt(tipoQuartoDaLista.getCodigo());
+            if (codigoDoTipoQuartoDaLista > maiorIndex) {
+                maiorIndex = codigoDoTipoQuartoDaLista;
+            }
+        }
+        
+        return maiorIndex;
+    }
+    
+    @Override
+    public void atualizarListaComArquivo()
+    {
+        try {
+            abrirLeituraDoArquivo();
+            listTiposQuarto = (ArrayList) objectIn.readObject();
+            fecharLeituraDoArquivo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível atualizar a lista com"
+                        + " os dados do arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
+    
+    @Override
+    public void salvarListaEmArquivo()
+    {
+        try {
+            abrirArmazenamentoEmArquivo();
+            objectOut.writeObject(listTiposQuarto); 
+            fecharArmazenamentoEmArquivo();
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível salvar os dados no"
+                                    + " arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(TipoQuartoDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
     }
 }

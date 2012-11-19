@@ -13,7 +13,9 @@ public class ClienteDAO extends AbstractDAO
 
     public ClienteDAO() throws IOException 
     {
-        super();
+        nomeArquivoDados = "cliente.data";
+        atualizarListaComArquivo();
+        index = getMaiorIndexDaLista()+ 1;
     }
  
     @Override
@@ -26,6 +28,7 @@ public class ClienteDAO extends AbstractDAO
             listClientes.add(clienteParaInserir);
             getHistorico().inserir("Inserção do Cliente " + clienteParaInserir.getNome());
             acrescerIndex();
+            salvarListaEmArquivo();
         }       
     }
 
@@ -36,6 +39,7 @@ public class ClienteDAO extends AbstractDAO
             Cliente clienteParaInserir = (Cliente) o;
             listClientes.remove((Cliente) o);
             getHistorico().inserir("Remoção do Cliente " + clienteParaInserir.getNome());
+            salvarListaEmArquivo();
         }
     }
     
@@ -46,6 +50,7 @@ public class ClienteDAO extends AbstractDAO
         if (null != clienteEncontrado) {
             listClientes.remove(clienteEncontrado);
             getHistorico().inserir("Remoção do Cliente " + clienteEncontrado.getNome());
+            salvarListaEmArquivo();
         }
     }
     
@@ -60,6 +65,7 @@ public class ClienteDAO extends AbstractDAO
                 listClientes.remove(clienteParaRemover);
                 listClientes.add(clienteParaInserir);
                 getHistorico().inserir("Atualização do Cliente " + clienteParaInserir.getNome());
+                salvarListaEmArquivo();
             }
         }
     }
@@ -115,17 +121,51 @@ public class ClienteDAO extends AbstractDAO
     }
 
     @Override
-    public void atualizarListaComArquivo() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void salvarListaEmArquivo() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public int getMaiorIndexDaLista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int maiorIndex = 0;
+        for (Cliente clienteDaLista : listClientes) {
+            int codigoDoClienteDaLista = clienteDaLista.getCodigo();
+            if (codigoDoClienteDaLista > maiorIndex) {
+                maiorIndex = codigoDoClienteDaLista;
+            }
+        }
+        
+        return maiorIndex;
+    }
+    
+    @Override
+    public void atualizarListaComArquivo()
+    {
+        try {
+            abrirLeituraDoArquivo();
+            listClientes = (ArrayList) objectIn.readObject();
+            fecharLeituraDoArquivo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível atualizar a lista com"
+                        + " os dados do arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
+    
+    @Override
+    public void salvarListaEmArquivo()
+    {
+        try {
+            abrirArmazenamentoEmArquivo();
+            objectOut.writeObject(listClientes); 
+            fecharArmazenamentoEmArquivo();
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível salvar os dados no"
+                                    + " arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
     }
 }

@@ -25,7 +25,7 @@ public class LogDAO implements InterfaceDAO
     {
         nomeArquivoDados = "log.data";
         atualizarListaComArquivo();
-        index = getMaiorIndexDaLista() + 1;
+        index = getMaiorIndexDaLista()+ 1;
     }
     
     @Override
@@ -119,9 +119,9 @@ public class LogDAO implements InterfaceDAO
     public int getMaiorIndexDaLista() {
         int maiorIndex = 0;
         for (Log logDaLista : listLogs) {
-            int codigoDaMobiliaDaLista = Integer.parseInt(logDaLista.getCodigo());
-            if (codigoDaMobiliaDaLista > maiorIndex) {
-                maiorIndex = codigoDaMobiliaDaLista;
+            int codigoDoLogDaLista = Integer.parseInt(logDaLista.getCodigo());
+            if (codigoDoLogDaLista > maiorIndex) {
+                maiorIndex = codigoDoLogDaLista;
             }
         }
         
@@ -136,13 +136,13 @@ public class LogDAO implements InterfaceDAO
             listLogs = (ArrayList) objectIn.readObject();
             fecharLeituraDoArquivo();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             try {
                 throw new Exception("Não foi possível atualizar a lista com"
                         + " os dados do arquivo " + nomeArquivoDados);
             } catch (Exception ex1) {
-                Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
     }
@@ -159,7 +159,7 @@ public class LogDAO implements InterfaceDAO
                 throw new Exception("Não foi possível salvar os dados no"
                                     + " arquivo " + nomeArquivoDados);
             } catch (Exception ex1) {
-                Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
     }
