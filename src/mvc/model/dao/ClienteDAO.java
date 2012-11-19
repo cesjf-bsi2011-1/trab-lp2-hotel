@@ -1,6 +1,7 @@
 package mvc.model.dao;
 
 import entity.Cliente;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -9,8 +10,12 @@ import java.util.logging.Logger;
 public class ClienteDAO extends AbstractDAO
 {
     private static List<Cliente> listClientes = new ArrayList<>();
-    private static int index = 0000;
-    
+
+    public ClienteDAO() throws IOException 
+    {
+        super();
+    }
+ 
     @Override
     public void inserir(Object o) 
     {
@@ -108,16 +113,19 @@ public class ClienteDAO extends AbstractDAO
             }
         }
     }
-    
+
     @Override
-    public int getIndex()
-    {
-        return index;
+    public void atualizarListaComArquivo() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public void acrescerIndex()
-    {
-        index += 1;
+    public void salvarListaEmArquivo() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getMaiorIndexDaLista() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

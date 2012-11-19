@@ -12,7 +12,7 @@ import myutils.Notificacao;
 
 public class FormCadastroQuarto extends javax.swing.JFrame {
 
-    public static TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();    
+    public static TipoQuartoDAO tipoQuartoDAO;    
     public static ArrayList<String> tipoQuartoNomes = new ArrayList<String>(); 
     public static Quarto quarto = null;
     private Notificacao notificacao = new Notificacao();
@@ -21,6 +21,8 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         initComponents();   
         
         try {
+            tipoQuartoDAO = new TipoQuartoDAO();
+            
             QuartoDAO quartoDAO = new QuartoDAO();
             tfCodigo.setText(String.valueOf(quartoDAO.getIndex()));
             

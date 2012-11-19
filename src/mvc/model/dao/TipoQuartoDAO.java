@@ -1,6 +1,7 @@
 package mvc.model.dao;
 
 import entity.TipoQuarto;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -9,7 +10,11 @@ import java.util.logging.Logger;
 public class TipoQuartoDAO extends AbstractDAO
 {
     private static List<TipoQuarto> listTiposQuarto = new ArrayList<>();
-    private static int index = 0000;
+
+    public TipoQuartoDAO() throws IOException 
+    {
+        super();
+    }
     
     @Override
     public void inserir(Object o) 
@@ -106,16 +111,6 @@ public class TipoQuartoDAO extends AbstractDAO
             }
         }
     }
-  
-    public int getIndex()
-    {
-        return index;
-    }
-    
-    public void acrescerIndex()
-    {
-        index += 1;
-    }
     
     public List<String> listarNomesTipoQuarto()
     {
@@ -126,5 +121,20 @@ public class TipoQuartoDAO extends AbstractDAO
         }
    
         return listaDeNomes;
+    }
+
+    @Override
+    public void atualizarListaComArquivo() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void salvarListaEmArquivo() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getMaiorIndexDaLista() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -1,6 +1,11 @@
 package mvc.model.dao;
 
 import entity.Log;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -8,10 +13,20 @@ import java.util.logging.Logger;
 import mvc.controllerview.AbstractForm;
 import java.util.Date;
 
-public class LogDAO extends AbstractDAO
+public class LogDAO implements InterfaceDAO
 {
     private static List<Log> listLogs = new ArrayList<>();
-    private static int index = 0000;
+    private String nomeArquivoDados = "";
+    private ObjectOutputStream objectOut;
+    private ObjectInputStream objectIn;
+    private int index = 0000;
+    
+    public LogDAO()
+    {
+        nomeArquivoDados = "log.data";
+        atualizarListaComArquivo();
+        index = getMaiorIndexDaLista() + 1;
+    }
     
     @Override
     public void inserir(Object o) 
@@ -22,6 +37,7 @@ public class LogDAO extends AbstractDAO
             logParaInserir.setCodigo(String.valueOf(getIndex()));
             listLogs.add(logParaInserir);
             acrescerIndex();
+            salvarListaEmArquivo();
         }       
     }
 
@@ -30,40 +46,36 @@ public class LogDAO extends AbstractDAO
         Log log = new Log(String.valueOf(getIndex()), AbstractForm.logado, mensagem, data);
         inserir(log);
         acrescerIndex();
+        salvarListaEmArquivo();
     }
     
     @Override
     public void remover(Object o) 
     {
-        if (objetoEUmLog(o)) {
-            Log logParaRemover = (Log) o;
-            listLogs.remove((Log) o);
-            getHistorico().inserir("Remoção do Log :" + logParaRemover.getAcao());
+        try {
+            throw new Exception("Não é possível remover logs!");
+        } catch (Exception ex) {
+            Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     @Override
     public void remover(String codigo) 
     {        
-        Log logEncontrado = buscar(codigo);
-        if (null != logEncontrado) {
-            listLogs.remove(logEncontrado);
-            getHistorico().inserir("Remoção do Log :" + logEncontrado.getAcao());
+        try {
+            throw new Exception("Não é possível remover logs!");
+        } catch (Exception ex) {
+            Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     @Override
     public void atualizar(String codigo, Object o) 
     {
-        if (objetoEUmLog(o)) {
-            Log logParaRemover = (Log) o;
-            Log logParaInserir = buscar(codigo);
-            
-            if (null != logParaRemover) {
-                listLogs.remove(logParaRemover);
-                listLogs.add(logParaInserir);
-                getHistorico().inserir("Atualização do Log :" + logParaInserir.getAcao());
-            }
+        try {
+            throw new Exception("Não é possível atualizar logs!");
+        } catch (Exception ex) {
+            Logger.getLogger(LogDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -102,7 +114,56 @@ public class LogDAO extends AbstractDAO
             }
         }
     }
+
+    @Override
+    public int getMaiorIndexDaLista() {
+        int maiorIndex = 0;
+        for (Log logDaLista : listLogs) {
+            int codigoDaMobiliaDaLista = Integer.parseInt(logDaLista.getCodigo());
+            if (codigoDaMobiliaDaLista > maiorIndex) {
+                maiorIndex = codigoDaMobiliaDaLista;
+            }
+        }
+        
+        return maiorIndex;
+    }
     
+    @Override
+    public void atualizarListaComArquivo()
+    {
+        try {
+            abrirLeituraDoArquivo();
+            listLogs = (ArrayList) objectIn.readObject();
+            fecharLeituraDoArquivo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível atualizar a lista com"
+                        + " os dados do arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
+    
+    @Override
+    public void salvarListaEmArquivo()
+    {
+        try {
+            abrirArmazenamentoEmArquivo();
+            objectOut.writeObject(listLogs); 
+            fecharArmazenamentoEmArquivo();
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível salvar os dados no"
+                                    + " arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
+
     @Override
     public int getIndex()
     {
@@ -113,5 +174,33 @@ public class LogDAO extends AbstractDAO
     public void acrescerIndex()
     {
         index += 1;
+    }
+    
+    @Override
+    public void abrirArmazenamentoEmArquivo() throws IOException
+    {
+        this.objectOut = new ObjectOutputStream(
+                new FileOutputStream(nomeArquivoDados)
+                );
+    }
+    
+    @Override
+    public void fecharArmazenamentoEmArquivo() throws IOException
+    {
+        this.objectOut.close();
+    }
+    
+    @Override
+    public void abrirLeituraDoArquivo() throws IOException
+    {
+        this.objectIn = new ObjectInputStream(
+                new FileInputStream(nomeArquivoDados)
+                );
+    }
+    
+    @Override
+    public void fecharLeituraDoArquivo() throws IOException
+    {
+        this.objectIn.close();
     }
 }

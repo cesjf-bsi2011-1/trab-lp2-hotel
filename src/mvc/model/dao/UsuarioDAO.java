@@ -1,18 +1,19 @@
 package mvc.model.dao;
 
 import entity.Usuario;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UsuarioDAO extends AbstractDAO{
-
-    private int index = 0;
+public class UsuarioDAO extends AbstractDAO
+{
     private List<Usuario> listUsuarios = new ArrayList<>();
     
-    public UsuarioDAO() {
-        
+    public UsuarioDAO() throws IOException 
+    {
+        super();   
     }
     
     public boolean validarLogin(String lg)
@@ -159,15 +160,18 @@ public class UsuarioDAO extends AbstractDAO{
     }
     
     @Override
-    public int getIndex()
-    {
-        return index;
+    public void atualizarListaComArquivo() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public void acrescerIndex()
-    {
-        index += 1;
+    public void salvarListaEmArquivo() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getMaiorIndexDaLista() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
    

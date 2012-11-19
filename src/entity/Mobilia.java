@@ -7,9 +7,10 @@ public class Mobilia implements InterfaceEntity, Serializable
     private String codigo;
     private String nome;
     private String descricao;
-
-    public Mobilia() 
+    
+    public Mobilia()
     {
+        
     }
 
     public Mobilia(String codigo, String nome, String descricao) 

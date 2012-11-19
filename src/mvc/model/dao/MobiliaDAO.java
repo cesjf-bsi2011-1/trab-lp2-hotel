@@ -1,6 +1,7 @@
 package mvc.model.dao;
 
 import entity.Mobilia;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -9,7 +10,14 @@ import java.util.logging.Logger;
 public class MobiliaDAO extends AbstractDAO
 {
     private static List<Mobilia> listMobilias = new ArrayList<>();
-    private static int index = 0000;
+
+    public MobiliaDAO() throws IOException 
+    {
+        super();
+        nomeArquivoDados = "mobilia.data";
+        atualizarListaComArquivo();
+        index = getMaiorIndexDaLista()+ 1;
+    }
     
     @Override
     public void inserir(Object o) 
@@ -19,6 +27,7 @@ public class MobiliaDAO extends AbstractDAO
             /*Garantindo que o código equivale ao index*/
             mobiliaParaInserir.setCodigo(String.valueOf(getIndex()));
             listMobilias.add(mobiliaParaInserir);
+            salvarListaEmArquivo();
             getHistorico().inserir("Inserção da Mobília " + mobiliaParaInserir.getNome());
             acrescerIndex();
         }       
@@ -30,6 +39,7 @@ public class MobiliaDAO extends AbstractDAO
         if (objetoEUmaMobilia(o)) {
             Mobilia mobiliaParaRemover = (Mobilia) o;
             listMobilias.remove(mobiliaParaRemover);
+            salvarListaEmArquivo();
             getHistorico().inserir("Remoção da Mobília " + mobiliaParaRemover.getNome());
         }
     }
@@ -40,6 +50,7 @@ public class MobiliaDAO extends AbstractDAO
         Mobilia mobiliaEncontrada = buscar(codigo);
         if (null != mobiliaEncontrada) {
             listMobilias.remove(mobiliaEncontrada);
+            salvarListaEmArquivo();
             getHistorico().inserir("Remoção da Mobília " + mobiliaEncontrada.getNome());
         }
     }
@@ -54,6 +65,7 @@ public class MobiliaDAO extends AbstractDAO
             if (null != mobiliaParaRemover) {
                 listMobilias.remove(mobiliaParaRemover);
                 listMobilias.add(mobiliaParaInserir);
+                salvarListaEmArquivo();
                 getHistorico().inserir("Atualização do mobilia " + mobiliaParaInserir.getNome());
             }
         } 
@@ -95,14 +107,51 @@ public class MobiliaDAO extends AbstractDAO
     }
     
     @Override
-    public int getIndex()
-    {
-        return index;
+    public int getMaiorIndexDaLista() {
+        int maiorIndex = 0;
+        for (Mobilia mobiliaDaLista : listMobilias) {
+            int codigoDaMobiliaDaLista = Integer.parseInt(mobiliaDaLista.getCodigo());
+            if (codigoDaMobiliaDaLista > maiorIndex) {
+                maiorIndex = codigoDaMobiliaDaLista;
+            }
+        }
+        
+        return maiorIndex;
     }
     
     @Override
-    public void acrescerIndex()
+    public void atualizarListaComArquivo()
     {
-        index += 1;
+        try {
+            abrirLeituraDoArquivo();
+            listMobilias = (ArrayList) objectIn.readObject();
+            fecharLeituraDoArquivo();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível atualizar a lista com"
+                        + " os dados do arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
+    }
+    
+    @Override
+    public void salvarListaEmArquivo()
+    {
+        try {
+            abrirArmazenamentoEmArquivo();
+            objectOut.writeObject(listMobilias); 
+            fecharArmazenamentoEmArquivo();
+        } catch (IOException ex) {
+            try {
+                throw new Exception("Não foi possível salvar os dados no"
+                                    + " arquivo " + nomeArquivoDados);
+            } catch (Exception ex1) {
+                Logger.getLogger(MobiliaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
     }
 }
