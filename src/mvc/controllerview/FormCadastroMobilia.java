@@ -53,8 +53,6 @@ public class FormCadastroMobilia extends AbstractForm {
         btAtualizar = new javax.swing.JButton();
         btCancelar = new javax.swing.JButton();
         btSair = new javax.swing.JButton();
-        lbErro = new javax.swing.JLabel();
-        lbConfirma = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Cadastro Mobilia");
@@ -109,10 +107,6 @@ public class FormCadastroMobilia extends AbstractForm {
             }
         });
 
-        lbErro.setForeground(new java.awt.Color(255, 102, 0));
-
-        lbConfirma.setForeground(new java.awt.Color(0, 204, 204));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,10 +129,6 @@ public class FormCadastroMobilia extends AbstractForm {
                         .addComponent(tfNome))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbConfirma)
-                                .addGap(28, 28, 28)
-                                .addComponent(lbErro))
                             .addComponent(lbDescricao)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbCodigo)
@@ -150,11 +140,7 @@ public class FormCadastroMobilia extends AbstractForm {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbConfirma, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbErro, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbCodigo)
                     .addComponent(lbNome))
@@ -199,9 +185,8 @@ public class FormCadastroMobilia extends AbstractForm {
                 taDescricao.setText("");  
             }   
         } else {
-            lbConfirma.setVisible(false);
-            lbErro.setVisible(true);
-            lbErro.setText("Os Campos com * são Obrigatorios!");
+            notificacao.exibir("Os Campos com * são Obrigatorios!", 
+                    Notificacao.ERRO);
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
@@ -213,9 +198,6 @@ public class FormCadastroMobilia extends AbstractForm {
         tfCodigo.setText("");
         tfNome.setText("");
         taDescricao.setText("");
-        lbConfirma.setText("");
-        lbErro.setText("");
-        
     }//GEN-LAST:event_btCancelarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -306,9 +288,7 @@ public class FormCadastroMobilia extends AbstractForm {
     private javax.swing.JButton btSair;
     private javax.swing.JScrollPane jScrollPaneDescricao;
     private javax.swing.JLabel lbCodigo;
-    private javax.swing.JLabel lbConfirma;
     private javax.swing.JLabel lbDescricao;
-    private javax.swing.JLabel lbErro;
     private javax.swing.JLabel lbNome;
     private javax.swing.JTextArea taDescricao;
     private javax.swing.JTextField tfCodigo;
