@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mvc.controllerview.AbstractForm;
 
 public class UsuarioDAO extends AbstractDAO
 {
@@ -18,41 +19,16 @@ public class UsuarioDAO extends AbstractDAO
         index = getMaiorIndexDaLista()+ 1; 
     }
     
-    public boolean validarLogin(String lg)
-    {
-        boolean result = false;
-        if(lg.trim().length() >= 4 && lg.trim().length() <= 10) {
-            result = true;
-        } else {
-            result = false;
-        }
-        
-        return result;
-    }
-    
-    public boolean validarSenha(String s)
-    {
-        boolean result = false;
-        if(s.trim().length() >= 5 && s.trim().length() <=10) {
-            result = true;
-        } else {
-            result = false;
-        }
-        
-        return result;
-    }
-    
     public boolean checkUsuario(Usuario usuario)
     {
         String login = usuario.getLogin();
         String senha = usuario.getSenha();
-        
+        usuario = buscarPorLoginESenha(login, senha);
         boolean result = false;
-        if(
-                validarLogin(login) 
-                && validarSenha(senha) 
-                && (null != buscarPorLoginESenha(login, senha))
-        ) {
+        if (null != usuario) {
+            AbstractForm.logado = usuario;
+            getHistorico().inserir("Usuário " + usuario.getNomeCompleto() +
+                    " acessou o sistema");
             result = true;
         } else {
             result = false;

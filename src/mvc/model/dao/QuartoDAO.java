@@ -27,7 +27,7 @@ public class QuartoDAO extends AbstractDAO
             /*Garantindo que o código equivale ao index*/
             quartoParaInserir.setCodigo(String.valueOf(getIndex()));
             listQuartos.add(quartoParaInserir);
-            getHistorico().inserir("Inserção do Quarto " + quartoParaInserir.getCodigo());
+            getHistorico().inserir("Inserção do Quarto " + quartoParaInserir.getObservacao());
             acrescerIndex();
             salvarListaEmArquivo();
         }       
@@ -39,7 +39,7 @@ public class QuartoDAO extends AbstractDAO
         if (objetoEUmQuarto(o)) {
             Quarto novoQuarto = (Quarto) o;
             listQuartos.remove((Quarto) o);
-            getHistorico().inserir("Remoção do Quarto " + novoQuarto.getCodigo());
+            getHistorico().inserir("Remoção do Quarto " + novoQuarto.getObservacao());
             salvarListaEmArquivo();
         }
     }
@@ -65,7 +65,8 @@ public class QuartoDAO extends AbstractDAO
             if (null != quartoParaRemover) {
                 listQuartos.remove(quartoParaRemover);
                 listQuartos.add(quartoParaInserir);
-                getHistorico().inserir("Atualização do tipo de quarto " + quartoParaInserir.getCodigo());
+                getHistorico().inserir("Atualização do tipo de quarto " + 
+                        quartoParaInserir.getObservacao());
                 salvarListaEmArquivo();
             }
         }

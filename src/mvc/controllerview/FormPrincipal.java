@@ -1,5 +1,10 @@
 package mvc.controllerview;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mvc.model.dao.UsuarioDAO;
+
 public class FormPrincipal extends AbstractForm {
 
     public FormPrincipal() {
@@ -21,8 +26,9 @@ public class FormPrincipal extends AbstractForm {
         jSeparator3 = new javax.swing.JToolBar.Separator();
         btHospedagem = new javax.swing.JButton();
         btQuartos = new javax.swing.JButton();
+        btTipoQuarto = new javax.swing.JButton();
         btMobilia = new javax.swing.JButton();
-        btCalculadora = new javax.swing.JButton();
+        btLog = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btSair = new javax.swing.JButton();
         lbLogo = new javax.swing.JLabel();
@@ -57,6 +63,9 @@ public class FormPrincipal extends AbstractForm {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Rooms | Principal");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -101,6 +110,18 @@ public class FormPrincipal extends AbstractForm {
         });
         jToolBarPrincipal.add(btQuartos);
 
+        btTipoQuarto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Red tag.png"))); // NOI18N
+        btTipoQuarto.setText("Tipo de Quarto");
+        btTipoQuarto.setFocusable(false);
+        btTipoQuarto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btTipoQuarto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btTipoQuarto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTipoQuartoActionPerformed(evt);
+            }
+        });
+        jToolBarPrincipal.add(btTipoQuarto);
+
         btMobilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Target.png"))); // NOI18N
         btMobilia.setText("Mobilia");
         btMobilia.setFocusable(false);
@@ -113,17 +134,17 @@ public class FormPrincipal extends AbstractForm {
         });
         jToolBarPrincipal.add(btMobilia);
 
-        btCalculadora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Calculator.png"))); // NOI18N
-        btCalculadora.setText("Calculadora");
-        btCalculadora.setFocusable(false);
-        btCalculadora.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btCalculadora.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btCalculadora.addActionListener(new java.awt.event.ActionListener() {
+        btLog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Lock.png"))); // NOI18N
+        btLog.setText("Logs");
+        btLog.setFocusable(false);
+        btLog.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btLog.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCalculadoraActionPerformed(evt);
+                btLogActionPerformed(evt);
             }
         });
-        jToolBarPrincipal.add(btCalculadora);
+        jToolBarPrincipal.add(btLog);
         jToolBarPrincipal.add(jSeparator2);
 
         btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Exit.png"))); // NOI18N
@@ -410,19 +431,19 @@ public class FormPrincipal extends AbstractForm {
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
-    private void btCalculadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalculadoraActionPerformed
+    private void btTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTipoQuartoActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_btCalculadoraActionPerformed
+    }//GEN-LAST:event_btTipoQuartoActionPerformed
 
     private void btQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartosActionPerformed
-        FormBuscarQuartos fBuscarQuartos = new FormBuscarQuartos();
-        fBuscarQuartos.setVisible(true);
+        FormBuscarQuartos formBuscarQuartos = new FormBuscarQuartos();
+        formBuscarQuartos.setVisible(true);
     }//GEN-LAST:event_btQuartosActionPerformed
 
     private void btMobiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMobiliaActionPerformed
-        FormBuscarMobilia fBuscarMobilia = new FormBuscarMobilia();
-        fBuscarMobilia.setVisible(true);
+        FormBuscarMobilia formBuscarMobilia = new FormBuscarMobilia();
+        formBuscarMobilia.setVisible(true);
     }//GEN-LAST:event_btMobiliaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -430,8 +451,8 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_formWindowOpened
 
     private void btHospedarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedarActionPerformed
-        FormReserva fReserva = new FormReserva();
-        fReserva.setVisible(true);
+        FormReserva formReserva = new FormReserva();
+        formReserva.setVisible(true);
     }//GEN-LAST:event_btHospedarActionPerformed
 
     private void btSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSair1ActionPerformed
@@ -441,40 +462,24 @@ public class FormPrincipal extends AbstractForm {
     private void btFecharHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharHospedagemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btFecharHospedagemActionPerformed
-   
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormPrincipal().setVisible(true);
-            }
-        });
-    }
+    private void btLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogActionPerformed
+        FormBuscarLog formBuscarLog = new FormBuscarLog();
+        formBuscarLog.setVisible(true);
+    }//GEN-LAST:event_btLogActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            usuarioDAO.getHistorico().inserir("Usuário " + logado.getNomeCompleto() +
+                    " saiu do sistema.");
+        } catch (IOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_formWindowClosing
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btCalculadora;
     private javax.swing.JButton btCancelarHosp;
     private javax.swing.JButton btClientes;
     private javax.swing.JButton btEditarHops;
@@ -484,10 +489,12 @@ public class FormPrincipal extends AbstractForm {
     private javax.swing.JButton btHospedar;
     private javax.swing.JButton btListarPorCodigo;
     private javax.swing.JButton btListarTodas;
+    private javax.swing.JButton btLog;
     private javax.swing.JButton btMobilia;
     private javax.swing.JButton btQuartos;
     private javax.swing.JButton btSair;
     private javax.swing.JButton btSair1;
+    private javax.swing.JButton btTipoQuarto;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBarPrincipal;
     private javax.swing.JMenu jMenuCadastro;

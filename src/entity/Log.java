@@ -65,7 +65,13 @@ public class Log implements InterfaceEntity, Serializable
     @Override
     public Object[] getDadosEmVetor() 
     {
-        throw new UnsupportedOperationException("Log.getDadosEmVetor não "
-                + "desenvolvido.");
+        Object[] dados = new Object[] {
+            codigo,
+            usuario.getNomeCompleto(),
+            acao,
+            data.toString()
+        };
+        
+        return dados;
     }    
 }
