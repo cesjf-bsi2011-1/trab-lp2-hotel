@@ -432,8 +432,8 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTipoQuartoActionPerformed
-        // TODO add your handling code here:
-        
+        FormBuscarTipoDeQuarto formBuscarTipoQuarto = new FormBuscarTipoDeQuarto();
+        formBuscarTipoQuarto.setVisible(true);
     }//GEN-LAST:event_btTipoQuartoActionPerformed
 
     private void btQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btQuartosActionPerformed

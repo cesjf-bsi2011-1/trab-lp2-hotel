@@ -66,7 +66,17 @@ public class TipoQuarto implements InterfaceEntity, Serializable
     @Override
     public Object[] getDadosEmVetor()
     {
-        throw new UnsupportedOperationException("TipoQuarto.getDadosEmVetor não "
-                + "desenvolvido.");
+        String nomesMobilias = "";
+        for(Mobilia mobilia : mobilias) {
+             nomesMobilias += mobilia.getNome() + ", ";
+        }
+        
+        Object dados[] = {
+            codigo,
+            nome,
+            nomesMobilias,
+        };
+        
+        return dados;
     }
 }

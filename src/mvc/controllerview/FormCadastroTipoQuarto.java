@@ -15,6 +15,7 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     public static Mobilia mobilia = null;
     private static ArrayList<Mobilia> listMobilias = new ArrayList<>();
     private Notificacao notificacao = new Notificacao();
+    public static TipoQuarto tipoQuarto = null;
     
     public FormCadastroTipoQuarto() {
         initComponents();
@@ -25,6 +26,17 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
             tfCodigo.setText(String.valueOf(tipoQuartoDAO.getIndex()));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        }
+        
+        /*Caso o Form esteja sendo aberto com intuito de 
+        * realizar uma atualização, o objeto global
+        * quarto foi preenchido diretamente por outro
+        * Form.
+        */
+        if (tipoQuarto != null) {
+            preencherFormCom(tipoQuarto);
+            btAtualizar.setEnabled(true);
+            btCadastrar.setEnabled(false);
         }
     }
 
@@ -59,6 +71,11 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Cadastro Tipo de Quarto");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lbCodigo.setText("Código: *");
 
@@ -121,6 +138,11 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Refresh.png"))); // NOI18N
         btAtualizar.setText("Atualizar");
         btAtualizar.setEnabled(false);
+        btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarActionPerformed(evt);
+            }
+        });
 
         btCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Abort.png"))); // NOI18N
         btCancelar.setText("Cancelar");
@@ -436,6 +458,35 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
     private void jTableMobiliasAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMobiliasAddMouseClicked
         btRemoverItem.setEnabled(true);
     }//GEN-LAST:event_jTableMobiliasAddMouseClicked
+
+    private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+        btIncluirMobilia.setEnabled(false);
+        btLimpar.setEnabled(false); 
+        
+        if (camposObrigatoriosPreenchidos()) {
+            TipoQuarto tipoQuarto = new TipoQuarto();
+            tipoQuarto.setCodigo(tfCodigo.getText());
+            tipoQuarto.setNome(tfNome.getText());
+            tipoQuarto.setDescricao(taDescricao.getText());
+            tipoQuarto.setMobilias(listMobilias);
+            
+            try {
+                TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
+                tipoQuartoDAO.atualizar(tipoQuarto.getCodigo(), tipoQuarto);
+                notificacao.exibir("Tipo de Quarto " + tipoQuarto.getNome()
+                        + " atualizado com sucesso!", Notificacao.SUCESSO);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+            }
+        } else {
+            notificacao.exibir("Os campos com * são obrigatorios!", 
+                                                           Notificacao.SUCESSO);
+        }
+    }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        tipoQuarto = null;
+    }//GEN-LAST:event_formWindowClosing
   
     private void limparTabelaBuscaMobilia()
     {
@@ -484,6 +535,17 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
         return retorno;
     }
 
+     public void preencherFormCom(TipoQuarto tipoQuarto)
+     {
+         tfCodigo.setText(tipoQuarto.getCodigo());
+         tfNome.setText(tipoQuarto.getNome());
+         taDescricao.setText(tipoQuarto.getDescricao());
+         DefaultTableModel modelo = (DefaultTableModel)jTableMobiliasAdd.getModel();
+         for (Mobilia mobiliaDaLista : tipoQuarto.getMobilias()) {
+             modelo.addRow(mobiliaDaLista.getDadosEmVetor());
+         } 
+     }
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAtualizar;
     private javax.swing.JButton btBuscar;
