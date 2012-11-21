@@ -73,6 +73,12 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Cadastro de Quartos");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -201,7 +207,6 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        quarto = null;
         this.dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
@@ -302,6 +307,14 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
         }
     }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        quarto = null;
+    }//GEN-LAST:event_formWindowClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAtualizar;

@@ -57,6 +57,12 @@ public class FormCadastroMobilia extends AbstractForm {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Cadastro Mobilia");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -216,10 +222,16 @@ public class FormCadastroMobilia extends AbstractForm {
                            + "foi atualizada com sucesso", Notificacao.SUCESSO);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-        } finally {
-            mobilia = null;
-        }   
+        }
     }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        mobilia = null;
+    }//GEN-LAST:event_formWindowClosed
 
     private boolean camposObrigatoriosPreenchidos()
     {

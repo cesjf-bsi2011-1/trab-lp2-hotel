@@ -96,6 +96,12 @@ public class FormCadastroCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Hotel Rooms | Cadastro de Clientes");
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -192,7 +198,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbDataNasc)
                     .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -501,7 +507,6 @@ public class FormCadastroCliente extends javax.swing.JFrame {
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
         this.dispose();
-        cliente = null;
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
@@ -625,6 +630,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                     " atualizado com sucesso!", Notificacao.SUCESSO);
         } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
+        } finally {
+            cliente = null;
         }
     }//GEN-LAST:event_btAtualizarActionPerformed
 
@@ -652,6 +659,14 @@ public class FormCadastroCliente extends javax.swing.JFrame {
             tfNome.requestFocus();
         }
     }//GEN-LAST:event_btRemoverActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        cliente = null;
+    }//GEN-LAST:event_formWindowClosed
 
     public boolean camposObrigatoriosPreenchidos()
     {
