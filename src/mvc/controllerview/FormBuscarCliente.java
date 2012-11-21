@@ -46,7 +46,7 @@ public class FormBuscarCliente extends AbstractForm {
         jPanelClientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Clientes"));
         jPanelClientes.setPreferredSize(new java.awt.Dimension(830, 490));
 
-        lbLocalizaClienteCodigo.setText("Localizar cliente por código: ");
+        lbLocalizaClienteCodigo.setText("Código");
 
         btLocalizaClienteCpf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btLocalizaClienteCpf.setText("...");
@@ -56,7 +56,7 @@ public class FormBuscarCliente extends AbstractForm {
             }
         });
 
-        lbLocCliCPF1.setText("Localizar por CPF: ");
+        lbLocCliCPF1.setText("CPF:");
 
         btLocaizaClienteCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btLocaizaClienteCodigo.setText("...");
@@ -155,30 +155,31 @@ public class FormBuscarCliente extends AbstractForm {
             .addGroup(jPanelClientesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelClientesLayout.createSequentialGroup()
-                        .addComponent(lbLocalizaClienteCodigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfLocalizaClienteCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btLocaizaClienteCodigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbLocCliCPF1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tformatadoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btLocalizaClienteCpf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btBuscarTodosClientes1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
-                        .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btCliEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btCliExcluir1)
-                            .addComponent(btCliNovo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClientesLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btSair)))
+                        .addComponent(btSair))
+                    .addGroup(jPanelClientesLayout.createSequentialGroup()
+                        .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelClientesLayout.createSequentialGroup()
+                                .addComponent(lbLocalizaClienteCodigo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfLocalizaClienteCodigo))
+                            .addComponent(btCliEditar1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btCliExcluir1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btCliNovo1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelClientesLayout.createSequentialGroup()
+                                .addComponent(btLocaizaClienteCodigo)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbLocCliCPF1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tformatadoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btLocalizaClienteCpf)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btBuscarTodosClientes1))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanelClientesLayout.setVerticalGroup(

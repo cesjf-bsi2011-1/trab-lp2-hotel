@@ -59,6 +59,7 @@ public class FormBuscarTipoDeQuarto extends javax.swing.JFrame {
             }
         });
 
+        btLocTipoQuartoNumero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btLocTipoQuartoNumero.setText("...");
         btLocTipoQuartoNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,7 +74,7 @@ public class FormBuscarTipoDeQuarto extends javax.swing.JFrame {
             }
         });
 
-        lbLocTipoQuartoNumero.setText("Localizar Tipo Quarto por número:");
+        lbLocTipoQuartoNumero.setText("Código");
 
         jTableTipoQuartos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,24 +128,24 @@ public class FormBuscarTipoDeQuarto extends javax.swing.JFrame {
             jPanelTipoQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTipoQuartosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelTipoQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTipoQuartosLayout.createSequentialGroup()
-                        .addGroup(jPanelTipoQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btEditarTipoQuarto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btNovoTipoQuarto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                            .addComponent(btExcluirTipoQuarto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                .addGroup(jPanelTipoQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelTipoQuartosLayout.createSequentialGroup()
                         .addComponent(lbLocTipoQuartoNumero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfLocTipoQuartoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(tfLocTipoQuartoNumero))
+                    .addComponent(btEditarTipoQuarto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btNovoTipoQuarto, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .addComponent(btExcluirTipoQuarto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelTipoQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTipoQuartosLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanelTipoQuartosLayout.createSequentialGroup()
                         .addComponent(btLocTipoQuartoNumero)
                         .addGap(18, 18, 18)
                         .addComponent(btBuscarTodosTiposQuartos)
-                        .addGap(0, 318, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTipoQuartosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btSair)
@@ -157,7 +158,7 @@ public class FormBuscarTipoDeQuarto extends javax.swing.JFrame {
                 .addGroup(jPanelTipoQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbLocTipoQuartoNumero)
                     .addComponent(tfLocTipoQuartoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btLocTipoQuartoNumero)
+                    .addComponent(btLocTipoQuartoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btBuscarTodosTiposQuartos))
                 .addGap(29, 29, 29)
                 .addGroup(jPanelTipoQuartosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +169,7 @@ public class FormBuscarTipoDeQuarto extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btExcluirTipoQuarto))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addGap(82, 82, 82)
                 .addComponent(btSair))
         );
 
@@ -193,8 +194,8 @@ public class FormBuscarTipoDeQuarto extends javax.swing.JFrame {
                     .addContainerGap(38, Short.MAX_VALUE)))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-866)/2, (screenSize.height-550)/2, 866, 550);
+        setSize(new java.awt.Dimension(866, 550));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btEditarTipoQuartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarTipoQuartoActionPerformed

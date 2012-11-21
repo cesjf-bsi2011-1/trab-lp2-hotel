@@ -68,27 +68,28 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="btQuartoEditar" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btQuartoNovo" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btNovoTipoQuarto" alignment="0" pref="126" max="32767" attributes="0"/>
-                              <Component id="btQuartoExcluir" alignment="1" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lbLocQuartoNumero" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="tfLocQuartoNumero" min="-2" pref="143" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btLocQuartoNumero" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfLocQuartoNumero" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="btQuartoEditar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btQuartoNovo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btNovoTipoQuarto" alignment="0" pref="126" max="32767" attributes="0"/>
+                      <Component id="btQuartoExcluir" alignment="1" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jScrollPane1" pref="654" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="btLocQuartoNumero" min="-2" pref="73" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btBuscarTodosQuartos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="341" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -106,8 +107,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbLocQuartoNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tfLocQuartoNumero" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btLocQuartoNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btBuscarTodosQuartos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btLocQuartoNumero" alignment="3" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -166,6 +167,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btLocQuartoNumero">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/images/24x24/Search_1.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="..."/>
           </Properties>
           <Events>
@@ -184,7 +188,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lbLocQuartoNumero">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Localizar Quarto por n&#xfa;mero:"/>
+            <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">

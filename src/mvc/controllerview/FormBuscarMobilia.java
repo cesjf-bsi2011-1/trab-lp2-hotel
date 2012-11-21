@@ -94,8 +94,9 @@ public class FormBuscarMobilia extends javax.swing.JFrame
         });
         jScrollPane3.setViewportView(jTableMobilia);
 
-        lbLocMobiliaNumero.setText("Localizar Mobilia por número:");
+        lbLocMobiliaNumero.setText("Código:");
 
+        btLocMobiliaNumero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btLocMobiliaNumero.setText("...");
         btLocMobiliaNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,24 +127,24 @@ public class FormBuscarMobilia extends javax.swing.JFrame
             jPanelMobiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMobiliaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelMobiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelMobiliaLayout.createSequentialGroup()
-                        .addGroup(jPanelMobiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btMobiliaEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btMobiliaExcluir)
-                            .addComponent(btMobiliaNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
-                        .addContainerGap())
+                .addGroup(jPanelMobiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelMobiliaLayout.createSequentialGroup()
                         .addComponent(lbLocMobiliaNumero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfLocMobiliaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btLocMobiliaNumero)
+                        .addComponent(tfLocMobiliaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btMobiliaEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btMobiliaExcluir)
+                    .addComponent(btMobiliaNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelMobiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMobiliaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanelMobiliaLayout.createSequentialGroup()
+                        .addComponent(btLocMobiliaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btBuscarTodosMobilia)
-                        .addGap(18, 18, 18)
+                        .addGap(163, 163, 163)
                         .addComponent(lbResultMobilia)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMobiliaLayout.createSequentialGroup()
@@ -160,7 +161,7 @@ public class FormBuscarMobilia extends javax.swing.JFrame
                     .addComponent(tfLocMobiliaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscarTodosMobilia)
                     .addComponent(lbResultMobilia)
-                    .addComponent(btLocMobiliaNumero))
+                    .addComponent(btLocMobiliaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanelMobiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMobiliaLayout.createSequentialGroup()
@@ -192,8 +193,8 @@ public class FormBuscarMobilia extends javax.swing.JFrame
                 .addGap(63, 63, 63))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-866)/2, (screenSize.height-539)/2, 866, 539);
+        setSize(new java.awt.Dimension(866, 539));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btMobiliaNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMobiliaNovoActionPerformed
