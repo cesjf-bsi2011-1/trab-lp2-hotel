@@ -18,7 +18,7 @@ import myutils.Notificacao;
 
 public class FormCadastroHospedagem extends javax.swing.JFrame {
 
-    public static Hospedagem hospedagem = null;
+    private Hospedagem hospedagem = null;
     public static Quarto quartoSelecionado = null;
     private Cliente cliente = null;
     private Notificacao notificacao = new Notificacao();
@@ -85,6 +85,11 @@ public class FormCadastroHospedagem extends javax.swing.JFrame {
         lbDataEntrada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 formFocusGained(evt);
@@ -693,6 +698,10 @@ public class FormCadastroHospedagem extends javax.swing.JFrame {
             Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btBuscarQuartoActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        quartoSelecionado = null;
+    }//GEN-LAST:event_formWindowClosed
 
     private void limparTabelaQuarto()
     {
