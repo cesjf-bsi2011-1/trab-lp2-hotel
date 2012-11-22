@@ -11,7 +11,7 @@ public class FormLogin extends javax.swing.JFrame {
     
     public FormLogin() {
         initComponents();
-        notificacao.exibir("Login: Admin // Senha: Admin", Notificacao.SUCESSO);
+        notificacao.exibir("Login: admin // Senha: admin", Notificacao.SUCESSO);
     }
 
     /**

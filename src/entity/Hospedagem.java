@@ -8,10 +8,10 @@ public class Hospedagem {
     private Cliente hospede;
     private Quarto quartoAlugado;
     private Date dataLocacao;
-
+    private float desconto;
+    
     public Hospedagem()
     {
-    
     }
 
     public Hospedagem(String codigo, Cliente hospede, Quarto quartoAlugado, 
@@ -60,6 +60,14 @@ public class Hospedagem {
     {
         this.dataLocacao = dataLocacao;
     }
+
+    public float getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(float desconto) {
+        this.desconto = desconto;
+    }
     
     public float calcularValor()
     {
@@ -81,7 +89,8 @@ public class Hospedagem {
             quantidadeDias = ( (mesAtual-mesLocacao) + 1 ) * 30;
         }
         quantidadeDias = (diaAtual - diaLocacao) + 1;
-  
-        return quantidadeDias * quartoAlugado.getValor();
+        float valorSemDesconto = quantidadeDias * quartoAlugado.getValor();
+        float descontoReais = valorSemDesconto * (this.desconto)/100;
+        return valorSemDesconto - descontoReais;
     }
 }

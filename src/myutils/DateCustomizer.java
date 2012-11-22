@@ -19,7 +19,7 @@ public class DateCustomizer {
     
     public static String getDayFromDateObject(Date date)
     {
-        SimpleDateFormat formatador = new SimpleDateFormat("MM");
+        SimpleDateFormat formatador = new SimpleDateFormat("dd");
         return formatador.format(date);
     }
     

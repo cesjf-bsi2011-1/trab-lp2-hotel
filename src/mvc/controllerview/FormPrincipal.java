@@ -35,17 +35,12 @@ public class FormPrincipal extends AbstractForm {
         jPanelHospedagem = new javax.swing.JPanel();
         btHospedar = new javax.swing.JButton();
         btFecharHospedagem = new javax.swing.JButton();
-        btCancelarHosp = new javax.swing.JButton();
-        btEditarHops = new javax.swing.JButton();
-        btSair1 = new javax.swing.JButton();
         lbBuscarHospedagem = new javax.swing.JLabel();
         tfBuscarHospedagemCodigo = new javax.swing.JTextField();
         btListarPorCodigo = new javax.swing.JButton();
-        btListarTodas = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btExcluirReserva = new javax.swing.JButton();
         jMenuBarPrincipal = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemCliente = new javax.swing.JMenuItem();
@@ -63,11 +58,11 @@ public class FormPrincipal extends AbstractForm {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Rooms | Principal");
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -87,7 +82,7 @@ public class FormPrincipal extends AbstractForm {
         jToolBarPrincipal.add(jSeparator3);
 
         btHospedagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Home.png"))); // NOI18N
-        btHospedagem.setText("Hospadagem");
+        btHospedagem.setText("Hospedagem");
         btHospedagem.setFocusable(false);
         btHospedagem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btHospedagem.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -181,31 +176,13 @@ public class FormPrincipal extends AbstractForm {
             }
         });
 
-        btCancelarHosp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/No-entry.png"))); // NOI18N
-        btCancelarHosp.setText("Cancelar");
-
-        btEditarHops.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Modify.png"))); // NOI18N
-        btEditarHops.setText("Editar");
-        btEditarHops.setEnabled(false);
-
-        btSair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Close.png"))); // NOI18N
-        btSair1.setText("Sair");
-        btSair1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSair1ActionPerformed(evt);
-            }
-        });
-
         lbBuscarHospedagem.setText("Código:");
 
         btListarPorCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
-        btListarPorCodigo.setText("Listar");
-
-        btListarTodas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search.png"))); // NOI18N
-        btListarTodas.setText("Listar Todas");
+        btListarPorCodigo.setText("Buscar Quarto");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Blue tag.png"))); // NOI18N
-        jButton1.setText("Listar Hospedagens");
+        jButton1.setText("Listar Quartos Vagos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -239,10 +216,6 @@ public class FormPrincipal extends AbstractForm {
         jTable1.getColumnModel().getColumn(5).setResizable(false);
         jTable1.getColumnModel().getColumn(6).setResizable(false);
 
-        btExcluirReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Remove.png"))); // NOI18N
-        btExcluirReserva.setText("Excluir");
-        btExcluirReserva.setEnabled(false);
-
         javax.swing.GroupLayout jPanelHospedagemLayout = new javax.swing.GroupLayout(jPanelHospedagem);
         jPanelHospedagem.setLayout(jPanelHospedagemLayout);
         jPanelHospedagemLayout.setHorizontalGroup(
@@ -253,15 +226,7 @@ public class FormPrincipal extends AbstractForm {
                     .addGroup(jPanelHospedagemLayout.createSequentialGroup()
                         .addComponent(btHospedar)
                         .addGap(18, 18, 18)
-                        .addComponent(btFecharHospedagem)
-                        .addGap(18, 18, 18)
-                        .addComponent(btEditarHops)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btExcluirReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btCancelarHosp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btSair1))
+                        .addComponent(btFecharHospedagem))
                     .addGroup(jPanelHospedagemLayout.createSequentialGroup()
                         .addComponent(lbBuscarHospedagem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -269,12 +234,9 @@ public class FormPrincipal extends AbstractForm {
                         .addGap(18, 18, 18)
                         .addComponent(btListarPorCodigo)
                         .addGap(18, 18, 18)
-                        .addComponent(btListarTodas)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(0, 201, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addComponent(jScrollPane1)
+                        .addComponent(jButton1)))
+                .addContainerGap(300, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
         );
         jPanelHospedagemLayout.setVerticalGroup(
             jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,21 +245,14 @@ public class FormPrincipal extends AbstractForm {
                 .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbBuscarHospedagem)
                     .addComponent(tfBuscarHospedagemCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btListarPorCodigo)
-                    .addComponent(btListarTodas)
-                    .addComponent(jButton1))
+                    .addComponent(btListarPorCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btHospedar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btFecharHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btEditarHops, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btSair1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btExcluirReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btCancelarHosp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(btHospedar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btFecharHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30))
         );
 
@@ -424,7 +379,8 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_btClientesActionPerformed
 
     private void btHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedagemActionPerformed
-        
+        FormCadastroReserva formCadastroReserva = new FormCadastroReserva();
+        formCadastroReserva.setVisible(true);
     }//GEN-LAST:event_btHospedagemActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -455,10 +411,6 @@ public class FormPrincipal extends AbstractForm {
         formReserva.setVisible(true);
     }//GEN-LAST:event_btHospedarActionPerformed
 
-    private void btSair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSair1ActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btSair1ActionPerformed
-
     private void btFecharHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharHospedagemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btFecharHospedagemActionPerformed
@@ -480,20 +432,15 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_formWindowClosing
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btCancelarHosp;
     private javax.swing.JButton btClientes;
-    private javax.swing.JButton btEditarHops;
-    private javax.swing.JButton btExcluirReserva;
     private javax.swing.JButton btFecharHospedagem;
     private javax.swing.JButton btHospedagem;
     private javax.swing.JButton btHospedar;
     private javax.swing.JButton btListarPorCodigo;
-    private javax.swing.JButton btListarTodas;
     private javax.swing.JButton btLog;
     private javax.swing.JButton btMobilia;
     private javax.swing.JButton btQuartos;
     private javax.swing.JButton btSair;
-    private javax.swing.JButton btSair1;
     private javax.swing.JButton btTipoQuarto;
     private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBarPrincipal;
