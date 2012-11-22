@@ -56,10 +56,7 @@ public class FormBuscarLog extends javax.swing.JFrame
 
         jTableLogs.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Código", "Usuário", "Descrição", "Data"

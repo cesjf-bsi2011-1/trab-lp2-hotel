@@ -90,6 +90,19 @@ public class QuartoDAO extends AbstractDAO
         }
         return null;
     }
+    
+    public ArrayList<Quarto> buscarDadosQuartosVagos()
+    {
+        ArrayList<Quarto> quartosVagos = new ArrayList<>();
+        for (Quarto quartoDaLista : listQuartos) {
+            if (!quartoDaLista.isStatus()) {
+                quartosVagos.add(quartoDaLista);
+            }
+        }
+        
+        return quartosVagos;
+    }
+    
     public boolean objetoEUmQuarto(Object o) 
     {
         if (o instanceof Quarto) {

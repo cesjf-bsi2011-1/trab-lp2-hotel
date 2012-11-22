@@ -1,9 +1,11 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import myutils.DateCustomizer;
 
-public class Hospedagem {
+public class Hospedagem implements InterfaceEntity, Serializable
+{
     private String codigo;
     private Cliente hospede;
     private Quarto quartoAlugado;
@@ -92,5 +94,25 @@ public class Hospedagem {
         float valorSemDesconto = quantidadeDias * quartoAlugado.getValor();
         float descontoReais = valorSemDesconto * (this.desconto)/100;
         return valorSemDesconto - descontoReais;
+    }
+
+    @Override
+    public Object[] getDadosEmVetor() {
+        String statusLocado = "DISPONÍVEL";
+        if (quartoAlugado.isStatus()) {
+            statusLocado = "LOCADO";
+        }
+        
+        Object dados[] = {
+            codigo,
+            hospede.getNome(),
+            quartoAlugado.getObservacao(),
+            quartoAlugado.getTipoQuarto().getNome(),
+            DateCustomizer.DateToStr(dataLocacao),
+            statusLocado,
+            String.valueOf(calcularValor())
+        };
+        
+        return dados;
     }
 }

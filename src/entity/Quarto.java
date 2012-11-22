@@ -63,7 +63,7 @@ public class Quarto implements InterfaceEntity, Serializable
     @Override
     public Object[] getDadosEmVetor()
     {
-        Object v[] = {
+        Object dados[] = {
             codigo,
             tipoQuarto.getNome(),
             status,
@@ -71,7 +71,28 @@ public class Quarto implements InterfaceEntity, Serializable
             Observacao
         };
         
-        return v;
+        return dados;
     }
+    
+    public Object[] getDadosEmVetorParaGridHospedagem()
+    {
+        String statusLocado = "DISPONÍVEL";
+        if (status) {
+            statusLocado = "LOCADO";
+        }
+        Object dados[] = {
+            codigo,
+            "",
+            Observacao,
+            tipoQuarto.getNome(),
+            "",
+            statusLocado,
+            valor,
+            
+        };
+        
+        return dados;
+    }
+    
     
 }

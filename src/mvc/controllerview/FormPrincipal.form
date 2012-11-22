@@ -92,7 +92,6 @@
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBarPrincipal"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
@@ -113,11 +112,11 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBarPrincipal" alignment="1" pref="1202" max="32767" attributes="0"/>
+          <Component id="jToolBarPrincipal" alignment="1" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanelHospedagem" min="-2" pref="796" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="104" max="32767" attributes="0"/>
               <Component id="lbLogo" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -128,13 +127,13 @@
               <Component id="jToolBarPrincipal" min="-2" pref="99" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="402" max="32767" attributes="0"/>
+                      <EmptySpace pref="408" max="32767" attributes="0"/>
                       <Component id="lbLogo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jPanelHospedagem" pref="685" max="32767" attributes="0"/>
+                      <Component id="jPanelHospedagem" pref="691" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -264,7 +263,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Hospedagem"/>
+            <TitledBorder title="Quartos"/>
           </Border>
         </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -286,7 +285,7 @@
                       <Group type="102" attributes="0">
                           <Component id="lbBuscarHospedagem" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="tfBuscarHospedagemCodigo" min="-2" pref="107" max="-2" attributes="0"/>
+                          <Component id="tfBuscarQuartoCodigo" min="-2" pref="107" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btListarPorCodigo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -304,12 +303,12 @@
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbBuscarHospedagem" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tfBuscarHospedagemCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="tfBuscarQuartoCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btListarPorCodigo" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="504" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" max="-2" attributes="0">
                       <Component id="btHospedar" max="32767" attributes="0"/>
@@ -327,6 +326,7 @@
               <Image iconType="3" name="/images/24x24/New.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Hospedar"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btHospedarActionPerformed"/>
@@ -349,7 +349,7 @@
             <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfBuscarHospedagemCodigo">
+        <Component class="javax.swing.JTextField" name="tfBuscarQuartoCodigo">
         </Component>
         <Component class="javax.swing.JButton" name="btListarPorCodigo">
           <Properties>
@@ -358,6 +358,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Buscar Quarto"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btListarPorCodigoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
@@ -366,6 +369,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Listar Quartos Vagos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>
@@ -374,17 +380,17 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="jTableQuartos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="7" rowCount="0">
-                    <Column editable="false" title="C&#xf3;digo" type="java.lang.Integer"/>
-                    <Column editable="false" title="Cliente" type="java.lang.Object"/>
-                    <Column editable="false" title="Quarto" type="java.lang.Object"/>
-                    <Column editable="false" title="Tipo Quarto" type="java.lang.Object"/>
+                    <Column editable="false" title="C&#xf3;digo" type="java.lang.String"/>
+                    <Column editable="false" title="Cliente" type="java.lang.String"/>
+                    <Column editable="false" title="Quarto" type="java.lang.String"/>
+                    <Column editable="false" title="Tipo Quarto" type="java.lang.String"/>
                     <Column editable="false" title="Data Entrada" type="java.lang.String"/>
-                    <Column editable="false" title="Qtd Hopedes" type="java.lang.Integer"/>
-                    <Column editable="false" title="Valor" type="java.lang.Float"/>
+                    <Column editable="false" title="Status" type="java.lang.String"/>
+                    <Column editable="false" title="Valor" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

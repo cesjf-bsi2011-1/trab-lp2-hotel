@@ -1,12 +1,21 @@
 package mvc.controllerview;
 
+import entity.Hospedagem;
+import entity.Quarto;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import mvc.model.dao.HospedagemDAO;
+import mvc.model.dao.QuartoDAO;
 import mvc.model.dao.UsuarioDAO;
+import myutils.Notificacao;
 
 public class FormPrincipal extends AbstractForm {
 
+    private Notificacao notificacao = new Notificacao();
+    
     public FormPrincipal() {
         initComponents();
         setExtendedState(FormPrincipal.MAXIMIZED_BOTH);
@@ -36,11 +45,11 @@ public class FormPrincipal extends AbstractForm {
         btHospedar = new javax.swing.JButton();
         btFecharHospedagem = new javax.swing.JButton();
         lbBuscarHospedagem = new javax.swing.JLabel();
-        tfBuscarHospedagemCodigo = new javax.swing.JTextField();
+        tfBuscarQuartoCodigo = new javax.swing.JTextField();
         btListarPorCodigo = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableQuartos = new javax.swing.JTable();
         jMenuBarPrincipal = new javax.swing.JMenuBar();
         jMenuCadastro = new javax.swing.JMenu();
         jMenuItemCliente = new javax.swing.JMenuItem();
@@ -156,11 +165,12 @@ public class FormPrincipal extends AbstractForm {
 
         lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/logoHotelRooms.png"))); // NOI18N
 
-        jPanelHospedagem.setBorder(javax.swing.BorderFactory.createTitledBorder("Hospedagem"));
+        jPanelHospedagem.setBorder(javax.swing.BorderFactory.createTitledBorder("Quartos"));
         jPanelHospedagem.setPreferredSize(new java.awt.Dimension(830, 490));
 
         btHospedar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/New.png"))); // NOI18N
         btHospedar.setText("Hospedar");
+        btHospedar.setEnabled(false);
         btHospedar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btHospedarActionPerformed(evt);
@@ -180,20 +190,30 @@ public class FormPrincipal extends AbstractForm {
 
         btListarPorCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Search_1.png"))); // NOI18N
         btListarPorCodigo.setText("Buscar Quarto");
+        btListarPorCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btListarPorCodigoActionPerformed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/24x24/Blue tag.png"))); // NOI18N
         jButton1.setText("Listar Quartos Vagos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableQuartos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Cliente", "Quarto", "Tipo Quarto", "Data Entrada", "Qtd Hopedes", "Valor"
+                "Código", "Cliente", "Quarto", "Tipo Quarto", "Data Entrada", "Status", "Valor"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
@@ -207,14 +227,14 @@ public class FormPrincipal extends AbstractForm {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setResizable(false);
-        jTable1.getColumnModel().getColumn(1).setResizable(false);
-        jTable1.getColumnModel().getColumn(2).setResizable(false);
-        jTable1.getColumnModel().getColumn(3).setResizable(false);
-        jTable1.getColumnModel().getColumn(4).setResizable(false);
-        jTable1.getColumnModel().getColumn(5).setResizable(false);
-        jTable1.getColumnModel().getColumn(6).setResizable(false);
+        jScrollPane1.setViewportView(jTableQuartos);
+        jTableQuartos.getColumnModel().getColumn(0).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(1).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(2).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(3).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(4).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(5).setResizable(false);
+        jTableQuartos.getColumnModel().getColumn(6).setResizable(false);
 
         javax.swing.GroupLayout jPanelHospedagemLayout = new javax.swing.GroupLayout(jPanelHospedagem);
         jPanelHospedagem.setLayout(jPanelHospedagemLayout);
@@ -230,7 +250,7 @@ public class FormPrincipal extends AbstractForm {
                     .addGroup(jPanelHospedagemLayout.createSequentialGroup()
                         .addComponent(lbBuscarHospedagem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfBuscarHospedagemCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfBuscarQuartoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btListarPorCodigo)
                         .addGap(18, 18, 18)
@@ -244,11 +264,11 @@ public class FormPrincipal extends AbstractForm {
                 .addGap(35, 35, 35)
                 .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbBuscarHospedagem)
-                    .addComponent(tfBuscarHospedagemCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfBuscarQuartoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btListarPorCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                     .addComponent(btHospedar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -324,11 +344,11 @@ public class FormPrincipal extends AbstractForm {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
+            .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelHospedagem, javax.swing.GroupLayout.PREFERRED_SIZE, 796, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(lbLogo))
         );
         layout.setVerticalGroup(
@@ -337,12 +357,12 @@ public class FormPrincipal extends AbstractForm {
                 .addComponent(jToolBarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
                         .addComponent(lbLogo)
                         .addGap(26, 26, 26))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE))))
+                        .addComponent(jPanelHospedagem, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))))
         );
 
         pack();
@@ -379,7 +399,7 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_btClientesActionPerformed
 
     private void btHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedagemActionPerformed
-        FormCadastroReserva formCadastroReserva = new FormCadastroReserva();
+        FormCadastroHospedagem formCadastroReserva = new FormCadastroHospedagem();
         formCadastroReserva.setVisible(true);
     }//GEN-LAST:event_btHospedagemActionPerformed
 
@@ -407,8 +427,18 @@ public class FormPrincipal extends AbstractForm {
     }//GEN-LAST:event_formWindowOpened
 
     private void btHospedarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHospedarActionPerformed
-        FormReserva formReserva = new FormReserva();
-        formReserva.setVisible(true);
+        int linha = jTableQuartos.getSelectedRow();
+        String codigoQuarto = (String) jTableQuartos.getModel().getValueAt(linha, 0);
+        
+        FormCadastroHospedagem formCadastroHospedagem = new FormCadastroHospedagem();
+        try {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            Quarto quartoBuscado = quartoDAO.buscar(codigoQuarto);
+            formCadastroHospedagem.quartoSelecionado = quartoBuscado;
+            formCadastroHospedagem.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btHospedarActionPerformed
 
     private void btFecharHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharHospedagemActionPerformed
@@ -430,7 +460,63 @@ public class FormPrincipal extends AbstractForm {
         }
         
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        limparTabelaQuarto();
+        DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
+        
+        try {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            ArrayList<Quarto> listQuartoDisponiveis = quartoDAO.buscarDadosQuartosVagos();
+            if (listQuartoDisponiveis.size() > 0) {
+                for (Quarto quarto: listQuartoDisponiveis) {
+                        modelo.addRow(quarto.getDadosEmVetorParaGridHospedagem());
+                }
+            } else {
+                notificacao.exibir("Nenhum quarto encontrado", Notificacao.ERRO);
+            }
+            btHospedar.setEnabled(true);
+            btFecharHospedagem.setEnabled(false);
+        } catch (IOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btListarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListarPorCodigoActionPerformed
+        limparTabelaQuarto();
+        DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
+        try {
+            QuartoDAO quartoDAO = new QuartoDAO();
+            Quarto quartoBuscado = quartoDAO.buscar(tfBuscarQuartoCodigo.getText());
+            
+            if (quartoBuscado != null) {
+                if (quartoBuscado.isStatus()) {
+                    HospedagemDAO hospedagemDAO = new HospedagemDAO();
+                    Hospedagem hospedagem = 
+                            hospedagemDAO.buscarPorQuartoCodigo(quartoBuscado.getCodigo());
+                    modelo.addRow(hospedagem.getDadosEmVetor());
+                } else {
+                    modelo.addRow(quartoBuscado.getDadosEmVetorParaGridHospedagem());
+                }
+                btHospedar.setEnabled(false);
+                btFecharHospedagem.setEnabled(true);
+            } else {
+                notificacao.exibir("Nenhum quarto encontrado", Notificacao.ERRO);
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btListarPorCodigoActionPerformed
   
+    private void limparTabelaQuarto()
+    {
+        DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
+        for (int i = jTableQuartos.getRowCount() - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClientes;
     private javax.swing.JButton btFecharHospedagem;
@@ -460,10 +546,10 @@ public class FormPrincipal extends AbstractForm {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableQuartos;
     private javax.swing.JToolBar jToolBarPrincipal;
     private javax.swing.JLabel lbBuscarHospedagem;
     private javax.swing.JLabel lbLogo;
-    private javax.swing.JTextField tfBuscarHospedagemCodigo;
+    private javax.swing.JTextField tfBuscarQuartoCodigo;
     // End of variables declaration//GEN-END:variables
 }

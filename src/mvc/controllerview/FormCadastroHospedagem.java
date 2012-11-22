@@ -1,10 +1,9 @@
 package mvc.controllerview;
 
 import entity.Cliente;
-import entity.Quarto;
 import entity.Hospedagem;
+import entity.Quarto;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -17,20 +16,25 @@ import mvc.model.dao.QuartoDAO;
 import myutils.DateCustomizer;
 import myutils.Notificacao;
 
-public class FormCadastroReserva extends javax.swing.JFrame {
+public class FormCadastroHospedagem extends javax.swing.JFrame {
 
     public static Hospedagem hospedagem = null;
-    private Quarto quartoSelecionado = null;
+    public static Quarto quartoSelecionado = null;
     private Cliente cliente = null;
     private Notificacao notificacao = new Notificacao();
 
-    public FormCadastroReserva() {
+    public FormCadastroHospedagem() {
         initComponents();
         hospedagem = new Hospedagem();
         hospedagem.setDataLocacao(new Date());
         tformatadoDataEntrada.setText(
                     DateCustomizer.DateToStr(new Date())
-                );  
+                );
+        
+        if (quartoSelecionado != null) {
+            hospedagem.setQuartoAlugado(quartoSelecionado);
+            tfQuarto.setText(quartoSelecionado.getObservacao());
+        }
     }
 
     /**
@@ -484,8 +488,8 @@ public class FormCadastroReserva extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
         );
 
-        setSize(new java.awt.Dimension(631, 679));
-        setLocationRelativeTo(null);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-631)/2, (screenSize.height-679)/2, 631, 679);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -493,7 +497,6 @@ public class FormCadastroReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_btSairActionPerformed
 
     private void btCalcularTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalcularTotalActionPerformed
-        
         if (hospedagem != null) {
             hospedagem.setDesconto(Float.parseFloat(tfDesconto.getText()));
             tfValorTotalReserva.setText(
@@ -513,15 +516,15 @@ public class FormCadastroReserva extends javax.swing.JFrame {
             ArrayList<Quarto> listaQuarto = (ArrayList<Quarto>) quartoDAO.buscarTodos();
 
             if (!listaQuarto.isEmpty()) {
-                for (int i = 0; i < listaQuarto.size(); i++) {
-                    modelo.addRow(listaQuarto.get(i).getDadosEmVetor());
+                for (Quarto quarto: listaQuarto) {
+                    modelo.addRow(quarto.getDadosEmVetor());
                 }
             } else {
                 notificacao.exibir("Nenhum Quarto Encontrado.", Notificacao.ERRO);
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-        }
+        } catch (IOException ex) {
+            Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_btBuscarTodosQuartosActionPerformed
 
     private void jTableQuartoDaReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableQuartoDaReservaMouseClicked
@@ -546,7 +549,7 @@ public class FormCadastroReserva extends javax.swing.JFrame {
                 notificacao.exibir("Selecione um quarto para incluir!", Notificacao.ERRO);
             }        
         } catch (IOException ex) {
-            Logger.getLogger(FormCadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }//GEN-LAST:event_btIncluirQuartoActionPerformed
 
@@ -558,13 +561,22 @@ public class FormCadastroReserva extends javax.swing.JFrame {
         hospedagem.setHospede(cliente);
         hospedagem.setQuartoAlugado(quartoSelecionado);
         hospedagem.setDesconto(Float.parseFloat(tfDesconto.getText()));
+        
+        try {
+            quartoSelecionado.setStatus(true);
+            QuartoDAO quartoDAO = new QuartoDAO();
+            quartoDAO.atualizar(quartoSelecionado.getCodigo(), quartoSelecionado);
+        } catch (IOException ex) {
+            Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
         try {
             HospedagemDAO hospedagemDAO = new HospedagemDAO();
             hospedagemDAO.inserir(hospedagem);
             notificacao.exibir("Hospedagem "+ tfCodigo.getText()  
                                + " realizada com sucesso", Notificacao.SUCESSO);
         } catch (IOException ex) {
-            Logger.getLogger(FormCadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
     }//GEN-LAST:event_btGravarActionPerformed
@@ -653,7 +665,7 @@ public class FormCadastroReserva extends javax.swing.JFrame {
             limparTabelaCliente();
 
         } catch (IOException ex) {
-            Logger.getLogger(FormCadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btIncluirActionPerformed
@@ -678,7 +690,7 @@ public class FormCadastroReserva extends javax.swing.JFrame {
                         + " não encontrado" , Notificacao.ERRO);
             }
         } catch (IOException ex) {
-            Logger.getLogger(FormCadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btBuscarQuartoActionPerformed
 

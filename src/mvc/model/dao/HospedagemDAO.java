@@ -107,6 +107,16 @@ public class HospedagemDAO extends AbstractDAO{
         return null; 
     }
     
+    public Hospedagem buscarPorQuartoCodigo(String codigo) 
+    {
+        for (Hospedagem hospedagemDaLista : listHospedagens) {
+                if (hospedagemDaLista.getQuartoAlugado().getCodigo().equals(codigo)) {
+                    return hospedagemDaLista;           
+                }
+        }
+        return null; 
+    }
+    
     public boolean objetoEUmaHospedagem(Object o) 
     {
         if (o instanceof Hospedagem) {
@@ -148,12 +158,7 @@ public class HospedagemDAO extends AbstractDAO{
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(HospedagemDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            try {
-                throw new Exception("Não foi possível atualizar a lista com"
-                        + " os dados do arquivo " + nomeArquivoDados);
-            } catch (Exception ex1) {
-                Logger.getLogger(HospedagemDAO.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            Logger.getLogger(HospedagemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

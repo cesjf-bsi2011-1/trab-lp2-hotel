@@ -1,12 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Tássio Auad
- */
-public class Cliente implements InterfaceEntity 
+public class Cliente implements InterfaceEntity, Serializable 
 {
     private int codigo;
     private String nome;
