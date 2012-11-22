@@ -179,17 +179,15 @@ public class FormCadastroMobilia extends AbstractForm {
             newMobilia.setDescricao(taDescricao.getText());
             
             try {
-                MobiliaDAO mobiliaDAO = new MobiliaDAO();
-                mobiliaDAO.inserir(newMobilia);
+                new MobiliaDAO().inserir(newMobilia);
                 notificacao.exibir("Mobília " + newMobilia.getNome() + " "
                         + "foi cadastrada com sucesso", Notificacao.SUCESSO);
+                tfCodigo.setText(String.valueOf(new MobiliaDAO().getIndex()));
+                tfNome.setText("");
+                taDescricao.setText(""); 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
-            } finally {
-                tfCodigo.setText("");
-                tfNome.setText("");
-                taDescricao.setText("");  
-            }   
+            }
         } else {
             notificacao.exibir("Os Campos com * são Obrigatorios!", 
                     Notificacao.ERRO);

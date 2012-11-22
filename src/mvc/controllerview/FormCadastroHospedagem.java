@@ -582,7 +582,13 @@ public class FormCadastroHospedagem extends javax.swing.JFrame {
                                + " realizada com sucesso", Notificacao.SUCESSO);
         } catch (IOException ex) {
             Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+        
+        try {
+            limparForm();
+        } catch (IOException ex) {
+            Logger.getLogger(FormCadastroHospedagem.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_btGravarActionPerformed
 
@@ -719,6 +725,20 @@ public class FormCadastroHospedagem extends javax.swing.JFrame {
         }
     }
 
+    private void limparForm() throws IOException
+    {
+        limparTabelaQuarto();
+        limparTabelaCliente();
+        tfLocalizaClienteCodigo.setText("");
+        tformatadoCpf.setText("");
+        tfNomeCliente.setText("");
+        tfQuarto.setText("");
+        tfBuscarQuarto.setText("");
+        tfValorTotalReserva.setText("");
+        tfDesconto.setText("0");
+        tfCodigo.setText(String.valueOf(new HospedagemDAO().getIndex()));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscarQuarto;
     private javax.swing.JButton btBuscarTodosClientes1;

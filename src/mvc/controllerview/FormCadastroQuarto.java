@@ -145,11 +145,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbValor)
-                                .addGap(11, 11, 11)
-                                .addComponent(tfValor))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbObs)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbCodigo)
@@ -161,17 +157,22 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                         .addComponent(jComboBoxTipoQuarto, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(72, 72, 72))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btCadastrar)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btAtualizar)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btCancelar)
+                                    .addGap(35, 35, 35)
+                                    .addComponent(btSair))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btCadastrar)
+                                .addComponent(lbValor)
                                 .addGap(18, 18, 18)
-                                .addComponent(btAtualizar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btCancelar)
-                                .addGap(35, 35, 35)
-                                .addComponent(btSair))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(23, Short.MAX_VALUE))))
+                                .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,8 +203,8 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                         .addContainerGap())))
         );
 
-        setSize(new java.awt.Dimension(514, 406));
-        setLocationRelativeTo(null);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-514)/2, (screenSize.height-406)/2, 514, 406);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
@@ -231,6 +232,7 @@ public class FormCadastroQuarto extends javax.swing.JFrame {
                 notificacao.exibir("Quarto " + quarto.getObservacao() 
                              + " Cadastrado com sucesso!", Notificacao.SUCESSO);
                 limparForm();
+                tfCodigo.setText(String.valueOf(quartoDAO.getIndex()));
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);
             }

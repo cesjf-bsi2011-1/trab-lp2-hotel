@@ -489,8 +489,8 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 .addGap(71, 71, 71))
         );
 
-        setSize(new java.awt.Dimension(829, 727));
-        setLocationRelativeTo(null);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-829)/2, (screenSize.height-727)/2, 829, 727);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
@@ -543,6 +543,7 @@ public class FormCadastroCliente extends javax.swing.JFrame {
                 FormCustomizer.limparTodosCampos(painelEndereco);
                 FormCustomizer.limparTodosCampos(painelContato);
                 taObs.setText("");
+                tfCodigo.setText(String.valueOf(new ClienteDAO().getIndex()));
                 tfNome.requestFocus();  
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "ERROR", ""+ex, ERROR);

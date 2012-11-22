@@ -356,15 +356,14 @@ public class FormCadastroTipoQuarto extends javax.swing.JFrame {
             tipoQuarto.setMobilias(listMobilias);
             
             try {
-                tfCodigo.setText("");
+                TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
+                tfCodigo.setText(String.valueOf(tipoQuartoDAO.getIndex()));
                 taDescricao.setText("");
                 tfBuscarMobilia.setText("");
                 tfNome.setText("");
-                
+          
                 limparTabelaAdicionarMobilia();
                 limparTabelaBuscaMobilia();
-                
-                TipoQuartoDAO tipoQuartoDAO = new TipoQuartoDAO();
                 tipoQuartoDAO.inserir(tipoQuarto);
                 notificacao.exibir("Tipo de Quarto " + tipoQuarto.getNome()
                         + " cadastrado com sucesso!", Notificacao.SUCESSO);
