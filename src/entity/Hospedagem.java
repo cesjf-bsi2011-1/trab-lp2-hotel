@@ -71,7 +71,7 @@ public class Hospedagem implements InterfaceEntity, Serializable
         this.desconto = desconto;
     }
     
-    public float calcularValor()
+    public int getQuantidadeDeDiarias()
     {
         int mesAtual = Integer.parseInt(
                     DateCustomizer.getMonthFromDateObject(new Date())
@@ -91,6 +91,13 @@ public class Hospedagem implements InterfaceEntity, Serializable
             quantidadeDias = ( (mesAtual-mesLocacao) + 1 ) * 30;
         }
         quantidadeDias = (diaAtual - diaLocacao) + 1;
+        
+        return quantidadeDias;
+    }
+    
+    public float calcularValor()
+    {
+        int quantidadeDias = getQuantidadeDeDiarias();
         float valorSemDesconto = quantidadeDias * quartoAlugado.getValor();
         float descontoReais = valorSemDesconto * (this.desconto)/100;
         return valorSemDesconto - descontoReais;

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mvc.model.dao.HospedagemDAO;
 import mvc.model.dao.QuartoDAO;
@@ -227,6 +228,11 @@ public class FormPrincipal extends AbstractForm {
                 return canEdit [columnIndex];
             }
         });
+        jTableQuartos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableQuartosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableQuartos);
         jTableQuartos.getColumnModel().getColumn(0).setResizable(false);
         jTableQuartos.getColumnModel().getColumn(1).setResizable(false);
@@ -244,19 +250,22 @@ public class FormPrincipal extends AbstractForm {
                 .addContainerGap()
                 .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelHospedagemLayout.createSequentialGroup()
-                        .addComponent(btHospedar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btFecharHospedagem))
-                    .addGroup(jPanelHospedagemLayout.createSequentialGroup()
-                        .addComponent(lbBuscarHospedagem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfBuscarQuartoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btListarPorCodigo)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
-                .addContainerGap(300, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+                        .addGroup(jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelHospedagemLayout.createSequentialGroup()
+                                .addComponent(btHospedar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btFecharHospedagem))
+                            .addGroup(jPanelHospedagemLayout.createSequentialGroup()
+                                .addComponent(lbBuscarHospedagem)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfBuscarQuartoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btListarPorCodigo)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1)))
+                        .addGap(0, 290, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanelHospedagemLayout.setVerticalGroup(
             jPanelHospedagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,19 +439,37 @@ public class FormPrincipal extends AbstractForm {
         int linha = jTableQuartos.getSelectedRow();
         String codigoQuarto = (String) jTableQuartos.getModel().getValueAt(linha, 0);
         
-        FormCadastroHospedagem formCadastroHospedagem = new FormCadastroHospedagem();
         try {
-            QuartoDAO quartoDAO = new QuartoDAO();
-            Quarto quartoBuscado = quartoDAO.buscar(codigoQuarto);
-            formCadastroHospedagem.quartoSelecionado = quartoBuscado;
+            Quarto quartoBuscado = new QuartoDAO().buscar(codigoQuarto);
+            FormCadastroHospedagem.quartoSelecionado = quartoBuscado;
+            FormCadastroHospedagem formCadastroHospedagem = new FormCadastroHospedagem();
             formCadastroHospedagem.setVisible(true);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        btHospedar.setVisible(false);
     }//GEN-LAST:event_btHospedarActionPerformed
 
     private void btFecharHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharHospedagemActionPerformed
-        // TODO add your handling code here:
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Confirma o fechamento da "
+                                              + "hospedagem ?");
+        if(confirmacao == 0) {  
+            try {
+                Quarto quartoBuscado = new QuartoDAO().buscar(tfBuscarQuartoCodigo.getText());
+
+                if (quartoBuscado != null && quartoBuscado.isStatus()) {
+                    Hospedagem hospedagem = new HospedagemDAO().buscarPorQuartoCodigo(quartoBuscado.getCodigo());
+                    if(hospedagem != null) {
+                        FormFechamentoHospedagem.hospedagem = hospedagem;
+                        FormFechamentoHospedagem formFechamentoHospedagem = new FormFechamentoHospedagem();
+                        formFechamentoHospedagem.setVisible(true);
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }  
+        }
+        btFecharHospedagem.setVisible(false);
     }//GEN-LAST:event_btFecharHospedagemActionPerformed
 
     private void btLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogActionPerformed
@@ -455,7 +482,7 @@ public class FormPrincipal extends AbstractForm {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             usuarioDAO.getHistorico().inserir("Usuário " + logado.getNomeCompleto() +
                     " saiu do sistema.");
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -466,8 +493,7 @@ public class FormPrincipal extends AbstractForm {
         DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
         
         try {
-            QuartoDAO quartoDAO = new QuartoDAO();
-            ArrayList<Quarto> listQuartoDisponiveis = quartoDAO.buscarDadosQuartosVagos();
+            ArrayList<Quarto> listQuartoDisponiveis = new QuartoDAO().buscarDadosQuartosVagos();
             if (listQuartoDisponiveis.size() > 0) {
                 for (Quarto quarto: listQuartoDisponiveis) {
                         modelo.addRow(quarto.getDadosEmVetorParaGridHospedagem());
@@ -475,9 +501,7 @@ public class FormPrincipal extends AbstractForm {
             } else {
                 notificacao.exibir("Nenhum quarto encontrado", Notificacao.ERRO);
             }
-            btHospedar.setEnabled(true);
-            btFecharHospedagem.setEnabled(false);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -486,28 +510,45 @@ public class FormPrincipal extends AbstractForm {
         limparTabelaQuarto();
         DefaultTableModel modelo = (DefaultTableModel)jTableQuartos.getModel();
         try {
-            QuartoDAO quartoDAO = new QuartoDAO();
-            Quarto quartoBuscado = quartoDAO.buscar(tfBuscarQuartoCodigo.getText());
+            Quarto quartoBuscado = new QuartoDAO().buscar(tfBuscarQuartoCodigo.getText());
             
             if (quartoBuscado != null) {
                 if (quartoBuscado.isStatus()) {
-                    HospedagemDAO hospedagemDAO = new HospedagemDAO();
                     Hospedagem hospedagem = 
-                            hospedagemDAO.buscarPorQuartoCodigo(quartoBuscado.getCodigo());
+                            new HospedagemDAO().buscarPorQuartoCodigo(quartoBuscado.getCodigo());
                     modelo.addRow(hospedagem.getDadosEmVetor());
                 } else {
                     modelo.addRow(quartoBuscado.getDadosEmVetorParaGridHospedagem());
                 }
-                btHospedar.setEnabled(false);
-                btFecharHospedagem.setEnabled(true);
             } else {
                 notificacao.exibir("Nenhum quarto encontrado", Notificacao.ERRO);
             }
             
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btListarPorCodigoActionPerformed
+
+    private void jTableQuartosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableQuartosMouseClicked
+        int linha = jTableQuartos.getSelectedRow();
+        String codigoQuarto = (String) jTableQuartos.getModel().getValueAt(linha, 0);
+        
+        Quarto quarto;
+        try {
+            quarto = new QuartoDAO().buscar(codigoQuarto);
+            if (quarto != null) {
+                if(quarto.isStatus()) {
+                    btHospedar.setEnabled(false);
+                    btFecharHospedagem.setEnabled(true);
+                } else {
+                    btHospedar.setEnabled(true);
+                    btFecharHospedagem.setEnabled(false);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    }//GEN-LAST:event_jTableQuartosMouseClicked
   
     private void limparTabelaQuarto()
     {
