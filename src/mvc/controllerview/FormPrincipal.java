@@ -447,7 +447,7 @@ public class FormPrincipal extends AbstractForm {
         } catch (Exception ex) {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        btHospedar.setVisible(false);
+        btHospedar.setEnabled(false);
     }//GEN-LAST:event_btHospedarActionPerformed
 
     private void btFecharHospedagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharHospedagemActionPerformed
@@ -469,7 +469,7 @@ public class FormPrincipal extends AbstractForm {
                 Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }  
         }
-        btFecharHospedagem.setVisible(false);
+        btFecharHospedagem.setEnabled(false);
     }//GEN-LAST:event_btFecharHospedagemActionPerformed
 
     private void btLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogActionPerformed
